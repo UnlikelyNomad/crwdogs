@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/jquery-ui.min.css">
         <link rel="stylesheet" href="../css/crwdogs.css">
 
         <title>CRW Dogs - Spring Fling</title>
@@ -107,7 +108,7 @@
                     <div class="accordion" id="skill-accordion">
                         <div class="card container-fluid accordion-panel">
                             <div class="card-header p-0" id="skill-new">
-                                <button class="btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-new" style="width: 100%;">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-new" style="width: 100%;">
                                     <h3>I HAVE NEVER DONE CRW</h3>
                                     <span class="small">...or such a small amount, or so long ago that I am basically starting from scratch.</span>
                                 </button>
@@ -138,7 +139,7 @@
 
                                 <div class="row">
                                     <div class="col-12 text-center mt-5">
-                                        <h3>PLEASE FILL OUT THIS FORM TO THE BEST OF YOUR KNOWLEDGE</h3>
+                                        <h4>PLEASE FILL OUT THIS FORM TO THE BEST OF YOUR KNOWLEDGE</h4>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -249,7 +250,7 @@
                         </div>
                         <div class="card container-fluid accordion-panel">
                             <div class="card-header p-0" id="skill-mid">
-                                <button class="btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-mid" style="width: 100%;">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-mid" style="width: 100%;">
                                     <h3>I HAVE DONE A LITTLE CRW</h3>
                                     <span class="small">...fairly recently. I feel comfortable with the basics but am working on the fundamentals.<br>
                                         <span class="small">I might not really know what the difference is between basics and fundamentals.</span>
@@ -259,7 +260,7 @@
                             <div id="collapse-mid" class="collapse" data-parent="#skill-accordion">
                                 <div class="row">
                                     <div class="col-12 text-center mt-5">
-                                        <h3>PLEASE FILL OUT THIS FORM TO THE BEST OF YOUR KNOWLEDGE</h3>
+                                        <h4>PLEASE FILL OUT THIS FORM TO THE BEST OF YOUR KNOWLEDGE</h4>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -351,13 +352,114 @@
                         </div>
                         <div class="card container-fluid accordion-panel">
                             <div class="card-header p-0" id="skill-exp">
-                                <button class="btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-exp" style="width: 100%;">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-exp" style="width: 100%;">
                                     <h3>I HAVE DONE MORE THAN A LITTLE CRW</h3>
                                     <span class="small">...and either have enough experience to know what sort of things I am hoping to learn at this event or am so fucking good that there's nothing left to learn.</span>
                                 </button>
                             </div>
-                            <div id="collapse-exp" class="collapse" data-parent="#skill-accordion">
-                                <h1>Dawg questions</h1>
+                            <div id="collapse-exp" class="collapse pl-2 pr-2" data-parent="#skill-accordion">
+                                <div class="row">
+                                    <div class="col-12 text-center mt-5">
+                                        <h4>PLEASE SELECT THE CANOPY SIZES THAT YOU WILL COME PREPARED TO FLY AT A 3.00 TO 3.50 WING LOADING</h4>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center mb-3">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>113</h3><span class="small">147-153 LBS</span>
+                                    </button>
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>126</h3><span class="small">164-170 LBS</span>
+                                    </button>
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>143</h3><span class="small">186-193 LBS</span>
+                                    </button>
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>160</h3><span class="small">208-216 LBS</span>
+                                    </button>
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>176</h3><span class="small">229-238 LBS</span>
+                                    </button>
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>193</h3><span class="small">251-261 LBS</span>
+                                    </button>
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                        <h3>218</h3><span class="small">283-295 LBS</span>
+                                    </button>
+                                </div>
+
+                                <div class="row text-center">
+                                    <h6>
+                                        CRW DOGS COME TO SPRING FLING FROM ALL OVER THE WORLD TO HAVE AN OPPORTUNITY TO DO THE KINDS OF FLYING THAT WE DON’T OFTEN GET A CHANCE TO DO AND TO TAKE ADVANTAGE OF THE HUGE POOL OF TALENT AVAILABLE TO DEVELOP NEW TECHNIQUES AND LEARN NEW SKILLS.
+                                    </h6>
+                                </div>
+
+                                <div class="row text-center">
+                                    <p>WE THINK THAT EVERYONE CAN LEARN MORE AND HAVE MORE FUN IF WE HAVE A BETTER IDEA WHAT YOUR PERSONAL PRIORITIES ARE.</p>
+                                </div>
+
+                                <div class="row text-center">
+                                    <p>PLEASE TAKE A MINUTE TO MOVE A FEW OF THE CHOICES BELOW INTO YOUR PRIORITY COLUMN SO THAT WE CAN GET A BETTER PICTURE OF WHAT EVERYONE IS COMING TO SPRING FLING FOR. </p>
+                                </div>
+
+                                <div class="row skills">
+                                    <div class="col-md-4 text-center">
+                                        <div class="rounded badge-info">THESE ARE THE SKILLS THAT I WOULD LIKE TO SPEND SOME FOCUSED TIME ON</div>
+                                        <div class="rounded badge-primary mb-3"><ul class="training crw-sort ui-sortable" id="pref_training"></ul></div>
+                                        <div class="rounded badge-info">
+                                            <ul class="training crw-sort ui-sortable" id="avail_training">
+                                                <li class="ui-state-default ui-sortable-handle">PILOTING</li>
+                                                <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
+                                                <li class="ui-state-default ui-sortable-handle">LOCK UP</li>
+                                                <li class="ui-state-default ui-sortable-handle">HANGING WINGS</li>
+                                                <li class="ui-state-default ui-sortable-handle">ECHELON</li>
+                                                <li class="ui-state-default ui-sortable-handle">2-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">4-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">ROTATIONS</li>
+                                                <li class="ui-state-default ui-sortable-handle">CAMERA FLYING</li>
+                                                <li class="ui-state-default ui-sortable-handle">TEACHING PUPS</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <div class="rounded badge-info">THESE ARE THE KINDS OF JUMPS THAT I DON'T OFTEN GET TO DO BUT WOULD LIKE TO</div>
+                                        <div class="rounded badge-primary mb-3"><ul class="jumps crw-sort ui-sortable" id="pref_jumps"></ul></div>
+                                        <div class="rounded badge-info">
+                                            <ul class="jumps crw-sort ui-sortable" id="avail_jumps">
+                                                <li class="ui-state-default ui-sortable-handle">2-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">4-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">ROTATIONS</li>
+                                                <li class="ui-state-default ui-sortable-handle">6 TO 9 WAY</li>
+                                                <li class="ui-state-default ui-sortable-handle">9 TO 16 WAY</li>
+                                                <li class="ui-state-default ui-sortable-handle">16 TO 25 WAY</li>
+                                                <li class="ui-state-default ui-sortable-handle">25 WAY AND UP</li>
+                                                <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
+                                                <li class="ui-state-default ui-sortable-handle">WEIRD SHIT</li>
+                                                <li class="ui-state-default ui-sortable-handle">FLYING PIECES</li>
+                                                <li class="ui-state-default ui-sortable-handle">VERY TALL STACKS</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <div class="rounded badge-info">I WOULD BE HAPPY TO SPEND THE FOLLOWING NUMBER OF DAYS COACHING LESS EXPERIENCED DOGS ON THESE SKILLS<br>
+                                        <input type="number" class="ml-4 mr-4" placeholder="# Days"></div>
+                                        <div class="rounded badge-primary mb-3"><ul class="coaching crw-sort ui-sortable" id="pref_coaching"></ul></div>
+                                        <div class="rounded badge-info">
+                                            <ul class="coaching crw-sort ui-sortable" id="avail_coaching">
+                                                <li class="ui-state-default ui-sortable-handle">PILOTING</li>
+                                                <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
+                                                <li class="ui-state-default ui-sortable-handle">LOCK UP</li>
+                                                <li class="ui-state-default ui-sortable-handle">HANGING WINGS</li>
+                                                <li class="ui-state-default ui-sortable-handle">ECHELON</li>
+                                                <li class="ui-state-default ui-sortable-handle">2-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">4-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">ROTATIONS</li>
+                                                <li class="ui-state-default ui-sortable-handle">CAMERA FLYING</li>
+                                                <li class="ui-state-default ui-sortable-handle">TEACHING PUPS</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -366,6 +468,7 @@
         </div>
         
         <script src="../js/jquery-3.3.1.min.js"></script>
+        <script src="../js/jquery-ui.min.js"></script>
         <script src="../js/popper.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/crwdogs-calc.js"></script>
@@ -429,13 +532,28 @@
             var accordions = $('.accordion-panel');
             
             accordions.on('hide.bs.collapse', function() {
-                $(this).find('button').removeClass('btn-success').addClass('btn-danger');
+                $(this).find('button.acc-toggle').removeClass('btn-success').addClass('btn-danger');
             });
 
             accordions.on('show.bs.collapse', function() {
-                $(this).find('button').removeClass('btn-danger').addClass('btn-success');
+                $(this).find('button.acc-toggle').removeClass('btn-danger').addClass('btn-success');
             });
 
+            $(function() {
+                $('ul.training').sortable({
+                    connectWith: 'ul.training'
+                });
+
+                $('ul.jumps').sortable({
+                    connectWith: 'ul.jumps'
+                });
+
+                $('ul.coaching').sortable({
+                    connectWith: 'ul.coaching'
+                });
+
+                $('ul.crw-sort').disableSelection();
+            });
 
         </script>
     </body>
