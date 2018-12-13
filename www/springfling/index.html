@@ -142,9 +142,107 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 text-center">
+                                    <div class="col-12 text-center mb-3">
                                             If you are not sure or have questions, its OK, we ask some strange things, sometimes.<br>
                                             Just e-mail Brian Pangburn at <a href="mailto:pbpangburn@gmail.com">pbpangburn@gmail.com</a> and he will be overjoyed to help you out.
+                                    </div>
+                                </div>
+
+                                <div class="question-group">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">NUMBER OF SPORT JUMPS (ROUGHLY)</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">NUMBER OF CRW JUMPS (IF ANY)</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">HOW LONG AGO?</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT EXIT WEIGHT</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="new_exit_weight"></div>
+                                        <div class="small text-center w-100">Please weigh yourself with all of your gear on. Wing loading is important in CRW. If you guess wrong or lie, it won't be very much fun.</div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT CANOPY SIZE</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="new_canopy_size"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT WING LOADING (CALCULATED)</label>
+                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="new_calc_loading"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT CANOPY TYPE</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">DO YOU HAVE A PD LIGHTNING <span id="new_pd_size">###</span> AVAILABLE TO USE FOR THIS EVENT?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                        <div class="small text-center w-100">If not, that's okay; we just need to make sure we get one for you. We will ONLY be doing CRW with PD Lightnings.</div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">DO YOU HAVE A RIG THAT WILL REASONABLY FIT A <span id="new_canopy_min">###</span> - <span id="new_canopy_max">###</span> SQ FT CANOPY?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">TYPE OF RESERVE HANDLE</label>
+                                        <div class="col-sm-4"><select id="new_reserve" class="form-control">
+                                            <option selected>No Rig</option>
+                                            <option>Hard D-Ring</option>
+                                            <option>Soft Pillow</option>
+                                        </select></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">ARE YOU ACQUAINTED WITH EXPERIENCED CRW DOGS THAT YOU EXPECT OR HOPE TO JUMP WITH AT HOME?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">ARE YOU ACQUAINTED WITH EXPERIENCED CRW DOGS THAT YOU EXPECT TO SEE AND HOPE TO JUMP WITH AT SPRING FLING?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +257,96 @@
                                 </button>
                             </div>
                             <div id="collapse-mid" class="collapse" data-parent="#skill-accordion">
-                                <h1>Experienced pup questions</h1>
+                                <div class="row">
+                                    <div class="col-12 text-center mt-5">
+                                        <h3>PLEASE FILL OUT THIS FORM TO THE BEST OF YOUR KNOWLEDGE</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center mb-3">
+                                            If you are not sure or have questions, its OK, we ask some strange things, sometimes.<br>
+                                            Just e-mail Brian Pangburn at <a href="mailto:pbpangburn@gmail.com">pbpangburn@gmail.com</a> and he will be overjoyed to help you out.
+                                    </div>
+                                </div>
+                                <div class="question-group">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">NUMBER OF SPORT JUMPS (ROUGHLY)</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">NUMBER OF CRW JUMPS</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">HOW LONG AGO?</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">WITH WHOM?</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT EXIT WEIGHT</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_exit_weight"></div>
+                                        <div class="small text-center w-100">Please weigh yourself with all of your gear on. Wing loading is important in CRW. If you guess wrong or lie, it won't be very much fun.</div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT CANOPY SIZE</label>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_canopy_size"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT WING LOADING (CALCULATED)</label>
+                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="mid_calc_loading"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CURRENT CANOPY TYPE</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">DO YOU HAVE A PD LIGHTNING <span id="mid_pd_size">###</span> AVAILABLE TO USE FOR THIS EVENT?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                        <div class="small text-center w-100">If not, that's okay; we just need to make sure we get one for you. We will ONLY be doing CRW with PD Lightnings.</div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">DO YOU HAVE A RIG THAT WILL REASONABLY FIT A <span id="mid_canopy_min">###</span> - <span id="mid_canopy_max">###</span> SQ FT CANOPY?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">TYPE OF RESERVE HANDLE</label>
+                                        <div class="col-sm-4"><select id="new_reserve" class="form-control">
+                                            <option selected>No Rig</option>
+                                            <option>Hard D-Ring</option>
+                                            <option>Soft Pillow</option>
+                                        </select></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card container-fluid accordion-panel">
@@ -181,6 +368,7 @@
         <script src="../js/jquery-3.3.1.min.js"></script>
         <script src="../js/popper.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/crwdogs-calc.js"></script>
         <script>
             $(".yesno-radio").click(function() {
                 var btns = $(this).find('.btn');
@@ -206,6 +394,38 @@
                 });
             });
 
+            $('#new_exit_weight').change(updateNewCalcs);
+            $('#new_canopy_size').change(updateNewCalcs);
+
+            function updateNewCalcs() {
+                var weight = $('#new_exit_weight').val();
+                var cur_size = $('#new_canopy_size').val();
+                var cur_load = Calcs.loading(weight, cur_size);
+                $('#new_calc_loading').val(Calcs.dec(cur_load, 3));
+
+                var size = Calcs.lightningSize(weight, 1.2);
+                $('#new_pd_size').text(size);
+
+                $('#new_canopy_min').text(Calcs.containerMin(size));
+                $('#new_canopy_max').text(Calcs.containerMax(size));
+            }
+
+            $('#mid_exit_weight').change(updateMidCalcs);
+            $('#mid_canopy_size').change(updateMidCalcs);
+
+            function updateMidCalcs() {
+                var weight = $('#mid_exit_weight').val();
+                var cur_size = $('#mid_canopy_size').val();
+                var cur_load = Calcs.loading(weight, cur_size);
+                $('#mid_calc_loading').val(Calcs.dec(cur_load, 3));
+
+                var size = Calcs.lightningSize(weight, 1.32);
+                $('#mid_pd_size').text(size);
+
+                $('#mid_canopy_min').text(Calcs.containerMin(size));
+                $('#mid_canopy_max').text(Calcs.containerMax(size));
+            }
+
             var accordions = $('.accordion-panel');
             
             accordions.on('hide.bs.collapse', function() {
@@ -215,6 +435,8 @@
             accordions.on('show.bs.collapse', function() {
                 $(this).find('button').removeClass('btn-danger').addClass('btn-success');
             });
+
+
         </script>
     </body>
 </html>

@@ -54,3 +54,9 @@ body {
   .row {
       margin-bottom: 10px;
   }
+
+  .question-group .form-group {
+      text-align: right;
+      border-bottom: 1px solid gray;
+      padding: 5px;
+  }
