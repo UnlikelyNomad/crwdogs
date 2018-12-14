@@ -73,3 +73,14 @@ ul.crw-sort li {
     padding: 5px;
     cursor: move;
 }
+
+.yesno-radio {
+    height: 2.5rem;
+}
+
+.sort-note {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}

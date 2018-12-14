@@ -43,9 +43,6 @@
                                     <div class="font-weight-bold">
                                         I WOULD LIKE TO DO BEACH JUMPS
                                     </div>
-                                    <div class="small">
-                                        $35/JUMP ON GOOD WEATHER DAYS IF PERMITTED. YOU MUST HAVE FLOTATION. GEAR CHECK REQUIRED BEFORE BOARDING THE PLANE.
-                                    </div>
                                 </div>
                                 <div class="col-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
                                     <label class="btn btn-secondary">
@@ -56,15 +53,16 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="card small p-2">
+                                <p>$35/JUMP ON GOOD WEATHER DAYS IF PERMITTED. YOU MUST HAVE FLOTATION. GEAR CHECK REQUIRED BEFORE BOARDING THE PLANE.</p>
+                                <p>BEACH JUMPS REQUIRE A D LICENSE</p>
+                            </div>
                         </div>
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-8 text-center">
                                     <div class="font-weight-bold">
                                         I WOULD LIKE TO DO NIGHT JUMPS
-                                    </div>
-                                    <div class="small">
-                                        9-WAYS’S OR SMALLER. DATES DETERMINED BY WEATHER. MUST BRING YOUR OWN NIGHT GEAR.
                                     </div>
                                 </div>
                                 <div class="col-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
@@ -76,10 +74,15 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="card small p-2">
+                                <p>9-WAYS’S OR SMALLER. DATES DETERMINED BY WEATHER. MUST BRING YOUR OWN NIGHT GEAR.</p>
+                                <p>Night gear: Glow sticks, Tape/Zip Ties, Strobe, Lighted/Glow Altimeter, White Clothing</p>
+                                <p>NIGHT JUMPS REQUIRE A B LICENSE</p>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 text-center mt-5">
+                        <div class="col-12 text-center mt-2">
                             <h3>PLEASE SELECT THE DATES THAT YOU PLAN TO ATTEND</h3>
                         </div>
                     </div>
@@ -258,6 +261,26 @@
                                 </button>
                             </div>
                             <div id="collapse-mid" class="collapse" data-parent="#skill-accordion">
+                                <p>Reminder, doing CRW has some specific gear and attire requirements for maximizing safety!</p>
+                                <ul>
+                                    <li>Being ready with appropriate attire:<ul>
+                                        <li>Long Pants</li>
+                                        <li>Long Sleeves</li>
+                                        <li>Long Socks</li>
+                                        <li>Gloves</li>
+                                        <li>Snagless Shoes IE no big skater shoe tongues or boots</li>
+                                    </ul></li>
+                                    <li>Have the appropriate gear:<ul>
+                                        <li>Open Face Helment - Bicycle or skate helmet works well</li>
+                                        <li>Altimeter</li>
+                                        <li>Hook Knife - No cheap plastic razor blade ones<ul>
+                                            <li>Why did the CRW Dog have 6 hook knives?<ul>
+                                                <li>Because he couldn't find a spot for the 7th.</li>
+                                            </ul></li>
+                                        </ul></li>
+                                        <li>If you have your own canopy/rig, be packed up!</li>
+                                    </ul></li>
+                                </ul>
                                 <div class="row">
                                     <div class="col-12 text-center mt-5">
                                         <h4>PLEASE FILL OUT THIS FORM TO THE BEST OF YOUR KNOWLEDGE</h4>
@@ -354,7 +377,7 @@
                             <div class="card-header p-0" id="skill-exp">
                                 <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-exp" style="width: 100%;">
                                     <h3>I HAVE DONE MORE THAN A LITTLE CRW</h3>
-                                    <span class="small">...and either have enough experience to know what sort of things I am hoping to learn at this event or am so fucking good that there's nothing left to learn.</span>
+                                    <span class="small">...and either have enough experience to know what sort of things I am hoping to learn at this event or am so good that there's nothing left to learn.</span>
                                 </button>
                             </div>
                             <div id="collapse-exp" class="collapse pl-2 pr-2" data-parent="#skill-accordion">
@@ -397,16 +420,56 @@
                                 <div class="row text-center">
                                     <p>WE THINK THAT EVERYONE CAN LEARN MORE AND HAVE MORE FUN IF WE HAVE A BETTER IDEA WHAT YOUR PERSONAL PRIORITIES ARE.</p>
                                 </div>
-
-                                <div class="row text-center">
-                                    <p>PLEASE TAKE A MINUTE TO MOVE A FEW OF THE CHOICES BELOW INTO YOUR PRIORITY COLUMN SO THAT WE CAN GET A BETTER PICTURE OF WHAT EVERYONE IS COMING TO SPRING FLING FOR. </p>
+                                <div class="row rounded-top badge-info mb-0 text-center">
+                                    LET US KNOW WHAT JUMPS YOU ARE INTERESTED IN DOING BY DRAGGING THEM TO THE LEFT INTO THE GREEN REGION.<br>
+                                    DRAG JUMP TYPES INTO THE RED IF YOU ARE NOT INTERESTED IN THEM.<br>
+                                    LEAVE THEM IN THE MIDDLE IF YOU HAVE NO PREFERENCE.
+                                </div>
+                                <div class="row jumps rounded-bottom text-center mt-0 badge-info pt-2">
+                                    <div class="col-md-4">
+                                        <div class="rounded badge-success">
+                                            <ul class="jumps crw-sort ui-sortable" id="pref_jumps">
+                                                <div class="sort-note small">PREFERRED JUMPS</div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="rounded badge-warning">
+                                            <ul class="jumps crw-sort ui-sortable" id="avail_jumps">
+                                                <div class="sort-note small">NO PREFERENCE</div>
+                                                <li class="ui-state-default ui-sortable-handle">2-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">4-WAY SEQUENTIAL</li>
+                                                <li class="ui-state-default ui-sortable-handle">8-WAY SPEED</li>
+                                                <li class="ui-state-default ui-sortable-handle">ROTATIONS</li>
+                                                <li class="ui-state-default ui-sortable-handle">6 TO 9 WAY</li>
+                                                <li class="ui-state-default ui-sortable-handle">9 TO 16 WAY</li>
+                                                <li class="ui-state-default ui-sortable-handle">16 TO 25 WAY</li>
+                                                <li class="ui-state-default ui-sortable-handle">25 WAY AND UP</li>
+                                                <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
+                                                <li class="ui-state-default ui-sortable-handle">WEIRD SHIT</li>
+                                                <li class="ui-state-default ui-sortable-handle">FLYING PIECES</li>
+                                                <li class="ui-state-default ui-sortable-handle">VERY TALL STACKS</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="rounded badge-danger">
+                                            <ul class="jumps crw-sort ui-sortable" id="avoid_jumps">
+                                                <div class="sort-note small">UNDESIRED JUMPS</div>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row skills">
-                                    <div class="col-md-4 text-center">
-                                        <div class="rounded badge-info">THESE ARE THE SKILLS THAT I WOULD LIKE TO SPEND SOME FOCUSED TIME ON</div>
-                                        <div class="rounded badge-primary mb-3"><ul class="training crw-sort ui-sortable" id="pref_training"></ul></div>
-                                        <div class="rounded badge-info">
+                                    <div class="col-md-6 text-center">
+                                        <div class="rounded-top badge-info">THESE ARE THE SKILLS THAT I WOULD LIKE TO SPEND SOME FOCUSED TIME ON</div>
+                                        <div class="badge-success">
+                                            <ul class="training crw-sort ui-sortable" id="pref_training">
+                                                <div class="sort-note small">DRAG SKILLS HERE</div>
+                                            </ul>
+                                        </div>
+                                        <div class="rounded-bottom badge-info">
                                             <ul class="training crw-sort ui-sortable" id="avail_training">
                                                 <li class="ui-state-default ui-sortable-handle">PILOTING</li>
                                                 <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
@@ -421,30 +484,15 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="rounded badge-info">THESE ARE THE KINDS OF JUMPS THAT I DON'T OFTEN GET TO DO BUT WOULD LIKE TO</div>
-                                        <div class="rounded badge-primary mb-3"><ul class="jumps crw-sort ui-sortable" id="pref_jumps"></ul></div>
-                                        <div class="rounded badge-info">
-                                            <ul class="jumps crw-sort ui-sortable" id="avail_jumps">
-                                                <li class="ui-state-default ui-sortable-handle">2-WAY SEQUENTIAL</li>
-                                                <li class="ui-state-default ui-sortable-handle">4-WAY SEQUENTIAL</li>
-                                                <li class="ui-state-default ui-sortable-handle">ROTATIONS</li>
-                                                <li class="ui-state-default ui-sortable-handle">6 TO 9 WAY</li>
-                                                <li class="ui-state-default ui-sortable-handle">9 TO 16 WAY</li>
-                                                <li class="ui-state-default ui-sortable-handle">16 TO 25 WAY</li>
-                                                <li class="ui-state-default ui-sortable-handle">25 WAY AND UP</li>
-                                                <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
-                                                <li class="ui-state-default ui-sortable-handle">WEIRD SHIT</li>
-                                                <li class="ui-state-default ui-sortable-handle">FLYING PIECES</li>
-                                                <li class="ui-state-default ui-sortable-handle">VERY TALL STACKS</li>
+                                    <div class="col-md-6 text-center">
+                                        <div class="rounded-top badge-info">I WOULD BE HAPPY TO SPEND THE FOLLOWING NUMBER OF DAYS COACHING LESS EXPERIENCED DOGS ON THESE SKILLS<br>
+                                        <input type="number" class="ml-4 mr-4" placeholder="# Days"></div>
+                                        <div class="badge-success">
+                                            <ul class="coaching crw-sort ui-sortable" id="pref_coaching">
+                                                <div class="sort-note small">DRAG SKILLS HERE</div>
                                             </ul>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4 text-center">
-                                        <div class="rounded badge-info">I WOULD BE HAPPY TO SPEND THE FOLLOWING NUMBER OF DAYS COACHING LESS EXPERIENCED DOGS ON THESE SKILLS<br>
-                                        <input type="number" class="ml-4 mr-4" placeholder="# Days"></div>
-                                        <div class="rounded badge-primary mb-3"><ul class="coaching crw-sort ui-sortable" id="pref_coaching"></ul></div>
-                                        <div class="rounded badge-info">
+                                        <div class="rounded-bottom badge-info">
                                             <ul class="coaching crw-sort ui-sortable" id="avail_coaching">
                                                 <li class="ui-state-default ui-sortable-handle">PILOTING</li>
                                                 <li class="ui-state-default ui-sortable-handle">PARABATICS</li>
@@ -506,7 +554,7 @@
                 var cur_load = Calcs.loading(weight, cur_size);
                 $('#new_calc_loading').val(Calcs.dec(cur_load, 3));
 
-                var size = Calcs.lightningSize(weight, 1.2);
+                var size = Calcs.lightningSize(weight, 1.34);
                 $('#new_pd_size').text(size);
 
                 $('#new_canopy_min').text(Calcs.containerMin(size));
@@ -522,7 +570,7 @@
                 var cur_load = Calcs.loading(weight, cur_size);
                 $('#mid_calc_loading').val(Calcs.dec(cur_load, 3));
 
-                var size = Calcs.lightningSize(weight, 1.32);
+                var size = Calcs.lightningSize(weight, 1.35);
                 $('#mid_pd_size').text(size);
 
                 $('#mid_canopy_min').text(Calcs.containerMin(size));
@@ -540,16 +588,20 @@
             });
 
             $(function() {
-                $('ul.training').sortable({
-                    connectWith: 'ul.training'
-                });
 
                 $('ul.jumps').sortable({
-                    connectWith: 'ul.jumps'
+                    connectWith: 'ul.jumps',
+                    items: 'li:not(.sort-note)'
+                });
+
+                $('ul.training').sortable({
+                    connectWith: 'ul.training',
+                    items: 'li:not(.sort-note)'
                 });
 
                 $('ul.coaching').sortable({
-                    connectWith: 'ul.coaching'
+                    connectWith: 'ul.coaching',
+                    items: 'li:not(.sort-note)'
                 });
 
                 $('ul.crw-sort').disableSelection();
