@@ -84,3 +84,15 @@ ul.crw-sort li {
     width: 100%;
     text-align: center;
 }
+
+.num-canopy {
+    width: 60px;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bring-canopy {
+    width: 90px;
+}
