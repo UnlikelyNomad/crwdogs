@@ -29,22 +29,25 @@
                 </div>
                 <form>
                     <div class="row mt-5">
-                        <div class="col-6">
+                        <div class="col-md-6 mt-3">
                             <input class="form-control" type="text" placeholder="Name">
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mt-3">
                             <input class="form-control" type="email" placeholder="E-Mail">
                         </div>
+                        <div class="col-md-6 mt-3">
+                            <input class="form-control" type="text" placeholder="Phone Number">
+                        </div>
                     </div>
-                    <div class="row mt-5">
-                        <div class="col-6">
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-md-6">
                             <div class="row">
-                                <div class="col-8 text-center">
+                                <div class="col-md-8 text-center">
                                     <div class="font-weight-bold">
                                         I WOULD LIKE TO DO BEACH JUMPS
                                     </div>
                                 </div>
-                                <div class="col-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                <div class="col-md-4 btn-group btn-group-toggle yesno-radio justify-content-center" data-toggle="buttons">
                                     <label class="btn btn-secondary">
                                         <input type="radio" name="beach_jumps" id="beach_yes">YES
                                     </label>
@@ -58,14 +61,14 @@
                                 <p>BEACH JUMPS REQUIRE A D LICENSE</p>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <div class="row">
-                                <div class="col-8 text-center">
+                                <div class="col-md-8 text-center">
                                     <div class="font-weight-bold">
                                         I WOULD LIKE TO DO NIGHT JUMPS
                                     </div>
                                 </div>
-                                <div class="col-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                <div class="col-md-4 btn-group btn-group-toggle yesno-radio justify-content-center" data-toggle="buttons">
                                     <label class="btn btn-secondary">
                                         <input type="radio" name="night_jumps" id="night_yes">YES
                                     </label>
@@ -154,6 +157,17 @@
 
                                 <div class="question-group">
                                     <div class="form-group row">
+                                        <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-8">NUMBER OF SPORT JUMPS (ROUGHLY)</label>
                                         <div class="col-sm-4"><input type="number" class="form-control"></div>
                                     </div>
@@ -214,17 +228,6 @@
                                             <option>Hard D-Ring</option>
                                             <option>Soft Pillow</option>
                                         </select></div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
-                                            <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
-                                            </label>
-                                            <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
-                                            </label>
-                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">ARE YOU ACQUAINTED WITH EXPERIENCED CRW DOGS THAT YOU EXPECT OR HOPE TO JUMP WITH AT HOME?</label>
@@ -294,6 +297,17 @@
                                 </div>
                                 <div class="question-group">
                                     <div class="form-group row">
+                                        <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-8">NUMBER OF SPORT JUMPS (ROUGHLY)</label>
                                         <div class="col-sm-4"><input type="number" class="form-control"></div>
                                     </div>
@@ -359,17 +373,6 @@
                                             <option>Soft Pillow</option>
                                         </select></div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
-                                            <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
-                                            </label>
-                                            <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
-                                            </label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -383,7 +386,7 @@
                             <div id="collapse-exp" class="collapse pl-2 pr-2" data-parent="#skill-accordion">
                                 <div class="row">
                                     <div class="col-12 text-center mt-5">
-                                        <h4>PLEASE SELECT THE CANOPY SIZES THAT YOU WILL COME PREPARED TO FLY AT A 3.00 TO 3.50 WING LOADING</h4>
+                                        <h4>PLEASE SELECT THE CANOPY SIZES THAT YOU WILL COME PREPARED TO FLY AT A 1.30 TO 1.38 WING LOADING</h4>
                                     </div>
                                 </div>
 
@@ -425,11 +428,11 @@
                                     DRAG JUMP TYPES INTO THE RED IF YOU ARE NOT INTERESTED IN THEM.<br>
                                     LEAVE THEM IN THE MIDDLE IF YOU HAVE NO PREFERENCE.
                                 </div>
-                                <div class="row jumps rounded-bottom text-center mt-0 badge-info pt-2">
-                                    <div class="col-md-4">
-                                        <div class="rounded badge-success">
-                                            <ul class="jumps crw-sort ui-sortable" id="pref_jumps">
-                                                <div class="sort-note small">PREFERRED JUMPS</div>
+                                <div class="row jumps rounded-bottom text-center mt-0 badge-info py-2">
+                                    <div class="col-md-4" style="height: 100%;">
+                                        <div class="rounded badge-success" style="height: 100%;">
+                                            <ul class="jumps crw-sort ui-sortable" style="height: 100%;" id="pref_jumps">
+                                                <div class="sort-note">PREFERRED JUMPS<br><span class="small">(DRAG SKILLS INTO GREEN)</span></div>
                                             </ul>
                                         </div>
                                     </div>
@@ -455,7 +458,7 @@
                                     <div class="col-md-4">
                                         <div class="rounded badge-danger">
                                             <ul class="jumps crw-sort ui-sortable" id="avoid_jumps">
-                                                <div class="sort-note small">UNDESIRED JUMPS</div>
+                                                <div class="sort-note">UNDESIRED JUMPS<br><span class="small">(DRAG SKILLS INTO RED)</span></div>
                                             </ul>
                                         </div>
                                     </div>
@@ -466,7 +469,7 @@
                                         <div class="rounded-top badge-info">THESE ARE THE SKILLS THAT I WOULD LIKE TO SPEND SOME FOCUSED TIME ON</div>
                                         <div class="badge-success">
                                             <ul class="training crw-sort ui-sortable" id="pref_training">
-                                                <div class="sort-note small">DRAG SKILLS HERE</div>
+                                                <div class="sort-note small">DRAG SKILLS INTO GREEN</div>
                                             </ul>
                                         </div>
                                         <div class="rounded-bottom badge-info">
@@ -484,6 +487,7 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <!--
                                     <div class="col-md-6 text-center">
                                         <div class="rounded-top badge-info">I WOULD BE HAPPY TO SPEND THE FOLLOWING NUMBER OF DAYS COACHING LESS EXPERIENCED DOGS ON THESE SKILLS<br>
                                         <input type="number" class="ml-4 mr-4" placeholder="# Days"></div>
@@ -506,7 +510,7 @@
                                                 <li class="ui-state-default ui-sortable-handle">TEACHING PUPS</li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center mt-3">
@@ -593,6 +597,15 @@
                         </div>
                     </div>
                 </form>
+
+                <div class="text-center" id="checkout">
+                    REGISTER - $75<br>
+                    <img src="../images/cc-badges-ppmcvdam.png">
+                </div>
+                <div class="card small p-2 mt-2">
+                    <p>You do not need a PayPal account to pay, you can use any credit card accepted by PayPal or use a PayPal account to pay directly from your bank or to use PayPal balance.</p>
+                    <p>Registration fee is $75 if paid before March 1, 2019 and $100 after that.</p>
+                </div>
             </div>
         </div>
         
@@ -602,93 +615,6 @@
         <script src="../js/popper.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/crwdogs-calc.js"></script>
-        <script>
-            $(".yesno-radio").click(function() {
-                var btns = $(this).find('.btn');
-                btns.toggleClass('btn-secondary');
-                $(btns.get(0)).toggleClass('btn-success');
-                $(btns.get(1)).toggleClass('btn-danger');
-            });
-
-            $('[data-toggle="button"].redgreen-toggle').click(function() {
-                var t = $(this);
-                if (!t.hasClass('active')) {
-                    t.removeClass('btn-danger').addClass('btn-success');
-                } else {
-                    t.removeClass('btn-success').addClass('btn-danger');
-                }
-            });
-
-            $('.btn').click(function() {
-                var t = this;
-                setTimeout(function() {
-                    $(t).removeClass('focus');
-                    t.blur();
-                });
-            });
-
-            $('#new_exit_weight').change(updateNewCalcs);
-            $('#new_canopy_size').change(updateNewCalcs);
-
-            function updateNewCalcs() {
-                var weight = $('#new_exit_weight').val();
-                var cur_size = $('#new_canopy_size').val();
-                var cur_load = Calcs.loading(weight, cur_size);
-                $('#new_calc_loading').val(Calcs.dec(cur_load, 3));
-
-                var size = Calcs.lightningSize(weight, 1.34);
-                $('#new_pd_size').text(size);
-
-                $('#new_canopy_min').text(Calcs.containerMin(size));
-                $('#new_canopy_max').text(Calcs.containerMax(size));
-            }
-
-            $('#mid_exit_weight').change(updateMidCalcs);
-            $('#mid_canopy_size').change(updateMidCalcs);
-
-            function updateMidCalcs() {
-                var weight = $('#mid_exit_weight').val();
-                var cur_size = $('#mid_canopy_size').val();
-                var cur_load = Calcs.loading(weight, cur_size);
-                $('#mid_calc_loading').val(Calcs.dec(cur_load, 3));
-
-                var size = Calcs.lightningSize(weight, 1.35);
-                $('#mid_pd_size').text(size);
-
-                $('#mid_canopy_min').text(Calcs.containerMin(size));
-                $('#mid_canopy_max').text(Calcs.containerMax(size));
-            }
-
-            var accordions = $('.accordion-panel');
-            
-            accordions.on('hide.bs.collapse', function() {
-                $(this).find('button.acc-toggle').removeClass('btn-success').addClass('btn-danger');
-            });
-
-            accordions.on('show.bs.collapse', function() {
-                $(this).find('button.acc-toggle').removeClass('btn-danger').addClass('btn-success');
-            });
-
-            $(function() {
-
-                $('ul.jumps').sortable({
-                    connectWith: 'ul.jumps',
-                    items: 'li:not(.sort-note)'
-                });
-
-                $('ul.training').sortable({
-                    connectWith: 'ul.training',
-                    items: 'li:not(.sort-note)'
-                });
-
-                $('ul.coaching').sortable({
-                    connectWith: 'ul.coaching',
-                    items: 'li:not(.sort-note)'
-                });
-
-                $('ul.crw-sort').disableSelection();
-            });
-
-        </script>
+        <script src="sf2019.js"></script>
     </body>
 </html>
