@@ -41,14 +41,14 @@ $('.num-canopy-container button').click(function() {
 
 $('.num-canopy-container input').change(function() {
     var t = $(this);
-    var n = t.val();
+    var n = Number(t.val());
 
     var b = t.parent().find('button');
     
     if (n > 0) {
         b.addClass(onClass).removeClass(offClass).addClass('active');
     } else {
-        b.addClass(offClass).removeClass(offClass).removeClass('active');
+        b.addClass(offClass).removeClass(onClass).removeClass('active');
     }
 });
 
