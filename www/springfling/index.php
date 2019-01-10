@@ -1,3 +1,22 @@
+<?php
+/**
+ * This registration page is a bit of a bastardization between GitErDone and future plans of extensibility and doing it better.
+ * This registration is all hand-coded as an early prototype and as such has DB names and keys hard-coded so that with
+ * minimal changes the backend works with this as it would with future planned events that get automagically generated
+ * based on info in the DB.
+ */
+
+require_once '../../vendor/autoload.php';
+require_once '../../generated-conf/config.php';
+
+$eid = 1; //SF2019 event key ID
+
+use \crwdogs\events\EventQuery;
+
+$event = EventQuery::create()->findPK($eid);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,19 +49,19 @@
                 <form>
                     <div class="row mt-5">
                         <div class="col-md-6 mt-3">
-                            <input class="form-control" type="text" placeholder="First Name">
+                            <input class="form-control" type="text" placeholder="First Name" id="first_name">
                         </div>
                         <div class="col-md-6 mt-3">
-                            <input class="form-control" type="text" placeholder="Last Name">
+                            <input class="form-control" type="text" placeholder="Last Name" id="last_name">
                         </div>
                         <div class="col-md-6 mt-3">
-                            <input class="form-control" type="email" placeholder="E-Mail">
+                            <input class="form-control" type="email" placeholder="E-Mail" id="email">
                         </div>
                         <div class="col-md-6 mt-3">
-                            <input class="form-control" type="text" placeholder="Confirm E-Mail">
+                            <input class="form-control" type="text" placeholder="Confirm E-Mail" id="email2">
                         </div>
                         <div class="col-md-6 mt-3">
-                            <input class="form-control" type="text" placeholder="Phone Number">
+                            <input class="form-control" type="text" placeholder="Phone Number" id="phone">
                         </div>
                     </div>
                     <div class="row mt-5 justify-content-center">
@@ -53,12 +72,12 @@
                                         I WOULD LIKE TO DO BEACH JUMPS
                                     </div>
                                 </div>
-                                <div class="col-md-4 btn-group btn-group-toggle yesno-radio justify-content-center" data-toggle="buttons">
+                                <div class="col-md-4 btn-group btn-group-toggle yesno-radio justify-content-center" data-toggle="buttons" data-qid="2">
                                     <label class="btn btn-secondary">
-                                        <input type="radio" name="beach_jumps" id="beach_yes">YES
+                                        <input type="radio">YES
                                     </label>
                                     <label class="btn btn-danger">
-                                        <input type="radio" name="beach_jumps" id="beach_no">NO
+                                        <input type="radio">NO
                                     </label>
                                 </div>
                             </div>
@@ -74,12 +93,12 @@
                                         I WOULD LIKE TO DO NIGHT JUMPS
                                     </div>
                                 </div>
-                                <div class="col-md-4 btn-group btn-group-toggle yesno-radio justify-content-center" data-toggle="buttons">
+                                <div class="col-md-4 btn-group btn-group-toggle yesno-radio justify-content-center" data-toggle="buttons" data-qid="1">
                                     <label class="btn btn-secondary">
-                                        <input type="radio" name="night_jumps" id="night_yes">YES
+                                        <input type="radio">YES
                                     </label>
                                     <label class="btn btn-danger">
-                                        <input type="radio" name="night_jumps" id="night_no">NO
+                                        <input type="radio">NO
                                     </label>
                                 </div>
                             </div>
@@ -96,19 +115,19 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle">
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle" data-qid="3">
                             9th - Dedicated to train new CRW Pups. Anyone is welcome but no organizers will be available.
                         </button>
                     </div>
                     <div class="row justify-content-center">
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">10th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">11th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">12th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">13th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">14th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">15th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">16th</button>
-                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">17th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">10th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">11th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">12th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">13th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">14th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">15th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">16th</button>
+                        <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="3">17th</button>
                     </div>
 
                     <div class="row justify-content-center mt-5">
@@ -120,7 +139,7 @@
                     <div class="accordion" id="skill-accordion">
                         <div class="card container-fluid accordion-panel">
                             <div class="card-header p-0" id="skill-new">
-                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-new" style="width: 100%;">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-new" style="width: 100%;" data-qid="4">
                                     <h3>I HAVE NEVER DONE CRW</h3>
                                     <span class="small">...or such a small amount, or so long ago that I am basically starting from scratch.</span>
                                 </button>
@@ -164,53 +183,53 @@
                                 <div class="question-group">
                                     <div class="form-group row">
                                         <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="5">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">NUMBER OF SPORT JUMPS (ROUGHLY)</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" data-qid="6"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">NUMBER OF CRW JUMPS (IF ANY)</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" data-qid="7"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">HOW LONG AGO?</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" data-qid="8"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT EXIT WEIGHT</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control" id="new_exit_weight"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="new_exit_weight" data-qid="9"></div>
                                         <div class="small text-center w-100">Please weigh yourself with all of your gear on. Wing loading is important in CRW. If you guess wrong or lie, it won't be very much fun.</div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT CANOPY SIZE</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control" id="new_canopy_size"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="new_canopy_size" data-qid="10"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT WING LOADING (CALCULATED)</label>
-                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="new_calc_loading"></div>
+                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="new_calc_loading" data-qid="11"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT CANOPY TYPE</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" data-qid="12"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">DO YOU HAVE A PD LIGHTNING <span id="new_pd_size">###</span> AVAILABLE TO USE FOR THIS EVENT?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="13">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                         <div class="small text-center w-100">If not, that's okay; we just need to make sure we get one for you. We will ONLY be doing CRW with PD Lightnings.</div>
@@ -218,18 +237,18 @@
                                     
                                     <div class="form-group row">
                                         <label class="col-sm-8">DO YOU HAVE A RIG THAT WILL REASONABLY FIT A <span id="new_canopy_min">###</span> - <span id="new_canopy_max">###</span> SQ FT CANOPY?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="14">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">TYPE OF RESERVE HANDLE</label>
-                                        <div class="col-sm-4"><select id="new_reserve" class="form-control">
+                                        <div class="col-sm-4"><select class="form-control" data-qid="15">
                                             <option selected>No Rig</option>
                                             <option>Hard D-Ring</option>
                                             <option>Soft Pillow</option>
@@ -237,23 +256,23 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">ARE YOU ACQUAINTED WITH EXPERIENCED CRW DOGS THAT YOU EXPECT OR HOPE TO JUMP WITH AT HOME?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="16">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">ARE YOU ACQUAINTED WITH EXPERIENCED CRW DOGS THAT YOU EXPECT TO SEE AND HOPE TO JUMP WITH AT SPRING FLING?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="17">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                     </div>
@@ -262,7 +281,7 @@
                         </div>
                         <div class="card container-fluid accordion-panel">
                             <div class="card-header p-0" id="skill-mid">
-                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-mid" style="width: 100%;">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-mid" style="width: 100%;" data-qid="4">
                                     <h3>I HAVE DONE A LITTLE CRW</h3>
                                     <span class="small">...fairly recently. I feel comfortable with the basics but am working on the fundamentals.<br>
                                         <span class="small">I might not really know what the difference is between basics and fundamentals.</span>
@@ -304,57 +323,57 @@
                                 <div class="question-group">
                                     <div class="form-group row">
                                         <label class="col-sm-8">CAN YOU SUPPLY YOURSELF WITH THE ABOVE LISTED CLOTHING AND GEAR?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="5">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">NUMBER OF SPORT JUMPS (ROUGHLY)</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" data-qid="6"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">NUMBER OF CRW JUMPS</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" data-qid="7"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">HOW LONG AGO?</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" data-qid="8"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">WITH WHOM?</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" data-qid="18"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT EXIT WEIGHT</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_exit_weight"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_exit_weight" data-qid="9"></div>
                                         <div class="small text-center w-100">Please weigh yourself with all of your gear on. Wing loading is important in CRW. If you guess wrong or lie, it won't be very much fun.</div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT CANOPY SIZE</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_canopy_size"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_canopy_size" data-qid="10"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT WING LOADING (CALCULATED)</label>
-                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="mid_calc_loading"></div>
+                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="mid_calc_loading" data-qid="11"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT CANOPY TYPE</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" data-qid="12"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">DO YOU HAVE A PD LIGHTNING <span id="mid_pd_size">###</span> AVAILABLE TO USE FOR THIS EVENT?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="13">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                         <div class="small text-center w-100">If not, that's okay; we just need to make sure we get one for you. We will ONLY be doing CRW with PD Lightnings.</div>
@@ -362,18 +381,18 @@
                                     
                                     <div class="form-group row">
                                         <label class="col-sm-8">DO YOU HAVE A RIG THAT WILL REASONABLY FIT A <span id="mid_canopy_min">###</span> - <span id="mid_canopy_max">###</span> SQ FT CANOPY?</label>
-                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons">
+                                        <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="14">
                                             <label class="btn btn-secondary">
-                                                <input type="radio" name="new_acq_sf_yes" id="new_acq_sf_yes">YES
+                                                <input type="radio">YES
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="new_acq_sf_no" id="new_acq_sf_no">NO
+                                                <input type="radio">NO
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">TYPE OF RESERVE HANDLE</label>
-                                        <div class="col-sm-4"><select id="new_reserve" class="form-control">
+                                        <div class="col-sm-4"><select id="new_reserve" class="form-control" data-qid="15">
                                             <option selected>No Rig</option>
                                             <option>Hard D-Ring</option>
                                             <option>Soft Pillow</option>
@@ -384,7 +403,7 @@
                         </div>
                         <div class="card container-fluid accordion-panel">
                             <div class="card-header p-0" id="skill-exp">
-                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-exp" style="width: 100%;">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-exp" style="width: 100%;" data-qid="4">
                                     <h3>I HAVE DONE MORE THAN A LITTLE CRW</h3>
                                     <span class="small">...and either have enough experience to know what sort of things I am hoping to learn at this event or am so good that there's nothing left to learn.</span>
                                 </button>
@@ -397,25 +416,25 @@
                                 </div>
 
                                 <div class="row justify-content-center mb-3">
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>113</h3><span class="small">147-153 LBS</span>
                                     </button>
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>126</h3><span class="small">164-170 LBS</span>
                                     </button>
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>143</h3><span class="small">186-193 LBS</span>
                                     </button>
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>160</h3><span class="small">208-216 LBS</span>
                                     </button>
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>176</h3><span class="small">229-238 LBS</span>
                                     </button>
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>193</h3><span class="small">251-261 LBS</span>
                                     </button>
-                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1">
+                                    <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="19">
                                         <h3>218</h3><span class="small">283-295 LBS</span>
                                     </button>
                                 </div>
@@ -437,7 +456,7 @@
                                 <div class="row jumps rounded-bottom text-center mt-0 badge-info py-2">
                                     <div class="col-md-4" style="height: 100%;">
                                         <div class="rounded badge-success" style="height: 100%;">
-                                            <ul class="jumps crw-sort ui-sortable" style="height: 100%;" id="pref_jumps">
+                                            <ul class="jumps crw-sort ui-sortable" style="height: 100%;" data-qid="20">
                                                 <div class="sort-note">PREFERRED JUMPS<br><span class="small">(DRAG SKILLS INTO GREEN)</span></div>
                                             </ul>
                                         </div>
@@ -463,7 +482,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="rounded badge-danger">
-                                            <ul class="jumps crw-sort ui-sortable" id="avoid_jumps">
+                                            <ul class="jumps crw-sort ui-sortable" data-qid="21">
                                                 <div class="sort-note">UNDESIRED JUMPS<br><span class="small">(DRAG SKILLS INTO RED)</span></div>
                                             </ul>
                                         </div>
@@ -474,7 +493,7 @@
                                     <div class="col-md-6 text-center">
                                         <div class="rounded-top badge-info">THESE ARE THE SKILLS THAT I WOULD LIKE TO SPEND SOME FOCUSED TIME ON</div>
                                         <div class="badge-success">
-                                            <ul class="training crw-sort ui-sortable" id="pref_training">
+                                            <ul class="training crw-sort ui-sortable" data-qid="22">
                                                 <div class="sort-note small">DRAG SKILLS INTO GREEN</div>
                                             </ul>
                                         </div>
@@ -526,31 +545,31 @@
                                 <div class="row justify-content-center">
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">113</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="23">
                                     </div>
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">126</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="24">
                                     </div>
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">143</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="25">
                                     </div>
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">160</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="26">
                                     </div>
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">176</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="27">
                                     </div>
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">193</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="28">
                                     </div>
                                     <div class="num-canopy-container">
                                         <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 bring-canopy">218</button><br>
-                                        <input type="number" min="0" value="0" class="num-canopy text-control" id="num_113">
+                                        <input type="number" min="0" value="0" class="num-canopy text-control" data-qid="29">
                                     </div>
                                 </div>
                             
@@ -589,11 +608,11 @@
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
-                                    <div class="col-4 text-center"><button data-toggle="button" class="btn btn-danger redgreen-toggle">
+                                    <div class="col-4 text-center"><button data-toggle="button" class="btn btn-danger redgreen-toggle" data-qid="30">
                                         <h5>…WOULD HAPPILY STEP IN AND FLY CAMERA FOR A FEW JUMPS.</h5>
                                     </button></div>
                                     <div clas="col-4 text-center"><h5>AND/OR</h5></div>
-                                    <div class="col-4 text-center"><button data-toggle="button" class="btn btn-danger redgreen-toggle">
+                                    <div class="col-4 text-center"><button data-toggle="button" class="btn btn-danger redgreen-toggle" data-qid="31">
                                         <h5>…ALOW SOMEONE ELSE TO USE MY GEAR.</h5>
                                     </button></div>
                                 </div>
