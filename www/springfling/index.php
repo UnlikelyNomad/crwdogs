@@ -64,6 +64,13 @@ $event = EventQuery::create()->findPK($eid);
                             <input class="form-control" type="text" placeholder="Phone Number" id="phone">
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <div class="col card small">
+                            <p>
+                                The above information is being collected for the sole purposes of identifying your registration with event organizers and getting in touch with you for this specific event, before or during, if needed. All registration information collected will be saved to make registering for future events easier. In the future this site will allow creation of accounts to save preferences. The operators of this site will only contact you by the above email and only in regards to registration for this event. This information will be available to event organizers using this site.
+                            </p>
+                        </div>
+                    </div>
                     <div class="row mt-5 justify-content-center">
                         <div class="col-md-6">
                             <div class="row">
@@ -280,15 +287,15 @@ $event = EventQuery::create()->findPK($eid);
                             </div>
                         </div>
                         <div class="card container-fluid accordion-panel">
-                            <div class="card-header p-0" id="skill-mid">
-                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-mid" style="width: 100%;" data-qid="4">
+                            <div class="card-header p-0" id="skill-pup">
+                                <button class="acc-toggle btn btn-danger redgreen-toggle p-0 m-0" type="button" data-toggle="collapse" data-target="#collapse-pup" style="width: 100%;" data-qid="4">
                                     <h3>I HAVE DONE A LITTLE CRW</h3>
                                     <span class="small">...fairly recently. I feel comfortable with the basics but am working on the fundamentals.<br>
                                         <span class="small">I might not really know what the difference is between basics and fundamentals.</span>
                                     </span>
                                 </button>
                             </div>
-                            <div id="collapse-mid" class="collapse" data-parent="#skill-accordion">
+                            <div id="collapse-pup" class="collapse" data-parent="#skill-accordion">
                                 <p>Reminder, doing CRW has some specific gear and attire requirements for maximizing safety!</p>
                                 <ul>
                                     <li>Being ready with appropriate attire:<ul>
@@ -350,24 +357,24 @@ $event = EventQuery::create()->findPK($eid);
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT EXIT WEIGHT</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_exit_weight" data-qid="9"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="pup_exit_weight" data-qid="9"></div>
                                         <div class="small text-center w-100">Please weigh yourself with all of your gear on. Wing loading is important in CRW. If you guess wrong or lie, it won't be very much fun.</div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT CANOPY SIZE</label>
-                                        <div class="col-sm-4"><input type="number" class="form-control" id="mid_canopy_size" data-qid="10"></div>
+                                        <div class="col-sm-4"><input type="number" class="form-control" id="pup_canopy_size" data-qid="10"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT WING LOADING (CALCULATED)</label>
-                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="mid_calc_loading" data-qid="11"></div>
+                                        <div class="col-sm-4"><input type="number" readonly class="form-control" id="pup_calc_loading" data-qid="11"></div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-8">CURRENT CANOPY TYPE</label>
                                         <div class="col-sm-4"><input type="text" class="form-control" data-qid="12"></div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-8">DO YOU HAVE A PD LIGHTNING <span id="mid_pd_size">###</span> AVAILABLE TO USE FOR THIS EVENT?</label>
+                                        <label class="col-sm-8">DO YOU HAVE A PD LIGHTNING <span id="pup_pd_size">###</span> AVAILABLE TO USE FOR THIS EVENT?</label>
                                         <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="13">
                                             <label class="btn btn-secondary">
                                                 <input type="radio">YES
@@ -380,7 +387,7 @@ $event = EventQuery::create()->findPK($eid);
                                     </div>
                                     
                                     <div class="form-group row">
-                                        <label class="col-sm-8">DO YOU HAVE A RIG THAT WILL REASONABLY FIT A <span id="mid_canopy_min">###</span> - <span id="mid_canopy_max">###</span> SQ FT CANOPY?</label>
+                                        <label class="col-sm-8">DO YOU HAVE A RIG THAT WILL REASONABLY FIT A <span id="pup_canopy_min">###</span> - <span id="pup_canopy_max">###</span> SQ FT CANOPY?</label>
                                         <div class="col-sm-4 btn-group btn-group-toggle yesno-radio" data-toggle="buttons" data-qid="14">
                                             <label class="btn btn-secondary">
                                                 <input type="radio">YES
