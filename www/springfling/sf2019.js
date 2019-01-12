@@ -251,7 +251,51 @@ $('#checkout').click(function() {
     q[30] = getButtonVal(expSel(e, 30)); //fly camera
     q[31] = getButtonVal(expSel(e, 31)); //loan camera
 
-    console.log(reg);
+    if (e == 'new' || e == 'pup') {
+        if (q[6] == '') {
+            $(expSel(e, 6))[0].focus();
+            alert('You must fill in number of sport jumps.');
+            return;
+        }
+
+        if (q[9] == '') {
+            $(expSel(e, 9))[0].focus();
+            alert('You must fill in exit weight.');
+            return;
+        }
+
+        if (q[10] == '') {
+            $(expSel(e, 10))[0].focus();
+            alert('You must fill in current sport canopy size.');
+            return;
+        }
+
+        if (q[12] == '') {
+            $(expSel(e, 12))[0].focus();
+            alert('You must fill in sport canopy type.');
+            return;
+        }
+
+        if (e == 'pup') {
+            if (q[8] == '') {
+                $(expSel(e, 8))[0].focus();
+                alert('You must fill in when you\'ve done CRW.');
+                return;
+            }
+
+            if (q[18] == '') {
+                $(expSel(e, 18))[0].focus();
+                alert('You must fill in who you\'ve jumped with.');
+                return;
+            }
+        }
+    } else if (e == 'exp') {
+        if (q[19] == '') {
+            $(expSel(e, 19))[0].focus();
+            alert('You must select at least one canopy size that you will be jumping.');
+            return;
+        }
+    }
 });
 
 $(function() {
