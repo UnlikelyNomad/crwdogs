@@ -197,6 +197,12 @@ $('#checkout').click(function() {
     }
     q[3] = dates.toString();
 
+    if (q[3] == '') {
+        $(qidSel(3))[0].focus();
+        alert('You must select at least one attendance day.');
+        return;
+    }
+
     //experience selection
     var expArr = getButtonVal(qidSel(4));
     if (expArr[0]) {
