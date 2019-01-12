@@ -133,11 +133,22 @@ function qidSel(qid) {
     return '[data-qid="' + qid + '"]';
 }
 
+function regSuccess(resp) {
+    console.log(resp);
+}
+
+function regFail(resp) {
+    console.log('fail');
+    console.log(resp);
+}
+
 $('#checkout').click(function() {
     //alert('REGISTER');
 
     //first gather up all the data
-    var reg = {};
+    var reg = {
+        eventid: 1 //hardcoded event id to find event info on server and link reg appropriately
+    };
 
     //registrant info
     reg['first_name'] = $('#first_name').val();
@@ -161,14 +172,14 @@ $('#checkout').click(function() {
         return;
     }
 
-    reg['email2'] = $('#email2').val();
-    if (reg['email2'] == '') {
+    var email2 = $('#email2').val();
+    if (email2 == '') {
         $('#email2')[0].focus();
         alert('You must enter your email before submitting.');
         return;
     }
 
-    if (reg['email'] != reg['email2']) {
+    if (reg['email'] != email2) {
         $('#email')[0].focus();
         alert('Email addresses do not match.');
         return;
@@ -239,7 +250,7 @@ $('#checkout').click(function() {
     var sizes = [];
     for (var i = 0; i < sizeArr.length; ++i) {
         if (sizeArr[i]) {
-            sizes.push(Calcs.sizes);
+            sizes.push(Calcs.sizes[i]);
         }
     }
     q[19] = sizes.toString();
@@ -302,6 +313,16 @@ $('#checkout').click(function() {
             return;
         }
     }
+
+    var reg = JSON.stringify(reg);
+
+    $.ajax({
+        type: 'POST',
+        url: '/registration/register.php',
+        data: {reg: reg},
+        success: regSuccess,
+        error: regFail
+    });
 });
 
 $(function() {

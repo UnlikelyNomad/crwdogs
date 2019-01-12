@@ -2947,10 +2947,10 @@ abstract class Event implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildRegistration[] List of ChildRegistration objects
      */
-    public function getRegistrationsJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getRegistrationsJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildRegistrationQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
+        $query->joinWith('User', $joinBehavior);
 
         return $this->getRegistrations($query, $con);
     }

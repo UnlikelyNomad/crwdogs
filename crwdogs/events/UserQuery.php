@@ -2,10 +2,10 @@
 
 namespace crwdogs\events;
 
-use crwdogs\events\Base\UsersQuery as BaseUsersQuery;
+use crwdogs\events\Base\UserQuery as BaseUserQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'users' table.
+ * Skeleton subclass for performing query and update operations on the 'user' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use crwdogs\events\Base\UsersQuery as BaseUsersQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class UsersQuery extends BaseUsersQuery
+class UserQuery extends BaseUserQuery
 {
 
 }

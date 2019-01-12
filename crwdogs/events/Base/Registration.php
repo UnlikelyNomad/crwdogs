@@ -26,8 +26,8 @@ use crwdogs\events\Registration as ChildRegistration;
 use crwdogs\events\RegistrationQuery as ChildRegistrationQuery;
 use crwdogs\events\Response as ChildResponse;
 use crwdogs\events\ResponseQuery as ChildResponseQuery;
-use crwdogs\events\Users as ChildUsers;
-use crwdogs\events\UsersQuery as ChildUsersQuery;
+use crwdogs\events\User as ChildUser;
+use crwdogs\events\UserQuery as ChildUserQuery;
 use crwdogs\events\Map\PaymentTableMap;
 use crwdogs\events\Map\PurchasedItemTableMap;
 use crwdogs\events\Map\RegistrationTableMap;
@@ -108,9 +108,9 @@ abstract class Registration implements ActiveRecordInterface
     protected $aEvent;
 
     /**
-     * @var        ChildUsers
+     * @var        ChildUser
      */
-    protected $aUsers;
+    protected $aUser;
 
     /**
      * @var        ObjectCollection|ChildPayment[] Collection to store aggregation of ChildPayment objects.
@@ -482,8 +482,8 @@ abstract class Registration implements ActiveRecordInterface
             $this->modifiedColumns[RegistrationTableMap::COL_USER_ID] = true;
         }
 
-        if ($this->aUsers !== null && $this->aUsers->getUserId() !== $v) {
-            $this->aUsers = null;
+        if ($this->aUser !== null && $this->aUser->getUserId() !== $v) {
+            $this->aUser = null;
         }
 
         return $this;
@@ -589,8 +589,8 @@ abstract class Registration implements ActiveRecordInterface
         if ($this->aEvent !== null && $this->event_id !== $this->aEvent->getEventId()) {
             $this->aEvent = null;
         }
-        if ($this->aUsers !== null && $this->user_id !== $this->aUsers->getUserId()) {
-            $this->aUsers = null;
+        if ($this->aUser !== null && $this->user_id !== $this->aUser->getUserId()) {
+            $this->aUser = null;
         }
     } // ensureConsistency
 
@@ -632,7 +632,7 @@ abstract class Registration implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aEvent = null;
-            $this->aUsers = null;
+            $this->aUser = null;
             $this->collPayments = null;
 
             $this->collPurchasedItems = null;
@@ -754,11 +754,11 @@ abstract class Registration implements ActiveRecordInterface
                 $this->setEvent($this->aEvent);
             }
 
-            if ($this->aUsers !== null) {
-                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
-                    $affectedRows += $this->aUsers->save($con);
+            if ($this->aUser !== null) {
+                if ($this->aUser->isModified() || $this->aUser->isNew()) {
+                    $affectedRows += $this->aUser->save($con);
                 }
-                $this->setUsers($this->aUsers);
+                $this->setUser($this->aUser);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1014,20 +1014,20 @@ abstract class Registration implements ActiveRecordInterface
 
                 $result[$key] = $this->aEvent->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aUsers) {
+            if (null !== $this->aUser) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'users';
+                        $key = 'user';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'users';
+                        $key = 'user';
                         break;
                     default:
-                        $key = 'Users';
+                        $key = 'User';
                 }
 
-                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collPayments) {
 
@@ -1406,13 +1406,13 @@ abstract class Registration implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildUsers object.
+     * Declares an association between this object and a ChildUser object.
      *
-     * @param  ChildUsers $v
+     * @param  ChildUser $v
      * @return $this|\crwdogs\events\Registration The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setUsers(ChildUsers $v = null)
+    public function setUser(ChildUser $v = null)
     {
         if ($v === null) {
             $this->setUserId(NULL);
@@ -1420,10 +1420,10 @@ abstract class Registration implements ActiveRecordInterface
             $this->setUserId($v->getUserId());
         }
 
-        $this->aUsers = $v;
+        $this->aUser = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUsers object, it will not be re-added.
+        // If this object has already been added to the ChildUser object, it will not be re-added.
         if ($v !== null) {
             $v->addRegistration($this);
         }
@@ -1434,26 +1434,26 @@ abstract class Registration implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildUsers object
+     * Get the associated ChildUser object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUsers The associated ChildUsers object.
+     * @return ChildUser The associated ChildUser object.
      * @throws PropelException
      */
-    public function getUsers(ConnectionInterface $con = null)
+    public function getUser(ConnectionInterface $con = null)
     {
-        if ($this->aUsers === null && ($this->user_id != 0)) {
-            $this->aUsers = ChildUsersQuery::create()->findPk($this->user_id, $con);
+        if ($this->aUser === null && ($this->user_id != 0)) {
+            $this->aUser = ChildUserQuery::create()->findPk($this->user_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUsers->addRegistrations($this);
+                $this->aUser->addRegistrations($this);
              */
         }
 
-        return $this->aUsers;
+        return $this->aUser;
     }
 
 
@@ -2216,8 +2216,8 @@ abstract class Registration implements ActiveRecordInterface
         if (null !== $this->aEvent) {
             $this->aEvent->removeRegistration($this);
         }
-        if (null !== $this->aUsers) {
-            $this->aUsers->removeRegistration($this);
+        if (null !== $this->aUser) {
+            $this->aUser->removeRegistration($this);
         }
         $this->registration_id = null;
         $this->event_id = null;
@@ -2262,7 +2262,7 @@ abstract class Registration implements ActiveRecordInterface
         $this->collPurchasedItems = null;
         $this->collResponses = null;
         $this->aEvent = null;
-        $this->aUsers = null;
+        $this->aUser = null;
     }
 
     /**

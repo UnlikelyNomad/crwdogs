@@ -2,10 +2,10 @@
 
 namespace crwdogs\events;
 
-use crwdogs\events\Base\Users as BaseUsers;
+use crwdogs\events\Base\User as BaseUser;
 
 /**
- * Skeleton subclass for representing a row from the 'users' table.
+ * Skeleton subclass for representing a row from the 'user' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use crwdogs\events\Base\Users as BaseUsers;
  * long as it does not already exist in the output directory.
  *
  */
-class Users extends BaseUsers
+class User extends BaseUser
 {
 
 }

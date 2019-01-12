@@ -23,16 +23,18 @@ $event = EventQuery::create()->findPK($eid);
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/jquery-ui.min.css">
-        <link rel="stylesheet" href="../css/crwdogs.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="/css/crwdogs.css">
+
+        <link rel="shortcut icon" href="/images/favicon.png">
 
         <title>CRW Dogs - Spring Fling</title>
     </head>
     <body>
         <div class="main-content">
             <div class="banner">
-                <img src="../images/jump1.jpg" class="img-fluid rounded">
+                <img src="/images/jump1.jpg" class="img-fluid rounded">
                 <span class="banner-text rounded">Spring Fling<br>Registration</span>
             </div>
 

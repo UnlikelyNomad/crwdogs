@@ -143,7 +143,7 @@ class RegistrationTableMap extends TableMap
         // columns
         $this->addPrimaryKey('registration_id', 'RegistrationId', 'INTEGER', true, null, null);
         $this->addForeignKey('event_id', 'EventId', 'INTEGER', 'event', 'event_id', true, null, null);
-        $this->addForeignKey('user_id', 'UserId', 'INTEGER', 'users', 'user_id', true, null, null);
+        $this->addForeignKey('user_id', 'UserId', 'INTEGER', 'user', 'user_id', true, null, null);
         $this->addColumn('status', 'Status', 'VARCHAR', true, 45, null);
     } // initialize()
 
@@ -159,7 +159,7 @@ class RegistrationTableMap extends TableMap
     1 => ':event_id',
   ),
 ), null, null, null, false);
-        $this->addRelation('Users', '\\crwdogs\\events\\Users', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('User', '\\crwdogs\\events\\User', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':user_id',

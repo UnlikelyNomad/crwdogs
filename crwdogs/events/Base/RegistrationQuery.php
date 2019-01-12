@@ -48,15 +48,15 @@ use crwdogs\events\Map\RegistrationTableMap;
  * @method     ChildRegistrationQuery rightJoinWithEvent() Adds a RIGHT JOIN clause and with to the query using the Event relation
  * @method     ChildRegistrationQuery innerJoinWithEvent() Adds a INNER JOIN clause and with to the query using the Event relation
  *
- * @method     ChildRegistrationQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
- * @method     ChildRegistrationQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
- * @method     ChildRegistrationQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
+ * @method     ChildRegistrationQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
+ * @method     ChildRegistrationQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
+ * @method     ChildRegistrationQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
  *
- * @method     ChildRegistrationQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
+ * @method     ChildRegistrationQuery joinWithUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the User relation
  *
- * @method     ChildRegistrationQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
- * @method     ChildRegistrationQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
- * @method     ChildRegistrationQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
+ * @method     ChildRegistrationQuery leftJoinWithUser() Adds a LEFT JOIN clause and with to the query using the User relation
+ * @method     ChildRegistrationQuery rightJoinWithUser() Adds a RIGHT JOIN clause and with to the query using the User relation
+ * @method     ChildRegistrationQuery innerJoinWithUser() Adds a INNER JOIN clause and with to the query using the User relation
  *
  * @method     ChildRegistrationQuery leftJoinPayment($relationAlias = null) Adds a LEFT JOIN clause to the query using the Payment relation
  * @method     ChildRegistrationQuery rightJoinPayment($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Payment relation
@@ -88,7 +88,7 @@ use crwdogs\events\Map\RegistrationTableMap;
  * @method     ChildRegistrationQuery rightJoinWithResponse() Adds a RIGHT JOIN clause and with to the query using the Response relation
  * @method     ChildRegistrationQuery innerJoinWithResponse() Adds a INNER JOIN clause and with to the query using the Response relation
  *
- * @method     \crwdogs\events\EventQuery|\crwdogs\events\UsersQuery|\crwdogs\events\PaymentQuery|\crwdogs\events\PurchasedItemQuery|\crwdogs\events\ResponseQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \crwdogs\events\EventQuery|\crwdogs\events\UserQuery|\crwdogs\events\PaymentQuery|\crwdogs\events\PurchasedItemQuery|\crwdogs\events\ResponseQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildRegistration findOne(ConnectionInterface $con = null) Return the first ChildRegistration matching the query
  * @method     ChildRegistration findOneOrCreate(ConnectionInterface $con = null) Return the first ChildRegistration matching the query, or a new ChildRegistration object populated from the query conditions when no match is found
@@ -393,7 +393,7 @@ abstract class RegistrationQuery extends ModelCriteria
      * $query->filterByUserId(array('min' => 12)); // WHERE user_id > 12
      * </code>
      *
-     * @see       filterByUsers()
+     * @see       filterByUser()
      *
      * @param     mixed $userId The value to use as filter.
      *              Use scalar values for equality.
@@ -529,44 +529,44 @@ abstract class RegistrationQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \crwdogs\events\Users object
+     * Filter the query by a related \crwdogs\events\User object
      *
-     * @param \crwdogs\events\Users|ObjectCollection $users The related object(s) to use as filter
+     * @param \crwdogs\events\User|ObjectCollection $user The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildRegistrationQuery The current query, for fluid interface
      */
-    public function filterByUsers($users, $comparison = null)
+    public function filterByUser($user, $comparison = null)
     {
-        if ($users instanceof \crwdogs\events\Users) {
+        if ($user instanceof \crwdogs\events\User) {
             return $this
-                ->addUsingAlias(RegistrationTableMap::COL_USER_ID, $users->getUserId(), $comparison);
-        } elseif ($users instanceof ObjectCollection) {
+                ->addUsingAlias(RegistrationTableMap::COL_USER_ID, $user->getUserId(), $comparison);
+        } elseif ($user instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(RegistrationTableMap::COL_USER_ID, $users->toKeyValue('PrimaryKey', 'UserId'), $comparison);
+                ->addUsingAlias(RegistrationTableMap::COL_USER_ID, $user->toKeyValue('PrimaryKey', 'UserId'), $comparison);
         } else {
-            throw new PropelException('filterByUsers() only accepts arguments of type \crwdogs\events\Users or Collection');
+            throw new PropelException('filterByUser() only accepts arguments of type \crwdogs\events\User or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Users relation
+     * Adds a JOIN clause to the query using the User relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildRegistrationQuery The current query, for fluid interface
      */
-    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Users');
+        $relationMap = $tableMap->getRelation('User');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -581,14 +581,14 @@ abstract class RegistrationQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Users');
+            $this->addJoinObject($join, 'User');
         }
 
         return $this;
     }
 
     /**
-     * Use the Users relation Users object
+     * Use the User relation User object
      *
      * @see useQuery()
      *
@@ -596,13 +596,13 @@ abstract class RegistrationQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \crwdogs\events\UsersQuery A secondary query class using the current class as primary query
+     * @return \crwdogs\events\UserQuery A secondary query class using the current class as primary query
      */
-    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinUsers($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Users', '\crwdogs\events\UsersQuery');
+            ->joinUser($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'User', '\crwdogs\events\UserQuery');
     }
 
     /**
