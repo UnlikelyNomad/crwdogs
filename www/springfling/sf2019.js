@@ -145,7 +145,7 @@ function doPayment(reg_id) {
         ipn_url: 'https://crwdogs.com/paypal/ipn.php',
         ret_url: 'https://crwdogs.com/springfling/success.php',
         invoice: '' + reg_id,
-        sandbox: true
+        sandbox: false
     });
 
     cart.setBuyer(

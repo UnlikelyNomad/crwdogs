@@ -15,7 +15,7 @@ use \crwdogs\events\Payment;
 
 $ipn = new PaypalIPN();
 
-$ipn->useSandbox();
+//$ipn->useSandbox();
 $ipn->usePHPCerts();
 
 $verified = $ipn->verifyIPN();
