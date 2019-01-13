@@ -108,6 +108,7 @@ abstract class Payment implements ActiveRecordInterface
     /**
      * The value for the parent_txn field.
      *
+     * Note: this column has a database default value of: ''
      * @var        string
      */
     protected $parent_txn;
@@ -147,10 +148,23 @@ abstract class Payment implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->parent_txn = '';
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\Payment object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -695,6 +709,10 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->parent_txn !== '') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1594,6 +1612,7 @@ abstract class Payment implements ActiveRecordInterface
         $this->received = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

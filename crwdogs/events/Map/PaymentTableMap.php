@@ -177,7 +177,7 @@ class PaymentTableMap extends TableMap
         $this->addColumn('txn_id', 'TxnId', 'VARCHAR', true, 45, null);
         $this->addColumn('txn_type', 'TxnType', 'VARCHAR', true, 45, null);
         $this->addColumn('recipient', 'Recipient', 'VARCHAR', true, 255, null);
-        $this->addColumn('parent_txn', 'ParentTxn', 'VARCHAR', true, 45, null);
+        $this->addColumn('parent_txn', 'ParentTxn', 'VARCHAR', true, 45, '');
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
         $this->addColumn('full', 'Full', 'LONGVARCHAR', true, null, null);
         $this->addColumn('received', 'Received', 'TIMESTAMP', true, null, null);

@@ -110,6 +110,7 @@ abstract class User implements ActiveRecordInterface
     /**
      * The value for the location field.
      *
+     * Note: this column has a database default value of: ''
      * @var        string
      */
     protected $location;
@@ -143,6 +144,7 @@ abstract class User implements ActiveRecordInterface
     public function applyDefaultValues()
     {
         $this->password = '';
+        $this->location = '';
     }
 
     /**
@@ -593,6 +595,10 @@ abstract class User implements ActiveRecordInterface
     public function hasOnlyDefaultValues()
     {
             if ($this->password !== '') {
+                return false;
+            }
+
+            if ($this->location !== '') {
                 return false;
             }
 
