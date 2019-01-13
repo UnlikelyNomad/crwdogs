@@ -637,6 +637,7 @@ $event = EventQuery::create()->findPK($eid);
                     <img src="../images/cc-badges-ppmcvdam.png">
                 </div>
                 <div class="card small p-2 mt-2">
+                    <p>You do not need a PayPal account to pay, you can use any credit card accepted by PayPal or use a PayPal account to pay directly from your bank or to use PayPal balance.</p>
                     <p>Registration fee is $75 if paid before March 1, 2019 and $100 after that.</p>
                 </div>
             </div>
