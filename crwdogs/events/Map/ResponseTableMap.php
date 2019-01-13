@@ -144,7 +144,7 @@ class ResponseTableMap extends TableMap
         $this->addPrimaryKey('response_id', 'ResponseId', 'INTEGER', true, null, null);
         $this->addForeignKey('question_id', 'QuestionId', 'INTEGER', 'question', 'question_id', true, null, null);
         $this->addForeignKey('registration_id', 'RegistrationId', 'INTEGER', 'registration', 'registration_id', true, null, null);
-        $this->addColumn('value', 'Value', 'VARCHAR', true, 255, null);
+        $this->addColumn('value', 'Value', 'VARCHAR', true, 255, '');
     } // initialize()
 
     /**

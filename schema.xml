@@ -232,7 +232,7 @@
     <column name="response_id" phpName="ResponseId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="question_id" phpName="QuestionId" type="INTEGER" required="true"/>
     <column name="registration_id" phpName="RegistrationId" type="INTEGER" required="true"/>
-    <column name="value" phpName="Value" type="VARCHAR" size="255" required="true"/>
+    <column name="value" phpName="Value" type="VARCHAR" size="255" defaultValue="" required="true"/>
     <foreign-key foreignTable="question" name="response_question">
       <reference local="question_id" foreign="question_id"/>
     </foreign-key>

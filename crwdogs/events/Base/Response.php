@@ -87,6 +87,7 @@ abstract class Response implements ActiveRecordInterface
     /**
      * The value for the value field.
      *
+     * Note: this column has a database default value of: ''
      * @var        string
      */
     protected $value;
@@ -110,10 +111,23 @@ abstract class Response implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->value = '';
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\Response object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -472,6 +486,10 @@ abstract class Response implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->value !== '') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1300,6 +1318,7 @@ abstract class Response implements ActiveRecordInterface
         $this->value = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
