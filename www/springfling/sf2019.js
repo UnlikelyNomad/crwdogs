@@ -103,7 +103,9 @@ function getYesNoBoolVal(sel) {
 function getButtonVal(sel) {
     var e = $(sel);
 
-    if (e.length == 1) {
+    if (e.length == 0) {
+        return undefined;
+    } else if (e.length == 1) {
         return e.hasClass('btn-success');
     } else {
         return $.map(e, function(val) {
@@ -114,6 +116,10 @@ function getButtonVal(sel) {
 
 function getSortListVal(sel) {
     var e = $(sel);
+    if (e.length == 0) {
+        return undefined;
+    }
+
     var c = e.find('li');
     return $.map(c, function(val) {
         return $(val).text();
@@ -133,13 +139,40 @@ function qidSel(qid) {
     return '[data-qid="' + qid + '"]';
 }
 
+function doPayment(reg_id) {
+    var cart = new PaypalCart({
+        business: 'crw@texascrwd.com',
+        ipn_url: 'https://crwdogs.com/paypal/ipn.php',
+        ret_url: 'https://crwdogs.com/springfling/success.php',
+        invoice: '' + reg_id,
+        sandbox: true
+    });
+
+    cart.setBuyer(
+        $('#first_name').val(),
+        $('#last_name').val(),
+        $('#email').val()
+    );
+
+    cart.addItem('Registration', 75, 1);
+
+    cart.submit();
+}
+
 function regSuccess(resp) {
-    console.log(resp);
+    var res = JSON.parse(resp);
+    if (res.result == 'success') {
+        doPayment(res.reg_id);
+    } else {
+        console.log(resp);
+        alert('There was an error with saving the registration: ' + res.msg);
+    }
 }
 
 function regFail(resp) {
     console.log('fail');
     console.log(resp);
+    alert('There was a problem submitting the registration, please try again in a minute.');
 }
 
 $('#checkout').click(function() {

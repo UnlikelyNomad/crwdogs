@@ -32,6 +32,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery orderByRegStart($order = Criteria::ASC) Order by the reg_start column
  * @method     ChildEventQuery orderByRegEnd($order = Criteria::ASC) Order by the reg_end column
  * @method     ChildEventQuery orderByRegCost($order = Criteria::ASC) Order by the reg_cost column
+ * @method     ChildEventQuery orderByPaypalEmail($order = Criteria::ASC) Order by the paypal_email column
+ * @method     ChildEventQuery orderByNotifyEmail($order = Criteria::ASC) Order by the notify_email column
  *
  * @method     ChildEventQuery groupByEventId() Group by the event_id column
  * @method     ChildEventQuery groupByLocationId() Group by the location_id column
@@ -45,6 +47,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery groupByRegStart() Group by the reg_start column
  * @method     ChildEventQuery groupByRegEnd() Group by the reg_end column
  * @method     ChildEventQuery groupByRegCost() Group by the reg_cost column
+ * @method     ChildEventQuery groupByPaypalEmail() Group by the paypal_email column
+ * @method     ChildEventQuery groupByNotifyEmail() Group by the notify_email column
  *
  * @method     ChildEventQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildEventQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -120,7 +124,9 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent findOneByInfo(string $info) Return the first ChildEvent filtered by the info column
  * @method     ChildEvent findOneByRegStart(string $reg_start) Return the first ChildEvent filtered by the reg_start column
  * @method     ChildEvent findOneByRegEnd(string $reg_end) Return the first ChildEvent filtered by the reg_end column
- * @method     ChildEvent findOneByRegCost(string $reg_cost) Return the first ChildEvent filtered by the reg_cost column *
+ * @method     ChildEvent findOneByRegCost(string $reg_cost) Return the first ChildEvent filtered by the reg_cost column
+ * @method     ChildEvent findOneByPaypalEmail(string $paypal_email) Return the first ChildEvent filtered by the paypal_email column
+ * @method     ChildEvent findOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column *
 
  * @method     ChildEvent requirePk($key, ConnectionInterface $con = null) Return the ChildEvent by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -137,6 +143,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent requireOneByRegStart(string $reg_start) Return the first ChildEvent filtered by the reg_start column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByRegEnd(string $reg_end) Return the first ChildEvent filtered by the reg_end column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByRegCost(string $reg_cost) Return the first ChildEvent filtered by the reg_cost column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByPaypalEmail(string $paypal_email) Return the first ChildEvent filtered by the paypal_email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findByEventId(int $event_id) Return ChildEvent objects filtered by the event_id column
@@ -151,6 +159,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent[]|ObjectCollection findByRegStart(string $reg_start) Return ChildEvent objects filtered by the reg_start column
  * @method     ChildEvent[]|ObjectCollection findByRegEnd(string $reg_end) Return ChildEvent objects filtered by the reg_end column
  * @method     ChildEvent[]|ObjectCollection findByRegCost(string $reg_cost) Return ChildEvent objects filtered by the reg_cost column
+ * @method     ChildEvent[]|ObjectCollection findByPaypalEmail(string $paypal_email) Return ChildEvent objects filtered by the paypal_email column
+ * @method     ChildEvent[]|ObjectCollection findByNotifyEmail(string $notify_email) Return ChildEvent objects filtered by the notify_email column
  * @method     ChildEvent[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -249,7 +259,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost FROM event WHERE event_id = :p0';
+        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email FROM event WHERE event_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -795,6 +805,56 @@ abstract class EventQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(EventTableMap::COL_REG_COST, $regCost, $comparison);
+    }
+
+    /**
+     * Filter the query on the paypal_email column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPaypalEmail('fooValue');   // WHERE paypal_email = 'fooValue'
+     * $query->filterByPaypalEmail('%fooValue%', Criteria::LIKE); // WHERE paypal_email LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $paypalEmail The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByPaypalEmail($paypalEmail = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($paypalEmail)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_PAYPAL_EMAIL, $paypalEmail, $comparison);
+    }
+
+    /**
+     * Filter the query on the notify_email column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByNotifyEmail('fooValue');   // WHERE notify_email = 'fooValue'
+     * $query->filterByNotifyEmail('%fooValue%', Criteria::LIKE); // WHERE notify_email LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $notifyEmail The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByNotifyEmail($notifyEmail = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($notifyEmail)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_NOTIFY_EMAIL, $notifyEmail, $comparison);
     }
 
     /**

@@ -649,6 +649,7 @@ $event = EventQuery::create()->findPK($eid);
         <script src="../js/popper.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/crwdogs-calc.js"></script>
+        <script src="../js/paypalcart.js"></script>
         <script src="sf2019.js"></script>
     </body>
 </html>

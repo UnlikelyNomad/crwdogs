@@ -13,3 +13,4 @@ php composer.phar install
 4. Generate php config file
 vender/bin/propel config:convert
 
+5. Copy crwdogs/mail.config.sample.php to crwdogs/mail.config.php and fill in oauth credentials

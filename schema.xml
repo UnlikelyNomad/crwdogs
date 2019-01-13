@@ -28,6 +28,8 @@
     <column name="reg_start" phpName="RegStart" type="DATE" required="true"/>
     <column name="reg_end" phpName="RegEnd" type="DATE" required="true"/>
     <column name="reg_cost" phpName="RegCost" type="DECIMAL" size="6" scale="2" required="true"/>
+    <column name="paypal_email" phpName="PaypalEmail" type="VARCHAR" size="255" required="true"/>
+    <column name="notify_email" phpName="NotifyEmail" type="VARCHAR" size="255" required="true"/>
     <foreign-key foreignTable="location" name="event_location">
       <reference local="location_id" foreign="location_id"/>
     </foreign-key>

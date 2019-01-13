@@ -1,6 +1,8 @@
 {
     "require": {
-        "propel/propel": "~2.0@dev"
+        "propel/propel": "~2.0@dev",
+        "phpmailer/phpmailer": "~6.0",
+        "league/oauth2-google": "^3.0"
     },
 
     "autoload": {

@@ -63,3 +63,5 @@ typings/
 propel.yml
 /generated-conf
 /composer.phar
+/www/get_oauth_token.php
+/crwdogs/mail.config.php

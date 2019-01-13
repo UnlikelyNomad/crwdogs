@@ -162,6 +162,20 @@ abstract class Event implements ActiveRecordInterface
     protected $reg_cost;
 
     /**
+     * The value for the paypal_email field.
+     *
+     * @var        string
+     */
+    protected $paypal_email;
+
+    /**
+     * The value for the notify_email field.
+     *
+     * @var        string
+     */
+    protected $notify_email;
+
+    /**
      * @var        ChildLocation
      */
     protected $aLocation;
@@ -628,6 +642,26 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [paypal_email] column value.
+     *
+     * @return string
+     */
+    public function getPaypalEmail()
+    {
+        return $this->paypal_email;
+    }
+
+    /**
+     * Get the [notify_email] column value.
+     *
+     * @return string
+     */
+    public function getNotifyEmail()
+    {
+        return $this->notify_email;
+    }
+
+    /**
      * Set the value of [event_id] column.
      *
      * @param int $v new value
@@ -872,6 +906,46 @@ abstract class Event implements ActiveRecordInterface
     } // setRegCost()
 
     /**
+     * Set the value of [paypal_email] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setPaypalEmail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->paypal_email !== $v) {
+            $this->paypal_email = $v;
+            $this->modifiedColumns[EventTableMap::COL_PAYPAL_EMAIL] = true;
+        }
+
+        return $this;
+    } // setPaypalEmail()
+
+    /**
+     * Set the value of [notify_email] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setNotifyEmail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->notify_email !== $v) {
+            $this->notify_email = $v;
+            $this->modifiedColumns[EventTableMap::COL_NOTIFY_EMAIL] = true;
+        }
+
+        return $this;
+    } // setNotifyEmail()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -954,6 +1028,12 @@ abstract class Event implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : EventTableMap::translateFieldName('RegCost', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reg_cost = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : EventTableMap::translateFieldName('PaypalEmail', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->paypal_email = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : EventTableMap::translateFieldName('NotifyEmail', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->notify_email = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -962,7 +1042,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 12; // 12 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 14; // 14 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Event'), 0, $e);
@@ -1291,6 +1371,12 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_REG_COST)) {
             $modifiedColumns[':p' . $index++]  = 'reg_cost';
         }
+        if ($this->isColumnModified(EventTableMap::COL_PAYPAL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'paypal_email';
+        }
+        if ($this->isColumnModified(EventTableMap::COL_NOTIFY_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'notify_email';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1337,6 +1423,12 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'reg_cost':
                         $stmt->bindValue($identifier, $this->reg_cost, PDO::PARAM_STR);
+                        break;
+                    case 'paypal_email':
+                        $stmt->bindValue($identifier, $this->paypal_email, PDO::PARAM_STR);
+                        break;
+                    case 'notify_email':
+                        $stmt->bindValue($identifier, $this->notify_email, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1436,6 +1528,12 @@ abstract class Event implements ActiveRecordInterface
             case 11:
                 return $this->getRegCost();
                 break;
+            case 12:
+                return $this->getPaypalEmail();
+                break;
+            case 13:
+                return $this->getNotifyEmail();
+                break;
             default:
                 return null;
                 break;
@@ -1478,6 +1576,8 @@ abstract class Event implements ActiveRecordInterface
             $keys[9] => $this->getRegStart(),
             $keys[10] => $this->getRegEnd(),
             $keys[11] => $this->getRegCost(),
+            $keys[12] => $this->getPaypalEmail(),
+            $keys[13] => $this->getNotifyEmail(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1654,6 +1754,12 @@ abstract class Event implements ActiveRecordInterface
             case 11:
                 $this->setRegCost($value);
                 break;
+            case 12:
+                $this->setPaypalEmail($value);
+                break;
+            case 13:
+                $this->setNotifyEmail($value);
+                break;
         } // switch()
 
         return $this;
@@ -1715,6 +1821,12 @@ abstract class Event implements ActiveRecordInterface
         }
         if (array_key_exists($keys[11], $arr)) {
             $this->setRegCost($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setPaypalEmail($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setNotifyEmail($arr[$keys[13]]);
         }
     }
 
@@ -1792,6 +1904,12 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_REG_COST)) {
             $criteria->add(EventTableMap::COL_REG_COST, $this->reg_cost);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_PAYPAL_EMAIL)) {
+            $criteria->add(EventTableMap::COL_PAYPAL_EMAIL, $this->paypal_email);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_NOTIFY_EMAIL)) {
+            $criteria->add(EventTableMap::COL_NOTIFY_EMAIL, $this->notify_email);
         }
 
         return $criteria;
@@ -1890,6 +2008,8 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setRegStart($this->getRegStart());
         $copyObj->setRegEnd($this->getRegEnd());
         $copyObj->setRegCost($this->getRegCost());
+        $copyObj->setPaypalEmail($this->getPaypalEmail());
+        $copyObj->setNotifyEmail($this->getNotifyEmail());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2977,6 +3097,8 @@ abstract class Event implements ActiveRecordInterface
         $this->reg_start = null;
         $this->reg_end = null;
         $this->reg_cost = null;
+        $this->paypal_email = null;
+        $this->notify_email = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

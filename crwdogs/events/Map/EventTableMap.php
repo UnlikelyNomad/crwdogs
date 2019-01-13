@@ -59,7 +59,7 @@ class EventTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 12;
+    const NUM_COLUMNS = 14;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class EventTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 12;
+    const NUM_HYDRATE_COLUMNS = 14;
 
     /**
      * the column name for the event_id field
@@ -132,6 +132,16 @@ class EventTableMap extends TableMap
     const COL_REG_COST = 'event.reg_cost';
 
     /**
+     * the column name for the paypal_email field
+     */
+    const COL_PAYPAL_EMAIL = 'event.paypal_email';
+
+    /**
+     * the column name for the notify_email field
+     */
+    const COL_NOTIFY_EMAIL = 'event.notify_email';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -143,11 +153,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('EventId', 'LocationId', 'Name', 'StartDate', 'EndDate', 'IncludeTime', 'StartTime', 'EndTime', 'Info', 'RegStart', 'RegEnd', 'RegCost', ),
-        self::TYPE_CAMELNAME     => array('eventId', 'locationId', 'name', 'startDate', 'endDate', 'includeTime', 'startTime', 'endTime', 'info', 'regStart', 'regEnd', 'regCost', ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_EVENT_ID, EventTableMap::COL_LOCATION_ID, EventTableMap::COL_NAME, EventTableMap::COL_START_DATE, EventTableMap::COL_END_DATE, EventTableMap::COL_INCLUDE_TIME, EventTableMap::COL_START_TIME, EventTableMap::COL_END_TIME, EventTableMap::COL_INFO, EventTableMap::COL_REG_START, EventTableMap::COL_REG_END, EventTableMap::COL_REG_COST, ),
-        self::TYPE_FIELDNAME     => array('event_id', 'location_id', 'name', 'start_date', 'end_date', 'include_time', 'start_time', 'end_time', 'info', 'reg_start', 'reg_end', 'reg_cost', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+        self::TYPE_PHPNAME       => array('EventId', 'LocationId', 'Name', 'StartDate', 'EndDate', 'IncludeTime', 'StartTime', 'EndTime', 'Info', 'RegStart', 'RegEnd', 'RegCost', 'PaypalEmail', 'NotifyEmail', ),
+        self::TYPE_CAMELNAME     => array('eventId', 'locationId', 'name', 'startDate', 'endDate', 'includeTime', 'startTime', 'endTime', 'info', 'regStart', 'regEnd', 'regCost', 'paypalEmail', 'notifyEmail', ),
+        self::TYPE_COLNAME       => array(EventTableMap::COL_EVENT_ID, EventTableMap::COL_LOCATION_ID, EventTableMap::COL_NAME, EventTableMap::COL_START_DATE, EventTableMap::COL_END_DATE, EventTableMap::COL_INCLUDE_TIME, EventTableMap::COL_START_TIME, EventTableMap::COL_END_TIME, EventTableMap::COL_INFO, EventTableMap::COL_REG_START, EventTableMap::COL_REG_END, EventTableMap::COL_REG_COST, EventTableMap::COL_PAYPAL_EMAIL, EventTableMap::COL_NOTIFY_EMAIL, ),
+        self::TYPE_FIELDNAME     => array('event_id', 'location_id', 'name', 'start_date', 'end_date', 'include_time', 'start_time', 'end_time', 'info', 'reg_start', 'reg_end', 'reg_cost', 'paypal_email', 'notify_email', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -157,11 +167,11 @@ class EventTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('EventId' => 0, 'LocationId' => 1, 'Name' => 2, 'StartDate' => 3, 'EndDate' => 4, 'IncludeTime' => 5, 'StartTime' => 6, 'EndTime' => 7, 'Info' => 8, 'RegStart' => 9, 'RegEnd' => 10, 'RegCost' => 11, ),
-        self::TYPE_CAMELNAME     => array('eventId' => 0, 'locationId' => 1, 'name' => 2, 'startDate' => 3, 'endDate' => 4, 'includeTime' => 5, 'startTime' => 6, 'endTime' => 7, 'info' => 8, 'regStart' => 9, 'regEnd' => 10, 'regCost' => 11, ),
-        self::TYPE_COLNAME       => array(EventTableMap::COL_EVENT_ID => 0, EventTableMap::COL_LOCATION_ID => 1, EventTableMap::COL_NAME => 2, EventTableMap::COL_START_DATE => 3, EventTableMap::COL_END_DATE => 4, EventTableMap::COL_INCLUDE_TIME => 5, EventTableMap::COL_START_TIME => 6, EventTableMap::COL_END_TIME => 7, EventTableMap::COL_INFO => 8, EventTableMap::COL_REG_START => 9, EventTableMap::COL_REG_END => 10, EventTableMap::COL_REG_COST => 11, ),
-        self::TYPE_FIELDNAME     => array('event_id' => 0, 'location_id' => 1, 'name' => 2, 'start_date' => 3, 'end_date' => 4, 'include_time' => 5, 'start_time' => 6, 'end_time' => 7, 'info' => 8, 'reg_start' => 9, 'reg_end' => 10, 'reg_cost' => 11, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+        self::TYPE_PHPNAME       => array('EventId' => 0, 'LocationId' => 1, 'Name' => 2, 'StartDate' => 3, 'EndDate' => 4, 'IncludeTime' => 5, 'StartTime' => 6, 'EndTime' => 7, 'Info' => 8, 'RegStart' => 9, 'RegEnd' => 10, 'RegCost' => 11, 'PaypalEmail' => 12, 'NotifyEmail' => 13, ),
+        self::TYPE_CAMELNAME     => array('eventId' => 0, 'locationId' => 1, 'name' => 2, 'startDate' => 3, 'endDate' => 4, 'includeTime' => 5, 'startTime' => 6, 'endTime' => 7, 'info' => 8, 'regStart' => 9, 'regEnd' => 10, 'regCost' => 11, 'paypalEmail' => 12, 'notifyEmail' => 13, ),
+        self::TYPE_COLNAME       => array(EventTableMap::COL_EVENT_ID => 0, EventTableMap::COL_LOCATION_ID => 1, EventTableMap::COL_NAME => 2, EventTableMap::COL_START_DATE => 3, EventTableMap::COL_END_DATE => 4, EventTableMap::COL_INCLUDE_TIME => 5, EventTableMap::COL_START_TIME => 6, EventTableMap::COL_END_TIME => 7, EventTableMap::COL_INFO => 8, EventTableMap::COL_REG_START => 9, EventTableMap::COL_REG_END => 10, EventTableMap::COL_REG_COST => 11, EventTableMap::COL_PAYPAL_EMAIL => 12, EventTableMap::COL_NOTIFY_EMAIL => 13, ),
+        self::TYPE_FIELDNAME     => array('event_id' => 0, 'location_id' => 1, 'name' => 2, 'start_date' => 3, 'end_date' => 4, 'include_time' => 5, 'start_time' => 6, 'end_time' => 7, 'info' => 8, 'reg_start' => 9, 'reg_end' => 10, 'reg_cost' => 11, 'paypal_email' => 12, 'notify_email' => 13, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -193,6 +203,8 @@ class EventTableMap extends TableMap
         $this->addColumn('reg_start', 'RegStart', 'DATE', true, null, null);
         $this->addColumn('reg_end', 'RegEnd', 'DATE', true, null, null);
         $this->addColumn('reg_cost', 'RegCost', 'DECIMAL', true, 6, null);
+        $this->addColumn('paypal_email', 'PaypalEmail', 'VARCHAR', true, 255, null);
+        $this->addColumn('notify_email', 'NotifyEmail', 'VARCHAR', true, 255, null);
     } // initialize()
 
     /**
@@ -390,6 +402,8 @@ class EventTableMap extends TableMap
             $criteria->addSelectColumn(EventTableMap::COL_REG_START);
             $criteria->addSelectColumn(EventTableMap::COL_REG_END);
             $criteria->addSelectColumn(EventTableMap::COL_REG_COST);
+            $criteria->addSelectColumn(EventTableMap::COL_PAYPAL_EMAIL);
+            $criteria->addSelectColumn(EventTableMap::COL_NOTIFY_EMAIL);
         } else {
             $criteria->addSelectColumn($alias . '.event_id');
             $criteria->addSelectColumn($alias . '.location_id');
@@ -403,6 +417,8 @@ class EventTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.reg_start');
             $criteria->addSelectColumn($alias . '.reg_end');
             $criteria->addSelectColumn($alias . '.reg_cost');
+            $criteria->addSelectColumn($alias . '.paypal_email');
+            $criteria->addSelectColumn($alias . '.notify_email');
         }
     }
 
