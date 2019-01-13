@@ -255,7 +255,7 @@
     <column name="last_name" phpName="LastName" type="VARCHAR" size="45" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
     <column name="phone" phpName="Phone" type="VARCHAR" size="20" required="true"/>
-    <column name="password" phpName="Password" type="VARCHAR" size="255" required="true"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="255" defaultValue="" required="true"/>
     <column name="location" phpName="Location" type="VARCHAR" size="255" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>

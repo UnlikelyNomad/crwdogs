@@ -108,3 +108,6 @@ if (!$mail->send()) {
 } else {
     echo '{"result":"success","reg_id":' . $registration->getRegistrationId() . '}';
 }
+
+$registration->setStatus('Complete');
+$registration->save();

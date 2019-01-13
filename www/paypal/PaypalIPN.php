@@ -7,6 +7,8 @@ class PaypalIPN
     /** @var bool Indicates if the local certificates are used. */
     private $use_local_certs = true;
 
+    private $full = '';
+
     /** Production Postback URL */
     const VERIFY_URI = 'https://ipnpb.paypal.com/cgi-bin/webscr';
     /** Sandbox Postback URL */
@@ -25,6 +27,10 @@ class PaypalIPN
     public function useSandbox()
     {
         $this->use_sandbox = true;
+    }
+
+    public function getFull() {
+        return $this->full;
     }
 
     /**
@@ -64,8 +70,8 @@ class PaypalIPN
             throw new Exception("Missing POST Data");
         }
 
-        $raw_post_data = file_get_contents('php://input');
-        $raw_post_array = explode('&', $raw_post_data);
+        $this->full = file_get_contents('php://input');
+        $raw_post_array = explode('&', $this->full);
         $myPost = array();
         foreach ($raw_post_array as $keyval) {
             $keyval = explode('=', $keyval);

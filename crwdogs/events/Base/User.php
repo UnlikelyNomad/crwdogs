@@ -102,6 +102,7 @@ abstract class User implements ActiveRecordInterface
     /**
      * The value for the password field.
      *
+     * Note: this column has a database default value of: ''
      * @var        string
      */
     protected $password;
@@ -134,10 +135,23 @@ abstract class User implements ActiveRecordInterface
     protected $registrationsScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->password = '';
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\User object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -578,6 +592,10 @@ abstract class User implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->password !== '') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1628,6 +1646,7 @@ abstract class User implements ActiveRecordInterface
         $this->location = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
