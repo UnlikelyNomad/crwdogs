@@ -20,6 +20,12 @@
                     <span class="banner-text rounded"><u>Spring Fling<br>Registration</u></span>
                 </a>
             </div>
+            <!--<div class="banner">
+                <img src="/images/snake1.png" class="img-fluid rounded">
+                <a href="/dinkdink">
+                    <span class="banner-text rounded"><u>Dink Dink<br>Registration</u></span>
+                </a>
+            </div>-->
         </div>
     </body>
 </html>

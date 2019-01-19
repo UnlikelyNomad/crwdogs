@@ -67,7 +67,7 @@ $event = EventQuery::create()->findPK($eid);
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col card small">
+                        <div class="col card small mx-3">
                             <p>
                                 The above information is being collected for the sole purposes of identifying your registration with event organizers and getting in touch with you for this specific event, before or during, if needed. All registration information collected will be saved to make registering for future events easier. In the future this site will allow creation of accounts to save preferences. The operators of this site will only contact you by the above email and only in regards to registration for this event. This information will be available to event organizers using this site.
                             </p>
