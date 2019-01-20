@@ -34,8 +34,8 @@ $event = EventQuery::create()->findPK($eid);
     <body>
         <div class="main-content">
             <div class="banner">
-                <img src="/images/jump1.jpg" class="img-fluid rounded">
-                <span class="banner-text rounded">Spring Fling<br>Registration</span>
+                <!--<img src="/images/jump1.jpg" class="img-fluid rounded">-->
+                <span class="banner-text rounded">Spring Fling Registration</span>
             </div>
 
             <div class="container-fluid inner-content rounded">
