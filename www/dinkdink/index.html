@@ -43,9 +43,6 @@
                         <input class="form-control" type="email" placeholder="E-Mail" id="email">
                     </div>
                     <div class="col-md-6 mt-3">
-                        <input class="form-control" type="text" placeholder="Confirm E-Mail" id="email2">
-                    </div>
-                    <div class="col-md-6 mt-3">
                         <input class="form-control" type="text" placeholder="Phone Number" id="phone">
                     </div>
                     <div class="col-md-6 mt-3 form-inline">
@@ -64,11 +61,12 @@
                     <div class="col card text-center py-3 mt-3 mx-3">PLEASE SELECT THE DISCIPLINE(S) YOU PLAN TO PARTICIPATE IN</div>
                 </div>
                 <div class="row">
-                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid=""><h3>CRW</h3></button></div>
-                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid=""><h3>WINGSUIT</h3></button></div>
-                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid=""><h3>RW</h3></button></div>
-                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid=""><h3>FF/ANGLE</h3></button></div>
-                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid=""><h3>FLOCKING</h3></button></div>
+                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">CRW</button></div>
+                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">WINGSUIT</button></div>
+                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">RW</button></div>
+                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">FF/ANGLE</button></div>
+                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">HP FLOCKING</button></div>
+                    <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">XRW</button></div>
                 </div>
                 <div class="container mt-3" id="lightning_size">
                     <div class="row">
@@ -177,18 +175,11 @@
                                 FULL REGISTRATION<br>W/ T-SHIRT<br>$100
                             </button></div>
                             <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
-                                TWO DAY REGISTRATION<br>W/ T-SHIRT<br>$175
+                                TWO DAY REGISTRATION<br>W/ T-SHIRT<br>$75
                             </button></div>
                             <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 ONE DAY REGISTRATION<br>W/ T-SHIRT<br>$45
                             </button></div>
-                        </div>
-                        <div class="row" id="reg_shirt">
-                            <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SMALL</button></div>
-                            <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">MEDIUM</button></div>
-                            <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">LARGE</button></div>
-                            <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">X-LARGE</button></div>
-                            <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">XX-LARGE</button></div>
                         </div>
                         <div class="row mt-5">
                             <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
@@ -200,6 +191,40 @@
                             <div class="col"><button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 ONE DAY REGISTRATION<br>$30
                             </button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col card text-center mt-3 py-3 mx-3">
+                        BOOGIE T-SHIRTS $15<br>
+                        <span class="small">SELECT SIZE AND QUANTITY OF BOOGIE T-SHIRTS BELOW</span>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-3 text-center"><h3 id="shirt_amount">$15.00</h3></div>
+                    <div class="col-9 text-center">
+                        <div class="row">
+                            <div class="col">
+                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button><br>
+                                <input type="number" min="0" value="0" class="form-control" data-qid="">
+                            </div>
+                            <div class="col">
+                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button><br>
+                                <input type="number" min="0" value="0" class="form-control" data-qid="">
+                            </div>
+                            <div class="col">
+                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button><br>
+                                <input type="number" min="0" value="0" class="form-control" data-qid="">
+                            </div>
+                            <div class="col">
+                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button><br>
+                                <input type="number" min="0" value="0" class="form-control" data-qid="">
+                            </div>
+                            <div class="col">
+                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button><br>
+                                <input type="number" min="0" value="0" class="form-control" data-qid="">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -240,44 +265,12 @@
                                 <div class="card py-3">QTY</div>
                                 <input type="number" min="0" value="0" class="form-control mt-3" data-qid="">
                             </div>
-                            <div class="col-9 card py-2">
-                                WHILE EVERONE IS ENCOURAGED TO ATTEND SATURDAY EVENING FESTIVITIES, YOU WILL NEED A TICKET TO PARTAKE IN THE WONDERFUL CATERED DINNER<br>
-                                <br>
-                                A LIMITED NUMBER OF DINNER TICKETS WILL BE AVAILABLE AT THE EVENT FOR $25
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col card text-center mt-3 py-3 mx-3">
-                        EXTRA BOOGIE T-SHIRTS $15<br>
-                        <span class="small">SELECT SIZE AND QUANTITY OF ADDITIONAL BOOGIE T-SHIRTS BELOW</span>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-3 text-center"><h3 id="shirt_amount">$15.00</h3></div>
-                    <div class="col-9 text-center">
-                        <div class="row">
-                            <div class="col">
-                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button><br>
-                                <input type="number" min="0" value="0" class="form-control" data-qid="">
-                            </div>
-                            <div class="col">
-                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button><br>
-                                <input type="number" min="0" value="0" class="form-control" data-qid="">
-                            </div>
-                            <div class="col">
-                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button><br>
-                                <input type="number" min="0" value="0" class="form-control" data-qid="">
-                            </div>
-                            <div class="col">
-                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button><br>
-                                <input type="number" min="0" value="0" class="form-control" data-qid="">
-                            </div>
-                            <div class="col">
-                                <button data-toggle="button" class="fill btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button><br>
-                                <input type="number" min="0" value="0" class="form-control" data-qid="">
+                            <div class="col-9">
+                                <div class="card py-2">
+                                    WHILE EVERONE IS ENCOURAGED TO ATTEND SATURDAY EVENING FESTIVITIES, YOU WILL NEED A TICKET TO PARTAKE IN THE WONDERFUL CATERED DINNER<br>
+                                    <br>
+                                    A LIMITED NUMBER OF DINNER TICKETS WILL BE AVAILABLE AT THE EVENT FOR $25
+                                </div>
                             </div>
                         </div>
                     </div>
