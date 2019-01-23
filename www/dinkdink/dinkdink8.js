@@ -118,6 +118,19 @@ function updateCamp() {
     });
 }
 
+function updateCRW() {
+    setTimeout(function() {
+        var show = Reg.getButtonVal(Reg.qidSel(33));
+        var l = $('#lightning_sizes');
+
+        if (show) {
+            l.slideDown();
+        } else {
+            l.slideUp();
+        }
+    });
+}
+
 $(regButtonSel).click(updateReg);
 $(shirtInputSel).change(updateShirt);
 $('.shirt-buttons button').click(updateShirt);
@@ -125,6 +138,7 @@ $(dinnerInputSel).change(updateDinner);
 $(beerInputSel).change(updateBeer);
 $('.beer-buttons button').click(updateBeer);
 $(campButtonSel).click(updateCamp);
+$(Reg.qidSel(33)).click(updateCRW);
 
 updateCosts();
 })();
