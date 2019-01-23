@@ -179,29 +179,32 @@
                 <div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3">
                         YOU MUST BE REGISTERED IN ORDER TO JUMP<br>
-                        <span class="small">WALK IN REGISTRATIONS WILL BE AN ADDITIONAL $10</span>
+                        <span class="small">
+                            IF YOU CHOOSE A REGISTRATION WITH T-SHIRT, YOUR FIRST BOOGIE SHIRT SIZE SELECTION WILL BE FREE.<br>
+                            WALK IN REGISTRATIONS WILL BE AN ADDITIONAL $10
+                        </span>
                     </div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col-auto text-center"><h3 id="reg_amount">$100.00</h3></div>
                     <div class="col">
-                        <div class="row">
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                        <div class="row" id="reg_buttons">
+                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 FULL REGISTRATION<br>W/ T-SHIRT<br>$100
                             </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 TWO DAY REGISTRATION<br>W/ T-SHIRT<br>$75
                             </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 ONE DAY REGISTRATION<br>W/ T-SHIRT<br>$45
                             </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 FULL REGISTRATION<br>$85
                             </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 TWO DAY REGISTRATION<br>$60
                             </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 ONE DAY REGISTRATION<br>$30
                             </button></div>
                         </div>
@@ -219,52 +222,52 @@
                     <div class="col text-center">
                         <div class="row">
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group shirt-buttons">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="shirt-input num-button form-control" data-itemid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group shirt-buttons">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="shirt-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group shirt-buttons">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="shirt-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group shirt-buttons">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="shirt-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group shirt-buttons">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="shirt-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +288,7 @@
                                 <div class="row">
                                     <div class="col-4 col-md-12 card py-3">QTY</div>
                                     <div class="col-8 col-md-12 px-3">
-                                        <input type="number" min="0" value="0" class="form-control mt-3" data-qid="">
+                                        <input type="number" min="0" value="0" class="form-control mt-3" id="dinner_input">
                                     </div>
                                 </div>
                             </div>
@@ -309,54 +312,54 @@
                 <div class="row align-items-center">
                     <div class="col-auto text-center"><h4 id="beer_amount">$50.00</h4></div>
                     <div class="col text-center">
-                        <div class="row">
+                        <div class="row beer-buttons">
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters">
+                                <div class="row no-gutters num-button-group">
                                     <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button>
+                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button>
                                     </div>
                                     <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="form-control" data-qid="">
+                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
                                     </div>
                                 </div>
                             </div>
@@ -378,11 +381,11 @@
                     <div class="col-auto text-center"><h4 id="camp_amount">$30.00</h4></div>
                     <div class="col">
                         <div class="row">
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">WEDNESDAY<br>FREE</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">THURSDAY<br>$10</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">FRIDAY<br>$10</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SATURDAY<br>$10</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SUNDAY<br>FREE</button></div>
+                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">WEDNESDAY<br>FREE</button></div>
+                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">THURSDAY<br>$10</button></div>
+                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">FRIDAY<br>$10</button></div>
+                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SATURDAY<br>$10</button></div>
+                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SUNDAY<br>FREE</button></div>
                         </div>
                     </div>
                 </div>
@@ -409,6 +412,7 @@
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/crwdogs-calc.js"></script>
         <script src="../js/paypalcart.js"></script>
+        <script src="../js/registration.js"></script>
         <script src="dinkdink8.js"></script>
     </body>
 </html>
