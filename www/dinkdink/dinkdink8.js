@@ -53,7 +53,7 @@ function updateReg() {
             if (regs[i]) {
                 cost.reg = regCosts[i];
 
-                if (i < 4) {
+                if (i < 3) {
                     freeShirt = true;
                 }
 
