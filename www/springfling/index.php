@@ -632,9 +632,11 @@ $event = EventQuery::create()->findPK($eid);
                     </div>
                 </form>
 
-                <div class="text-center" id="checkout">
-                    REGISTER - $75<br>
-                    <img src="../images/cc-badges-ppmcvdam.png">
+                <div class="row justify-content-center">
+                    <div class="col-auto text-center mt-3" id="checkout">
+                        REGISTER - $75<br>
+                        <img src="../images/cc-badges-ppmcvdam.png">
+                    </div>
                 </div>
                 <div class="card small p-2 mt-2">
                     <p>You do not need a PayPal account to pay, you can use any credit card accepted by PayPal or use a PayPal account to pay directly from your bank or to use PayPal balance.</p>
