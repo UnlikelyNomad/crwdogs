@@ -128,6 +128,13 @@ abstract class Location implements ActiveRecordInterface
     protected $amenities;
 
     /**
+     * The value for the website field.
+     *
+     * @var        string
+     */
+    protected $website;
+
+    /**
      * @var        ObjectCollection|ChildEvent[] Collection to store aggregation of ChildEvent objects.
      */
     protected $collEvents;
@@ -463,6 +470,16 @@ abstract class Location implements ActiveRecordInterface
     }
 
     /**
+     * Get the [website] column value.
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
      * Set the value of [location_id] column.
      *
      * @param int $v new value
@@ -643,6 +660,26 @@ abstract class Location implements ActiveRecordInterface
     } // setAmenities()
 
     /**
+     * Set the value of [website] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Location The current object (for fluent API support)
+     */
+    public function setWebsite($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->website !== $v) {
+            $this->website = $v;
+            $this->modifiedColumns[LocationTableMap::COL_WEBSITE] = true;
+        }
+
+        return $this;
+    } // setWebsite()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -704,6 +741,9 @@ abstract class Location implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : LocationTableMap::translateFieldName('Amenities', TableMap::TYPE_PHPNAME, $indexType)];
             $this->amenities = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : LocationTableMap::translateFieldName('Website', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->website = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -712,7 +752,7 @@ abstract class Location implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 9; // 9 = LocationTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 10; // 10 = LocationTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Location'), 0, $e);
@@ -959,6 +999,9 @@ abstract class Location implements ActiveRecordInterface
         if ($this->isColumnModified(LocationTableMap::COL_AMENITIES)) {
             $modifiedColumns[':p' . $index++]  = 'amenities';
         }
+        if ($this->isColumnModified(LocationTableMap::COL_WEBSITE)) {
+            $modifiedColumns[':p' . $index++]  = 'website';
+        }
 
         $sql = sprintf(
             'INSERT INTO location (%s) VALUES (%s)',
@@ -996,6 +1039,9 @@ abstract class Location implements ActiveRecordInterface
                         break;
                     case 'amenities':
                         $stmt->bindValue($identifier, $this->amenities, PDO::PARAM_STR);
+                        break;
+                    case 'website':
+                        $stmt->bindValue($identifier, $this->website, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1086,6 +1132,9 @@ abstract class Location implements ActiveRecordInterface
             case 8:
                 return $this->getAmenities();
                 break;
+            case 9:
+                return $this->getWebsite();
+                break;
             default:
                 return null;
                 break;
@@ -1125,6 +1174,7 @@ abstract class Location implements ActiveRecordInterface
             $keys[6] => $this->getGoogleLink(),
             $keys[7] => $this->getPhone(),
             $keys[8] => $this->getAmenities(),
+            $keys[9] => $this->getWebsite(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1208,6 +1258,9 @@ abstract class Location implements ActiveRecordInterface
             case 8:
                 $this->setAmenities($value);
                 break;
+            case 9:
+                $this->setWebsite($value);
+                break;
         } // switch()
 
         return $this;
@@ -1260,6 +1313,9 @@ abstract class Location implements ActiveRecordInterface
         }
         if (array_key_exists($keys[8], $arr)) {
             $this->setAmenities($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setWebsite($arr[$keys[9]]);
         }
     }
 
@@ -1328,6 +1384,9 @@ abstract class Location implements ActiveRecordInterface
         }
         if ($this->isColumnModified(LocationTableMap::COL_AMENITIES)) {
             $criteria->add(LocationTableMap::COL_AMENITIES, $this->amenities);
+        }
+        if ($this->isColumnModified(LocationTableMap::COL_WEBSITE)) {
+            $criteria->add(LocationTableMap::COL_WEBSITE, $this->website);
         }
 
         return $criteria;
@@ -1423,6 +1482,7 @@ abstract class Location implements ActiveRecordInterface
         $copyObj->setGoogleLink($this->getGoogleLink());
         $copyObj->setPhone($this->getPhone());
         $copyObj->setAmenities($this->getAmenities());
+        $copyObj->setWebsite($this->getWebsite());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1707,6 +1767,31 @@ abstract class Location implements ActiveRecordInterface
         return $this;
     }
 
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Location is new, it will return
+     * an empty collection; or if this Location has previously
+     * been saved, it will retrieve related Events from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Location.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildEvent[] List of ChildEvent objects
+     */
+    public function getEventsJoinAuthGroup(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildEventQuery::create(null, $criteria);
+        $query->joinWith('AuthGroup', $joinBehavior);
+
+        return $this->getEvents($query, $con);
+    }
+
     /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
@@ -1723,6 +1808,7 @@ abstract class Location implements ActiveRecordInterface
         $this->google_link = null;
         $this->phone = null;
         $this->amenities = null;
+        $this->website = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

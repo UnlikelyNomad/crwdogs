@@ -104,6 +104,7 @@ abstract class ItemOption implements ActiveRecordInterface
     /**
      * The value for the sort field.
      *
+     * Note: this column has a database default value of: 0
      * @var        int
      */
     protected $sort;
@@ -134,10 +135,23 @@ abstract class ItemOption implements ActiveRecordInterface
     protected $optionValuesScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->sort = 0;
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\ItemOption object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -552,6 +566,10 @@ abstract class ItemOption implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->sort !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1638,6 +1656,7 @@ abstract class ItemOption implements ActiveRecordInterface
         $this->sort = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

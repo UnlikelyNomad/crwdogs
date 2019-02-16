@@ -13,6 +13,9 @@
         <title>CRW Dogs - Dink Dink</title>
     </head>
     <body>
+
+    <?php include '../common/nav.inc.php'; ?>
+
         <div class="main-content">
             <div class="banner">
                 <div class="banner-text rounded">

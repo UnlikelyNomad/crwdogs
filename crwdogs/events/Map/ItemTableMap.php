@@ -197,14 +197,14 @@ class ItemTableMap extends TableMap
         $this->addColumn('qty_type', 'QtyType', 'VARCHAR', true, 45, null);
         $this->addColumn('min_qty', 'MinQty', 'INTEGER', true, null, null);
         $this->addColumn('max_qty', 'MaxQty', 'INTEGER', true, null, null);
-        $this->addColumn('event_qty', 'EventQty', 'INTEGER', true, null, null);
+        $this->addColumn('event_qty', 'EventQty', 'INTEGER', true, null, 0);
         $this->addColumn('image', 'Image', 'VARCHAR', true, 255, null);
         $this->addColumn('label', 'Label', 'VARCHAR', true, 45, null);
-        $this->addColumn('base_cost', 'BaseCost', 'DECIMAL', true, 6, null);
+        $this->addColumn('base_cost', 'BaseCost', 'DECIMAL', true, 6, 0);
         $this->addColumn('multiple_variations', 'MultipleVariations', 'VARCHAR', true, 1, null);
         $this->addColumn('qty_label', 'QtyLabel', 'VARCHAR', true, 20, null);
         $this->addColumn('cost_label', 'CostLabel', 'VARCHAR', true, 20, null);
-        $this->addColumn('sort', 'Sort', 'INTEGER', true, null, null);
+        $this->addColumn('sort', 'Sort', 'INTEGER', true, null, 0);
     } // initialize()
 
     /**

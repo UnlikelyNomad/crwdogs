@@ -18,29 +18,29 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use crwdogs\events\AuthGroup as ChildAuthGroup;
 use crwdogs\events\AuthGroupQuery as ChildAuthGroupQuery;
-use crwdogs\events\Registration as ChildRegistration;
-use crwdogs\events\RegistrationQuery as ChildRegistrationQuery;
+use crwdogs\events\Event as ChildEvent;
+use crwdogs\events\EventQuery as ChildEventQuery;
 use crwdogs\events\User as ChildUser;
 use crwdogs\events\UserGroup as ChildUserGroup;
 use crwdogs\events\UserGroupQuery as ChildUserGroupQuery;
 use crwdogs\events\UserQuery as ChildUserQuery;
-use crwdogs\events\Map\RegistrationTableMap;
+use crwdogs\events\Map\AuthGroupTableMap;
+use crwdogs\events\Map\EventTableMap;
 use crwdogs\events\Map\UserGroupTableMap;
-use crwdogs\events\Map\UserTableMap;
 
 /**
- * Base class that represents a row from the 'user' table.
+ * Base class that represents a row from the 'auth_group' table.
  *
  *
  *
  * @package    propel.generator.crwdogs.events.Base
  */
-abstract class User implements ActiveRecordInterface
+abstract class AuthGroup implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\crwdogs\\events\\Map\\UserTableMap';
+    const TABLE_MAP = '\\crwdogs\\events\\Map\\AuthGroupTableMap';
 
 
     /**
@@ -70,61 +70,59 @@ abstract class User implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the user_id field.
+     * The value for the group_id field.
      *
      * @var        int
      */
-    protected $user_id;
+    protected $group_id;
 
     /**
-     * The value for the first_name field.
+     * The value for the name field.
      *
      * @var        string
      */
-    protected $first_name;
+    protected $name;
 
     /**
-     * The value for the last_name field.
+     * The value for the label field.
      *
      * @var        string
      */
-    protected $last_name;
+    protected $label;
 
     /**
-     * The value for the email field.
+     * The value for the comment field.
      *
      * @var        string
      */
-    protected $email;
+    protected $comment;
 
     /**
-     * The value for the phone field.
+     * The value for the default_group field.
      *
      * @var        string
      */
-    protected $phone;
+    protected $default_group;
 
     /**
-     * The value for the password field.
+     * The value for the anonymous field.
      *
-     * Note: this column has a database default value of: ''
      * @var        string
      */
-    protected $password;
+    protected $anonymous;
 
     /**
-     * The value for the location field.
+     * The value for the root field.
      *
-     * Note: this column has a database default value of: ''
      * @var        string
      */
-    protected $location;
+    protected $root;
 
     /**
-     * @var        ObjectCollection|ChildRegistration[] Collection to store aggregation of ChildRegistration objects.
+     * @var        ObjectCollection|ChildEvent[] Collection to store aggregation of ChildEvent objects.
      */
-    protected $collRegistrations;
-    protected $collRegistrationsPartial;
+    protected $collEvents;
+    protected $collEventsPartial;
 
     /**
      * @var        ObjectCollection|ChildUserGroup[] Collection to store aggregation of ChildUserGroup objects.
@@ -133,14 +131,14 @@ abstract class User implements ActiveRecordInterface
     protected $collUserGroupsPartial;
 
     /**
-     * @var        ObjectCollection|ChildAuthGroup[] Cross Collection to store aggregation of ChildAuthGroup objects.
+     * @var        ObjectCollection|ChildUser[] Cross Collection to store aggregation of ChildUser objects.
      */
-    protected $collAuthGroups;
+    protected $collUsers;
 
     /**
      * @var bool
      */
-    protected $collAuthGroupsPartial;
+    protected $collUsersPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -152,15 +150,15 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildAuthGroup[]
+     * @var ObjectCollection|ChildUser[]
      */
-    protected $authGroupsScheduledForDeletion = null;
+    protected $usersScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildRegistration[]
+     * @var ObjectCollection|ChildEvent[]
      */
-    protected $registrationsScheduledForDeletion = null;
+    protected $eventsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -169,24 +167,10 @@ abstract class User implements ActiveRecordInterface
     protected $userGroupsScheduledForDeletion = null;
 
     /**
-     * Applies default values to this object.
-     * This method should be called from the object's constructor (or
-     * equivalent initialization method).
-     * @see __construct()
-     */
-    public function applyDefaultValues()
-    {
-        $this->password = '';
-        $this->location = '';
-    }
-
-    /**
-     * Initializes internal state of crwdogs\events\Base\User object.
-     * @see applyDefaults()
+     * Initializes internal state of crwdogs\events\Base\AuthGroup object.
      */
     public function __construct()
     {
-        $this->applyDefaultValues();
     }
 
     /**
@@ -278,9 +262,9 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>User</code> instance.  If
-     * <code>obj</code> is an instance of <code>User</code>, delegates to
-     * <code>equals(User)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>AuthGroup</code> instance.  If
+     * <code>obj</code> is an instance of <code>AuthGroup</code>, delegates to
+     * <code>equals(AuthGroup)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -346,7 +330,7 @@ abstract class User implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|User The current object, for fluid interface
+     * @return $this|AuthGroup The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -408,214 +392,214 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user_id] column value.
+     * Get the [group_id] column value.
      *
      * @return int
      */
-    public function getUserId()
+    public function getGroupId()
     {
-        return $this->user_id;
+        return $this->group_id;
     }
 
     /**
-     * Get the [first_name] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getFirstName()
+    public function getName()
     {
-        return $this->first_name;
+        return $this->name;
     }
 
     /**
-     * Get the [last_name] column value.
+     * Get the [label] column value.
      *
      * @return string
      */
-    public function getLastName()
+    public function getLabel()
     {
-        return $this->last_name;
+        return $this->label;
     }
 
     /**
-     * Get the [email] column value.
+     * Get the [comment] column value.
      *
      * @return string
      */
-    public function getEmail()
+    public function getComment()
     {
-        return $this->email;
+        return $this->comment;
     }
 
     /**
-     * Get the [phone] column value.
+     * Get the [default_group] column value.
      *
      * @return string
      */
-    public function getPhone()
+    public function getDefaultGroup()
     {
-        return $this->phone;
+        return $this->default_group;
     }
 
     /**
-     * Get the [password] column value.
+     * Get the [anonymous] column value.
      *
      * @return string
      */
-    public function getPassword()
+    public function getAnonymous()
     {
-        return $this->password;
+        return $this->anonymous;
     }
 
     /**
-     * Get the [location] column value.
+     * Get the [root] column value.
      *
      * @return string
      */
-    public function getLocation()
+    public function getRoot()
     {
-        return $this->location;
+        return $this->root;
     }
 
     /**
-     * Set the value of [user_id] column.
+     * Set the value of [group_id] column.
      *
      * @param int $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setUserId($v)
+    public function setGroupId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->user_id !== $v) {
-            $this->user_id = $v;
-            $this->modifiedColumns[UserTableMap::COL_USER_ID] = true;
+        if ($this->group_id !== $v) {
+            $this->group_id = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_GROUP_ID] = true;
         }
 
         return $this;
-    } // setUserId()
+    } // setGroupId()
 
     /**
-     * Set the value of [first_name] column.
+     * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setFirstName($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->first_name !== $v) {
-            $this->first_name = $v;
-            $this->modifiedColumns[UserTableMap::COL_FIRST_NAME] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setFirstName()
+    } // setName()
 
     /**
-     * Set the value of [last_name] column.
+     * Set the value of [label] column.
      *
      * @param string $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setLastName($v)
+    public function setLabel($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->last_name !== $v) {
-            $this->last_name = $v;
-            $this->modifiedColumns[UserTableMap::COL_LAST_NAME] = true;
+        if ($this->label !== $v) {
+            $this->label = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_LABEL] = true;
         }
 
         return $this;
-    } // setLastName()
+    } // setLabel()
 
     /**
-     * Set the value of [email] column.
+     * Set the value of [comment] column.
      *
      * @param string $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setEmail($v)
+    public function setComment($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
+        if ($this->comment !== $v) {
+            $this->comment = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_COMMENT] = true;
         }
 
         return $this;
-    } // setEmail()
+    } // setComment()
 
     /**
-     * Set the value of [phone] column.
+     * Set the value of [default_group] column.
      *
      * @param string $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setPhone($v)
+    public function setDefaultGroup($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->phone !== $v) {
-            $this->phone = $v;
-            $this->modifiedColumns[UserTableMap::COL_PHONE] = true;
+        if ($this->default_group !== $v) {
+            $this->default_group = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_DEFAULT_GROUP] = true;
         }
 
         return $this;
-    } // setPhone()
+    } // setDefaultGroup()
 
     /**
-     * Set the value of [password] column.
+     * Set the value of [anonymous] column.
      *
      * @param string $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setPassword($v)
+    public function setAnonymous($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[UserTableMap::COL_PASSWORD] = true;
+        if ($this->anonymous !== $v) {
+            $this->anonymous = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_ANONYMOUS] = true;
         }
 
         return $this;
-    } // setPassword()
+    } // setAnonymous()
 
     /**
-     * Set the value of [location] column.
+     * Set the value of [root] column.
      *
      * @param string $v new value
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function setLocation($v)
+    public function setRoot($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->location !== $v) {
-            $this->location = $v;
-            $this->modifiedColumns[UserTableMap::COL_LOCATION] = true;
+        if ($this->root !== $v) {
+            $this->root = $v;
+            $this->modifiedColumns[AuthGroupTableMap::COL_ROOT] = true;
         }
 
         return $this;
-    } // setLocation()
+    } // setRoot()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -627,14 +611,6 @@ abstract class User implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->password !== '') {
-                return false;
-            }
-
-            if ($this->location !== '') {
-                return false;
-            }
-
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -661,26 +637,26 @@ abstract class User implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : AuthGroupTableMap::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->group_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('FirstName', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->first_name = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : AuthGroupTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('LastName', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->last_name = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : AuthGroupTableMap::translateFieldName('Label', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->label = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AuthGroupTableMap::translateFieldName('Comment', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->comment = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Phone', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->phone = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AuthGroupTableMap::translateFieldName('DefaultGroup', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->default_group = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->password = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AuthGroupTableMap::translateFieldName('Anonymous', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->anonymous = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->location = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AuthGroupTableMap::translateFieldName('Root', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->root = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -689,10 +665,10 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = AuthGroupTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\User'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\AuthGroup'), 0, $e);
         }
     }
 
@@ -734,13 +710,13 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(UserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(AuthGroupTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildUserQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildAuthGroupQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -750,11 +726,11 @@ abstract class User implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collRegistrations = null;
+            $this->collEvents = null;
 
             $this->collUserGroups = null;
 
-            $this->collAuthGroups = null;
+            $this->collUsers = null;
         } // if (deep)
     }
 
@@ -764,8 +740,8 @@ abstract class User implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see User::setDeleted()
-     * @see User::isDeleted()
+     * @see AuthGroup::setDeleted()
+     * @see AuthGroup::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -774,11 +750,11 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(AuthGroupTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildUserQuery::create()
+            $deleteQuery = ChildAuthGroupQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -813,7 +789,7 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(AuthGroupTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -832,7 +808,7 @@ abstract class User implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                UserTableMap::addInstanceToPool($this);
+                AuthGroupTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -869,14 +845,14 @@ abstract class User implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->authGroupsScheduledForDeletion !== null) {
-                if (!$this->authGroupsScheduledForDeletion->isEmpty()) {
+            if ($this->usersScheduledForDeletion !== null) {
+                if (!$this->usersScheduledForDeletion->isEmpty()) {
                     $pks = array();
-                    foreach ($this->authGroupsScheduledForDeletion as $entry) {
+                    foreach ($this->usersScheduledForDeletion as $entry) {
                         $entryPk = [];
 
-                        $entryPk[0] = $this->getUserId();
-                        $entryPk[1] = $entry->getGroupId();
+                        $entryPk[1] = $this->getGroupId();
+                        $entryPk[0] = $entry->getUserId();
                         $pks[] = $entryPk;
                     }
 
@@ -884,31 +860,31 @@ abstract class User implements ActiveRecordInterface
                         ->filterByPrimaryKeys($pks)
                         ->delete($con);
 
-                    $this->authGroupsScheduledForDeletion = null;
+                    $this->usersScheduledForDeletion = null;
                 }
 
             }
 
-            if ($this->collAuthGroups) {
-                foreach ($this->collAuthGroups as $authGroup) {
-                    if (!$authGroup->isDeleted() && ($authGroup->isNew() || $authGroup->isModified())) {
-                        $authGroup->save($con);
+            if ($this->collUsers) {
+                foreach ($this->collUsers as $user) {
+                    if (!$user->isDeleted() && ($user->isNew() || $user->isModified())) {
+                        $user->save($con);
                     }
                 }
             }
 
 
-            if ($this->registrationsScheduledForDeletion !== null) {
-                if (!$this->registrationsScheduledForDeletion->isEmpty()) {
-                    \crwdogs\events\RegistrationQuery::create()
-                        ->filterByPrimaryKeys($this->registrationsScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->eventsScheduledForDeletion !== null) {
+                if (!$this->eventsScheduledForDeletion->isEmpty()) {
+                    \crwdogs\events\EventQuery::create()
+                        ->filterByPrimaryKeys($this->eventsScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->registrationsScheduledForDeletion = null;
+                    $this->eventsScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collRegistrations !== null) {
-                foreach ($this->collRegistrations as $referrerFK) {
+            if ($this->collEvents !== null) {
+                foreach ($this->collEvents as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -952,36 +928,36 @@ abstract class User implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[UserTableMap::COL_USER_ID] = true;
-        if (null !== $this->user_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTableMap::COL_USER_ID . ')');
+        $this->modifiedColumns[AuthGroupTableMap::COL_GROUP_ID] = true;
+        if (null !== $this->group_id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . AuthGroupTableMap::COL_GROUP_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UserTableMap::COL_USER_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'user_id';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_GROUP_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'group_id';
         }
-        if ($this->isColumnModified(UserTableMap::COL_FIRST_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'first_name';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(UserTableMap::COL_LAST_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'last_name';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_LABEL)) {
+            $modifiedColumns[':p' . $index++]  = 'label';
         }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_COMMENT)) {
+            $modifiedColumns[':p' . $index++]  = 'comment';
         }
-        if ($this->isColumnModified(UserTableMap::COL_PHONE)) {
-            $modifiedColumns[':p' . $index++]  = 'phone';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_DEFAULT_GROUP)) {
+            $modifiedColumns[':p' . $index++]  = 'default_group';
         }
-        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = 'password';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_ANONYMOUS)) {
+            $modifiedColumns[':p' . $index++]  = 'anonymous';
         }
-        if ($this->isColumnModified(UserTableMap::COL_LOCATION)) {
-            $modifiedColumns[':p' . $index++]  = 'location';
+        if ($this->isColumnModified(AuthGroupTableMap::COL_ROOT)) {
+            $modifiedColumns[':p' . $index++]  = 'root';
         }
 
         $sql = sprintf(
-            'INSERT INTO user (%s) VALUES (%s)',
+            'INSERT INTO auth_group (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -990,26 +966,26 @@ abstract class User implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'user_id':
-                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
+                    case 'group_id':
+                        $stmt->bindValue($identifier, $this->group_id, PDO::PARAM_INT);
                         break;
-                    case 'first_name':
-                        $stmt->bindValue($identifier, $this->first_name, PDO::PARAM_STR);
+                    case 'name':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'last_name':
-                        $stmt->bindValue($identifier, $this->last_name, PDO::PARAM_STR);
+                    case 'label':
+                        $stmt->bindValue($identifier, $this->label, PDO::PARAM_STR);
                         break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                    case 'comment':
+                        $stmt->bindValue($identifier, $this->comment, PDO::PARAM_STR);
                         break;
-                    case 'phone':
-                        $stmt->bindValue($identifier, $this->phone, PDO::PARAM_STR);
+                    case 'default_group':
+                        $stmt->bindValue($identifier, $this->default_group, PDO::PARAM_STR);
                         break;
-                    case 'password':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+                    case 'anonymous':
+                        $stmt->bindValue($identifier, $this->anonymous, PDO::PARAM_STR);
                         break;
-                    case 'location':
-                        $stmt->bindValue($identifier, $this->location, PDO::PARAM_STR);
+                    case 'root':
+                        $stmt->bindValue($identifier, $this->root, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1024,7 +1000,7 @@ abstract class User implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setUserId($pk);
+        $this->setGroupId($pk);
 
         $this->setNew(false);
     }
@@ -1057,7 +1033,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = AuthGroupTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1074,25 +1050,25 @@ abstract class User implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getUserId();
+                return $this->getGroupId();
                 break;
             case 1:
-                return $this->getFirstName();
+                return $this->getName();
                 break;
             case 2:
-                return $this->getLastName();
+                return $this->getLabel();
                 break;
             case 3:
-                return $this->getEmail();
+                return $this->getComment();
                 break;
             case 4:
-                return $this->getPhone();
+                return $this->getDefaultGroup();
                 break;
             case 5:
-                return $this->getPassword();
+                return $this->getAnonymous();
                 break;
             case 6:
-                return $this->getLocation();
+                return $this->getRoot();
                 break;
             default:
                 return null;
@@ -1118,19 +1094,19 @@ abstract class User implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['User'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['AuthGroup'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['User'][$this->hashCode()] = true;
-        $keys = UserTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['AuthGroup'][$this->hashCode()] = true;
+        $keys = AuthGroupTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getUserId(),
-            $keys[1] => $this->getFirstName(),
-            $keys[2] => $this->getLastName(),
-            $keys[3] => $this->getEmail(),
-            $keys[4] => $this->getPhone(),
-            $keys[5] => $this->getPassword(),
-            $keys[6] => $this->getLocation(),
+            $keys[0] => $this->getGroupId(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getLabel(),
+            $keys[3] => $this->getComment(),
+            $keys[4] => $this->getDefaultGroup(),
+            $keys[5] => $this->getAnonymous(),
+            $keys[6] => $this->getRoot(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1138,20 +1114,20 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collRegistrations) {
+            if (null !== $this->collEvents) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'registrations';
+                        $key = 'events';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'registrations';
+                        $key = 'events';
                         break;
                     default:
-                        $key = 'Registrations';
+                        $key = 'Events';
                 }
 
-                $result[$key] = $this->collRegistrations->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collEvents->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collUserGroups) {
 
@@ -1182,11 +1158,11 @@ abstract class User implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\crwdogs\events\User
+     * @return $this|\crwdogs\events\AuthGroup
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = AuthGroupTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1197,31 +1173,31 @@ abstract class User implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\crwdogs\events\User
+     * @return $this|\crwdogs\events\AuthGroup
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setUserId($value);
+                $this->setGroupId($value);
                 break;
             case 1:
-                $this->setFirstName($value);
+                $this->setName($value);
                 break;
             case 2:
-                $this->setLastName($value);
+                $this->setLabel($value);
                 break;
             case 3:
-                $this->setEmail($value);
+                $this->setComment($value);
                 break;
             case 4:
-                $this->setPhone($value);
+                $this->setDefaultGroup($value);
                 break;
             case 5:
-                $this->setPassword($value);
+                $this->setAnonymous($value);
                 break;
             case 6:
-                $this->setLocation($value);
+                $this->setRoot($value);
                 break;
         } // switch()
 
@@ -1247,28 +1223,28 @@ abstract class User implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = UserTableMap::getFieldNames($keyType);
+        $keys = AuthGroupTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setUserId($arr[$keys[0]]);
+            $this->setGroupId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setFirstName($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setLastName($arr[$keys[2]]);
+            $this->setLabel($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setEmail($arr[$keys[3]]);
+            $this->setComment($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setPhone($arr[$keys[4]]);
+            $this->setDefaultGroup($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setPassword($arr[$keys[5]]);
+            $this->setAnonymous($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setLocation($arr[$keys[6]]);
+            $this->setRoot($arr[$keys[6]]);
         }
     }
 
@@ -1289,7 +1265,7 @@ abstract class User implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\crwdogs\events\User The current object, for fluid interface
+     * @return $this|\crwdogs\events\AuthGroup The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1309,28 +1285,28 @@ abstract class User implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(UserTableMap::DATABASE_NAME);
+        $criteria = new Criteria(AuthGroupTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(UserTableMap::COL_USER_ID)) {
-            $criteria->add(UserTableMap::COL_USER_ID, $this->user_id);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_GROUP_ID)) {
+            $criteria->add(AuthGroupTableMap::COL_GROUP_ID, $this->group_id);
         }
-        if ($this->isColumnModified(UserTableMap::COL_FIRST_NAME)) {
-            $criteria->add(UserTableMap::COL_FIRST_NAME, $this->first_name);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_NAME)) {
+            $criteria->add(AuthGroupTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(UserTableMap::COL_LAST_NAME)) {
-            $criteria->add(UserTableMap::COL_LAST_NAME, $this->last_name);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_LABEL)) {
+            $criteria->add(AuthGroupTableMap::COL_LABEL, $this->label);
         }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_COMMENT)) {
+            $criteria->add(AuthGroupTableMap::COL_COMMENT, $this->comment);
         }
-        if ($this->isColumnModified(UserTableMap::COL_PHONE)) {
-            $criteria->add(UserTableMap::COL_PHONE, $this->phone);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_DEFAULT_GROUP)) {
+            $criteria->add(AuthGroupTableMap::COL_DEFAULT_GROUP, $this->default_group);
         }
-        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
-            $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_ANONYMOUS)) {
+            $criteria->add(AuthGroupTableMap::COL_ANONYMOUS, $this->anonymous);
         }
-        if ($this->isColumnModified(UserTableMap::COL_LOCATION)) {
-            $criteria->add(UserTableMap::COL_LOCATION, $this->location);
+        if ($this->isColumnModified(AuthGroupTableMap::COL_ROOT)) {
+            $criteria->add(AuthGroupTableMap::COL_ROOT, $this->root);
         }
 
         return $criteria;
@@ -1348,8 +1324,8 @@ abstract class User implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildUserQuery::create();
-        $criteria->add(UserTableMap::COL_USER_ID, $this->user_id);
+        $criteria = ChildAuthGroupQuery::create();
+        $criteria->add(AuthGroupTableMap::COL_GROUP_ID, $this->group_id);
 
         return $criteria;
     }
@@ -1362,7 +1338,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getUserId();
+        $validPk = null !== $this->getGroupId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1382,18 +1358,18 @@ abstract class User implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getUserId();
+        return $this->getGroupId();
     }
 
     /**
-     * Generic method to set the primary key (user_id column).
+     * Generic method to set the primary key (group_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setUserId($key);
+        $this->setGroupId($key);
     }
 
     /**
@@ -1402,7 +1378,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getUserId();
+        return null === $this->getGroupId();
     }
 
     /**
@@ -1411,28 +1387,28 @@ abstract class User implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \crwdogs\events\User (or compatible) type.
+     * @param      object $copyObj An object of \crwdogs\events\AuthGroup (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setFirstName($this->getFirstName());
-        $copyObj->setLastName($this->getLastName());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setPhone($this->getPhone());
-        $copyObj->setPassword($this->getPassword());
-        $copyObj->setLocation($this->getLocation());
+        $copyObj->setName($this->getName());
+        $copyObj->setLabel($this->getLabel());
+        $copyObj->setComment($this->getComment());
+        $copyObj->setDefaultGroup($this->getDefaultGroup());
+        $copyObj->setAnonymous($this->getAnonymous());
+        $copyObj->setRoot($this->getRoot());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getRegistrations() as $relObj) {
+            foreach ($this->getEvents() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addRegistration($relObj->copy($deepCopy));
+                    $copyObj->addEvent($relObj->copy($deepCopy));
                 }
             }
 
@@ -1446,7 +1422,7 @@ abstract class User implements ActiveRecordInterface
 
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setUserId(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setGroupId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1459,7 +1435,7 @@ abstract class User implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \crwdogs\events\User Clone of current object.
+     * @return \crwdogs\events\AuthGroup Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1483,8 +1459,8 @@ abstract class User implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Registration' == $relationName) {
-            $this->initRegistrations();
+        if ('Event' == $relationName) {
+            $this->initEvents();
             return;
         }
         if ('UserGroup' == $relationName) {
@@ -1494,31 +1470,31 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collRegistrations collection
+     * Clears out the collEvents collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addRegistrations()
+     * @see        addEvents()
      */
-    public function clearRegistrations()
+    public function clearEvents()
     {
-        $this->collRegistrations = null; // important to set this to NULL since that means it is uninitialized
+        $this->collEvents = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collRegistrations collection loaded partially.
+     * Reset is the collEvents collection loaded partially.
      */
-    public function resetPartialRegistrations($v = true)
+    public function resetPartialEvents($v = true)
     {
-        $this->collRegistrationsPartial = $v;
+        $this->collEventsPartial = $v;
     }
 
     /**
-     * Initializes the collRegistrations collection.
+     * Initializes the collEvents collection.
      *
-     * By default this just sets the collRegistrations collection to an empty array (like clearcollRegistrations());
+     * By default this just sets the collEvents collection to an empty array (like clearcollEvents());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1527,162 +1503,162 @@ abstract class User implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initRegistrations($overrideExisting = true)
+    public function initEvents($overrideExisting = true)
     {
-        if (null !== $this->collRegistrations && !$overrideExisting) {
+        if (null !== $this->collEvents && !$overrideExisting) {
             return;
         }
 
-        $collectionClassName = RegistrationTableMap::getTableMap()->getCollectionClassName();
+        $collectionClassName = EventTableMap::getTableMap()->getCollectionClassName();
 
-        $this->collRegistrations = new $collectionClassName;
-        $this->collRegistrations->setModel('\crwdogs\events\Registration');
+        $this->collEvents = new $collectionClassName;
+        $this->collEvents->setModel('\crwdogs\events\Event');
     }
 
     /**
-     * Gets an array of ChildRegistration objects which contain a foreign key that references this object.
+     * Gets an array of ChildEvent objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
+     * If this ChildAuthGroup is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildRegistration[] List of ChildRegistration objects
+     * @return ObjectCollection|ChildEvent[] List of ChildEvent objects
      * @throws PropelException
      */
-    public function getRegistrations(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getEvents(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collRegistrationsPartial && !$this->isNew();
-        if (null === $this->collRegistrations || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collRegistrations) {
+        $partial = $this->collEventsPartial && !$this->isNew();
+        if (null === $this->collEvents || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collEvents) {
                 // return empty collection
-                $this->initRegistrations();
+                $this->initEvents();
             } else {
-                $collRegistrations = ChildRegistrationQuery::create(null, $criteria)
-                    ->filterByUser($this)
+                $collEvents = ChildEventQuery::create(null, $criteria)
+                    ->filterByAuthGroup($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collRegistrationsPartial && count($collRegistrations)) {
-                        $this->initRegistrations(false);
+                    if (false !== $this->collEventsPartial && count($collEvents)) {
+                        $this->initEvents(false);
 
-                        foreach ($collRegistrations as $obj) {
-                            if (false == $this->collRegistrations->contains($obj)) {
-                                $this->collRegistrations->append($obj);
+                        foreach ($collEvents as $obj) {
+                            if (false == $this->collEvents->contains($obj)) {
+                                $this->collEvents->append($obj);
                             }
                         }
 
-                        $this->collRegistrationsPartial = true;
+                        $this->collEventsPartial = true;
                     }
 
-                    return $collRegistrations;
+                    return $collEvents;
                 }
 
-                if ($partial && $this->collRegistrations) {
-                    foreach ($this->collRegistrations as $obj) {
+                if ($partial && $this->collEvents) {
+                    foreach ($this->collEvents as $obj) {
                         if ($obj->isNew()) {
-                            $collRegistrations[] = $obj;
+                            $collEvents[] = $obj;
                         }
                     }
                 }
 
-                $this->collRegistrations = $collRegistrations;
-                $this->collRegistrationsPartial = false;
+                $this->collEvents = $collEvents;
+                $this->collEventsPartial = false;
             }
         }
 
-        return $this->collRegistrations;
+        return $this->collEvents;
     }
 
     /**
-     * Sets a collection of ChildRegistration objects related by a one-to-many relationship
+     * Sets a collection of ChildEvent objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $registrations A Propel collection.
+     * @param      Collection $events A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
+     * @return $this|ChildAuthGroup The current object (for fluent API support)
      */
-    public function setRegistrations(Collection $registrations, ConnectionInterface $con = null)
+    public function setEvents(Collection $events, ConnectionInterface $con = null)
     {
-        /** @var ChildRegistration[] $registrationsToDelete */
-        $registrationsToDelete = $this->getRegistrations(new Criteria(), $con)->diff($registrations);
+        /** @var ChildEvent[] $eventsToDelete */
+        $eventsToDelete = $this->getEvents(new Criteria(), $con)->diff($events);
 
 
-        $this->registrationsScheduledForDeletion = $registrationsToDelete;
+        $this->eventsScheduledForDeletion = $eventsToDelete;
 
-        foreach ($registrationsToDelete as $registrationRemoved) {
-            $registrationRemoved->setUser(null);
+        foreach ($eventsToDelete as $eventRemoved) {
+            $eventRemoved->setAuthGroup(null);
         }
 
-        $this->collRegistrations = null;
-        foreach ($registrations as $registration) {
-            $this->addRegistration($registration);
+        $this->collEvents = null;
+        foreach ($events as $event) {
+            $this->addEvent($event);
         }
 
-        $this->collRegistrations = $registrations;
-        $this->collRegistrationsPartial = false;
+        $this->collEvents = $events;
+        $this->collEventsPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related Registration objects.
+     * Returns the number of related Event objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related Registration objects.
+     * @return int             Count of related Event objects.
      * @throws PropelException
      */
-    public function countRegistrations(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countEvents(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collRegistrationsPartial && !$this->isNew();
-        if (null === $this->collRegistrations || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collRegistrations) {
+        $partial = $this->collEventsPartial && !$this->isNew();
+        if (null === $this->collEvents || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collEvents) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getRegistrations());
+                return count($this->getEvents());
             }
 
-            $query = ChildRegistrationQuery::create(null, $criteria);
+            $query = ChildEventQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
 
             return $query
-                ->filterByUser($this)
+                ->filterByAuthGroup($this)
                 ->count($con);
         }
 
-        return count($this->collRegistrations);
+        return count($this->collEvents);
     }
 
     /**
-     * Method called to associate a ChildRegistration object to this object
-     * through the ChildRegistration foreign key attribute.
+     * Method called to associate a ChildEvent object to this object
+     * through the ChildEvent foreign key attribute.
      *
-     * @param  ChildRegistration $l ChildRegistration
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @param  ChildEvent $l ChildEvent
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
-    public function addRegistration(ChildRegistration $l)
+    public function addEvent(ChildEvent $l)
     {
-        if ($this->collRegistrations === null) {
-            $this->initRegistrations();
-            $this->collRegistrationsPartial = true;
+        if ($this->collEvents === null) {
+            $this->initEvents();
+            $this->collEventsPartial = true;
         }
 
-        if (!$this->collRegistrations->contains($l)) {
-            $this->doAddRegistration($l);
+        if (!$this->collEvents->contains($l)) {
+            $this->doAddEvent($l);
 
-            if ($this->registrationsScheduledForDeletion and $this->registrationsScheduledForDeletion->contains($l)) {
-                $this->registrationsScheduledForDeletion->remove($this->registrationsScheduledForDeletion->search($l));
+            if ($this->eventsScheduledForDeletion and $this->eventsScheduledForDeletion->contains($l)) {
+                $this->eventsScheduledForDeletion->remove($this->eventsScheduledForDeletion->search($l));
             }
         }
 
@@ -1690,29 +1666,29 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * @param ChildRegistration $registration The ChildRegistration object to add.
+     * @param ChildEvent $event The ChildEvent object to add.
      */
-    protected function doAddRegistration(ChildRegistration $registration)
+    protected function doAddEvent(ChildEvent $event)
     {
-        $this->collRegistrations[]= $registration;
-        $registration->setUser($this);
+        $this->collEvents[]= $event;
+        $event->setAuthGroup($this);
     }
 
     /**
-     * @param  ChildRegistration $registration The ChildRegistration object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
+     * @param  ChildEvent $event The ChildEvent object to remove.
+     * @return $this|ChildAuthGroup The current object (for fluent API support)
      */
-    public function removeRegistration(ChildRegistration $registration)
+    public function removeEvent(ChildEvent $event)
     {
-        if ($this->getRegistrations()->contains($registration)) {
-            $pos = $this->collRegistrations->search($registration);
-            $this->collRegistrations->remove($pos);
-            if (null === $this->registrationsScheduledForDeletion) {
-                $this->registrationsScheduledForDeletion = clone $this->collRegistrations;
-                $this->registrationsScheduledForDeletion->clear();
+        if ($this->getEvents()->contains($event)) {
+            $pos = $this->collEvents->search($event);
+            $this->collEvents->remove($pos);
+            if (null === $this->eventsScheduledForDeletion) {
+                $this->eventsScheduledForDeletion = clone $this->collEvents;
+                $this->eventsScheduledForDeletion->clear();
             }
-            $this->registrationsScheduledForDeletion[]= clone $registration;
-            $registration->setUser(null);
+            $this->eventsScheduledForDeletion[]= clone $event;
+            $event->setAuthGroup(null);
         }
 
         return $this;
@@ -1722,25 +1698,25 @@ abstract class User implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this User is new, it will return
-     * an empty collection; or if this User has previously
-     * been saved, it will retrieve related Registrations from storage.
+     * Otherwise if this AuthGroup is new, it will return
+     * an empty collection; or if this AuthGroup has previously
+     * been saved, it will retrieve related Events from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in User.
+     * actually need in AuthGroup.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildRegistration[] List of ChildRegistration objects
+     * @return ObjectCollection|ChildEvent[] List of ChildEvent objects
      */
-    public function getRegistrationsJoinEvent(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getEventsJoinLocation(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildRegistrationQuery::create(null, $criteria);
-        $query->joinWith('Event', $joinBehavior);
+        $query = ChildEventQuery::create(null, $criteria);
+        $query->joinWith('Location', $joinBehavior);
 
-        return $this->getRegistrations($query, $con);
+        return $this->getEvents($query, $con);
     }
 
     /**
@@ -1795,7 +1771,7 @@ abstract class User implements ActiveRecordInterface
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
+     * If this ChildAuthGroup is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
@@ -1812,7 +1788,7 @@ abstract class User implements ActiveRecordInterface
                 $this->initUserGroups();
             } else {
                 $collUserGroups = ChildUserGroupQuery::create(null, $criteria)
-                    ->filterByUser($this)
+                    ->filterByAuthGroup($this)
                     ->find($con);
 
                 if (null !== $criteria) {
@@ -1855,7 +1831,7 @@ abstract class User implements ActiveRecordInterface
      *
      * @param      Collection $userGroups A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
+     * @return $this|ChildAuthGroup The current object (for fluent API support)
      */
     public function setUserGroups(Collection $userGroups, ConnectionInterface $con = null)
     {
@@ -1869,7 +1845,7 @@ abstract class User implements ActiveRecordInterface
         $this->userGroupsScheduledForDeletion = clone $userGroupsToDelete;
 
         foreach ($userGroupsToDelete as $userGroupRemoved) {
-            $userGroupRemoved->setUser(null);
+            $userGroupRemoved->setAuthGroup(null);
         }
 
         $this->collUserGroups = null;
@@ -1910,7 +1886,7 @@ abstract class User implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByUser($this)
+                ->filterByAuthGroup($this)
                 ->count($con);
         }
 
@@ -1922,7 +1898,7 @@ abstract class User implements ActiveRecordInterface
      * through the ChildUserGroup foreign key attribute.
      *
      * @param  ChildUserGroup $l ChildUserGroup
-     * @return $this|\crwdogs\events\User The current object (for fluent API support)
+     * @return $this|\crwdogs\events\AuthGroup The current object (for fluent API support)
      */
     public function addUserGroup(ChildUserGroup $l)
     {
@@ -1948,12 +1924,12 @@ abstract class User implements ActiveRecordInterface
     protected function doAddUserGroup(ChildUserGroup $userGroup)
     {
         $this->collUserGroups[]= $userGroup;
-        $userGroup->setUser($this);
+        $userGroup->setAuthGroup($this);
     }
 
     /**
      * @param  ChildUserGroup $userGroup The ChildUserGroup object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
+     * @return $this|ChildAuthGroup The current object (for fluent API support)
      */
     public function removeUserGroup(ChildUserGroup $userGroup)
     {
@@ -1965,7 +1941,7 @@ abstract class User implements ActiveRecordInterface
                 $this->userGroupsScheduledForDeletion->clear();
             }
             $this->userGroupsScheduledForDeletion[]= clone $userGroup;
-            $userGroup->setUser(null);
+            $userGroup->setAuthGroup(null);
         }
 
         return $this;
@@ -1975,205 +1951,205 @@ abstract class User implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this User is new, it will return
-     * an empty collection; or if this User has previously
+     * Otherwise if this AuthGroup is new, it will return
+     * an empty collection; or if this AuthGroup has previously
      * been saved, it will retrieve related UserGroups from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in User.
+     * actually need in AuthGroup.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildUserGroup[] List of ChildUserGroup objects
      */
-    public function getUserGroupsJoinAuthGroup(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getUserGroupsJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildUserGroupQuery::create(null, $criteria);
-        $query->joinWith('AuthGroup', $joinBehavior);
+        $query->joinWith('User', $joinBehavior);
 
         return $this->getUserGroups($query, $con);
     }
 
     /**
-     * Clears out the collAuthGroups collection
+     * Clears out the collUsers collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addAuthGroups()
+     * @see        addUsers()
      */
-    public function clearAuthGroups()
+    public function clearUsers()
     {
-        $this->collAuthGroups = null; // important to set this to NULL since that means it is uninitialized
+        $this->collUsers = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Initializes the collAuthGroups crossRef collection.
+     * Initializes the collUsers crossRef collection.
      *
-     * By default this just sets the collAuthGroups collection to an empty collection (like clearAuthGroups());
+     * By default this just sets the collUsers collection to an empty collection (like clearUsers());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
      * @return void
      */
-    public function initAuthGroups()
+    public function initUsers()
     {
         $collectionClassName = UserGroupTableMap::getTableMap()->getCollectionClassName();
 
-        $this->collAuthGroups = new $collectionClassName;
-        $this->collAuthGroupsPartial = true;
-        $this->collAuthGroups->setModel('\crwdogs\events\AuthGroup');
+        $this->collUsers = new $collectionClassName;
+        $this->collUsersPartial = true;
+        $this->collUsers->setModel('\crwdogs\events\User');
     }
 
     /**
-     * Checks if the collAuthGroups collection is loaded.
+     * Checks if the collUsers collection is loaded.
      *
      * @return bool
      */
-    public function isAuthGroupsLoaded()
+    public function isUsersLoaded()
     {
-        return null !== $this->collAuthGroups;
+        return null !== $this->collUsers;
     }
 
     /**
-     * Gets a collection of ChildAuthGroup objects related by a many-to-many relationship
+     * Gets a collection of ChildUser objects related by a many-to-many relationship
      * to the current object by way of the user_group cross-reference table.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
+     * If this ChildAuthGroup is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria Optional query object to filter the query
      * @param      ConnectionInterface $con Optional connection object
      *
-     * @return ObjectCollection|ChildAuthGroup[] List of ChildAuthGroup objects
+     * @return ObjectCollection|ChildUser[] List of ChildUser objects
      */
-    public function getAuthGroups(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getUsers(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collAuthGroupsPartial && !$this->isNew();
-        if (null === $this->collAuthGroups || null !== $criteria || $partial) {
+        $partial = $this->collUsersPartial && !$this->isNew();
+        if (null === $this->collUsers || null !== $criteria || $partial) {
             if ($this->isNew()) {
                 // return empty collection
-                if (null === $this->collAuthGroups) {
-                    $this->initAuthGroups();
+                if (null === $this->collUsers) {
+                    $this->initUsers();
                 }
             } else {
 
-                $query = ChildAuthGroupQuery::create(null, $criteria)
-                    ->filterByUser($this);
-                $collAuthGroups = $query->find($con);
+                $query = ChildUserQuery::create(null, $criteria)
+                    ->filterByAuthGroup($this);
+                $collUsers = $query->find($con);
                 if (null !== $criteria) {
-                    return $collAuthGroups;
+                    return $collUsers;
                 }
 
-                if ($partial && $this->collAuthGroups) {
+                if ($partial && $this->collUsers) {
                     //make sure that already added objects gets added to the list of the database.
-                    foreach ($this->collAuthGroups as $obj) {
-                        if (!$collAuthGroups->contains($obj)) {
-                            $collAuthGroups[] = $obj;
+                    foreach ($this->collUsers as $obj) {
+                        if (!$collUsers->contains($obj)) {
+                            $collUsers[] = $obj;
                         }
                     }
                 }
 
-                $this->collAuthGroups = $collAuthGroups;
-                $this->collAuthGroupsPartial = false;
+                $this->collUsers = $collUsers;
+                $this->collUsersPartial = false;
             }
         }
 
-        return $this->collAuthGroups;
+        return $this->collUsers;
     }
 
     /**
-     * Sets a collection of AuthGroup objects related by a many-to-many relationship
+     * Sets a collection of User objects related by a many-to-many relationship
      * to the current object by way of the user_group cross-reference table.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param  Collection $authGroups A Propel collection.
+     * @param  Collection $users A Propel collection.
      * @param  ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
+     * @return $this|ChildAuthGroup The current object (for fluent API support)
      */
-    public function setAuthGroups(Collection $authGroups, ConnectionInterface $con = null)
+    public function setUsers(Collection $users, ConnectionInterface $con = null)
     {
-        $this->clearAuthGroups();
-        $currentAuthGroups = $this->getAuthGroups();
+        $this->clearUsers();
+        $currentUsers = $this->getUsers();
 
-        $authGroupsScheduledForDeletion = $currentAuthGroups->diff($authGroups);
+        $usersScheduledForDeletion = $currentUsers->diff($users);
 
-        foreach ($authGroupsScheduledForDeletion as $toDelete) {
-            $this->removeAuthGroup($toDelete);
+        foreach ($usersScheduledForDeletion as $toDelete) {
+            $this->removeUser($toDelete);
         }
 
-        foreach ($authGroups as $authGroup) {
-            if (!$currentAuthGroups->contains($authGroup)) {
-                $this->doAddAuthGroup($authGroup);
+        foreach ($users as $user) {
+            if (!$currentUsers->contains($user)) {
+                $this->doAddUser($user);
             }
         }
 
-        $this->collAuthGroupsPartial = false;
-        $this->collAuthGroups = $authGroups;
+        $this->collUsersPartial = false;
+        $this->collUsers = $users;
 
         return $this;
     }
 
     /**
-     * Gets the number of AuthGroup objects related by a many-to-many relationship
+     * Gets the number of User objects related by a many-to-many relationship
      * to the current object by way of the user_group cross-reference table.
      *
      * @param      Criteria $criteria Optional query object to filter the query
      * @param      boolean $distinct Set to true to force count distinct
      * @param      ConnectionInterface $con Optional connection object
      *
-     * @return int the number of related AuthGroup objects
+     * @return int the number of related User objects
      */
-    public function countAuthGroups(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countUsers(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collAuthGroupsPartial && !$this->isNew();
-        if (null === $this->collAuthGroups || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collAuthGroups) {
+        $partial = $this->collUsersPartial && !$this->isNew();
+        if (null === $this->collUsers || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collUsers) {
                 return 0;
             } else {
 
                 if ($partial && !$criteria) {
-                    return count($this->getAuthGroups());
+                    return count($this->getUsers());
                 }
 
-                $query = ChildAuthGroupQuery::create(null, $criteria);
+                $query = ChildUserQuery::create(null, $criteria);
                 if ($distinct) {
                     $query->distinct();
                 }
 
                 return $query
-                    ->filterByUser($this)
+                    ->filterByAuthGroup($this)
                     ->count($con);
             }
         } else {
-            return count($this->collAuthGroups);
+            return count($this->collUsers);
         }
     }
 
     /**
-     * Associate a ChildAuthGroup to this object
+     * Associate a ChildUser to this object
      * through the user_group cross reference table.
      *
-     * @param ChildAuthGroup $authGroup
-     * @return ChildUser The current object (for fluent API support)
+     * @param ChildUser $user
+     * @return ChildAuthGroup The current object (for fluent API support)
      */
-    public function addAuthGroup(ChildAuthGroup $authGroup)
+    public function addUser(ChildUser $user)
     {
-        if ($this->collAuthGroups === null) {
-            $this->initAuthGroups();
+        if ($this->collUsers === null) {
+            $this->initUsers();
         }
 
-        if (!$this->getAuthGroups()->contains($authGroup)) {
+        if (!$this->getUsers()->contains($user)) {
             // only add it if the **same** object is not already associated
-            $this->collAuthGroups->push($authGroup);
-            $this->doAddAuthGroup($authGroup);
+            $this->collUsers->push($user);
+            $this->doAddUser($user);
         }
 
         return $this;
@@ -2181,58 +2157,58 @@ abstract class User implements ActiveRecordInterface
 
     /**
      *
-     * @param ChildAuthGroup $authGroup
+     * @param ChildUser $user
      */
-    protected function doAddAuthGroup(ChildAuthGroup $authGroup)
+    protected function doAddUser(ChildUser $user)
     {
         $userGroup = new ChildUserGroup();
 
-        $userGroup->setAuthGroup($authGroup);
+        $userGroup->setUser($user);
 
-        $userGroup->setUser($this);
+        $userGroup->setAuthGroup($this);
 
         $this->addUserGroup($userGroup);
 
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!$authGroup->isUsersLoaded()) {
-            $authGroup->initUsers();
-            $authGroup->getUsers()->push($this);
-        } elseif (!$authGroup->getUsers()->contains($this)) {
-            $authGroup->getUsers()->push($this);
+        if (!$user->isAuthGroupsLoaded()) {
+            $user->initAuthGroups();
+            $user->getAuthGroups()->push($this);
+        } elseif (!$user->getAuthGroups()->contains($this)) {
+            $user->getAuthGroups()->push($this);
         }
 
     }
 
     /**
-     * Remove authGroup of this object
+     * Remove user of this object
      * through the user_group cross reference table.
      *
-     * @param ChildAuthGroup $authGroup
-     * @return ChildUser The current object (for fluent API support)
+     * @param ChildUser $user
+     * @return ChildAuthGroup The current object (for fluent API support)
      */
-    public function removeAuthGroup(ChildAuthGroup $authGroup)
+    public function removeUser(ChildUser $user)
     {
-        if ($this->getAuthGroups()->contains($authGroup)) {
+        if ($this->getUsers()->contains($user)) {
             $userGroup = new ChildUserGroup();
-            $userGroup->setAuthGroup($authGroup);
-            if ($authGroup->isUsersLoaded()) {
+            $userGroup->setUser($user);
+            if ($user->isAuthGroupsLoaded()) {
                 //remove the back reference if available
-                $authGroup->getUsers()->removeObject($this);
+                $user->getAuthGroups()->removeObject($this);
             }
 
-            $userGroup->setUser($this);
+            $userGroup->setAuthGroup($this);
             $this->removeUserGroup(clone $userGroup);
             $userGroup->clear();
 
-            $this->collAuthGroups->remove($this->collAuthGroups->search($authGroup));
+            $this->collUsers->remove($this->collUsers->search($user));
 
-            if (null === $this->authGroupsScheduledForDeletion) {
-                $this->authGroupsScheduledForDeletion = clone $this->collAuthGroups;
-                $this->authGroupsScheduledForDeletion->clear();
+            if (null === $this->usersScheduledForDeletion) {
+                $this->usersScheduledForDeletion = clone $this->collUsers;
+                $this->usersScheduledForDeletion->clear();
             }
 
-            $this->authGroupsScheduledForDeletion->push($authGroup);
+            $this->usersScheduledForDeletion->push($user);
         }
 
 
@@ -2246,16 +2222,15 @@ abstract class User implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->user_id = null;
-        $this->first_name = null;
-        $this->last_name = null;
-        $this->email = null;
-        $this->phone = null;
-        $this->password = null;
-        $this->location = null;
+        $this->group_id = null;
+        $this->name = null;
+        $this->label = null;
+        $this->comment = null;
+        $this->default_group = null;
+        $this->anonymous = null;
+        $this->root = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
-        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -2272,8 +2247,8 @@ abstract class User implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collRegistrations) {
-                foreach ($this->collRegistrations as $o) {
+            if ($this->collEvents) {
+                foreach ($this->collEvents as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -2282,16 +2257,16 @@ abstract class User implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collAuthGroups) {
-                foreach ($this->collAuthGroups as $o) {
+            if ($this->collUsers) {
+                foreach ($this->collUsers as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
         } // if ($deep)
 
-        $this->collRegistrations = null;
+        $this->collEvents = null;
         $this->collUserGroups = null;
-        $this->collAuthGroups = null;
+        $this->collUsers = null;
     }
 
     /**
@@ -2301,7 +2276,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(UserTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(AuthGroupTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

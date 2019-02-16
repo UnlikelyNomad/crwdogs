@@ -9,6 +9,8 @@
 require_once '../../vendor/autoload.php';
 require_once '../../generated-conf/config.php';
 
+require_once(dirname(__DIR__).'/common/crwdogs.inc.php');
+
 $eid = 1; //SF2019 event key ID
 
 use \crwdogs\events\EventQuery;
@@ -32,6 +34,7 @@ $event = EventQuery::create()->findPK($eid);
         <title>CRW Dogs - Spring Fling</title>
     </head>
     <body>
+        <?php include '../common/nav.inc.php'; ?>
         <div class="main-content">
             <div class="banner">
                 <!--<img src="/images/jump1.jpg" class="img-fluid rounded">-->

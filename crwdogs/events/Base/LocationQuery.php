@@ -29,6 +29,7 @@ use crwdogs\events\Map\LocationTableMap;
  * @method     ChildLocationQuery orderByGoogleLink($order = Criteria::ASC) Order by the google_link column
  * @method     ChildLocationQuery orderByPhone($order = Criteria::ASC) Order by the phone column
  * @method     ChildLocationQuery orderByAmenities($order = Criteria::ASC) Order by the amenities column
+ * @method     ChildLocationQuery orderByWebsite($order = Criteria::ASC) Order by the website column
  *
  * @method     ChildLocationQuery groupByLocationId() Group by the location_id column
  * @method     ChildLocationQuery groupByName() Group by the name column
@@ -39,6 +40,7 @@ use crwdogs\events\Map\LocationTableMap;
  * @method     ChildLocationQuery groupByGoogleLink() Group by the google_link column
  * @method     ChildLocationQuery groupByPhone() Group by the phone column
  * @method     ChildLocationQuery groupByAmenities() Group by the amenities column
+ * @method     ChildLocationQuery groupByWebsite() Group by the website column
  *
  * @method     ChildLocationQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildLocationQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -71,7 +73,8 @@ use crwdogs\events\Map\LocationTableMap;
  * @method     ChildLocation findOneByZip(int $zip) Return the first ChildLocation filtered by the zip column
  * @method     ChildLocation findOneByGoogleLink(string $google_link) Return the first ChildLocation filtered by the google_link column
  * @method     ChildLocation findOneByPhone(string $phone) Return the first ChildLocation filtered by the phone column
- * @method     ChildLocation findOneByAmenities(string $amenities) Return the first ChildLocation filtered by the amenities column *
+ * @method     ChildLocation findOneByAmenities(string $amenities) Return the first ChildLocation filtered by the amenities column
+ * @method     ChildLocation findOneByWebsite(string $website) Return the first ChildLocation filtered by the website column *
 
  * @method     ChildLocation requirePk($key, ConnectionInterface $con = null) Return the ChildLocation by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLocation requireOne(ConnectionInterface $con = null) Return the first ChildLocation matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -85,6 +88,7 @@ use crwdogs\events\Map\LocationTableMap;
  * @method     ChildLocation requireOneByGoogleLink(string $google_link) Return the first ChildLocation filtered by the google_link column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLocation requireOneByPhone(string $phone) Return the first ChildLocation filtered by the phone column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildLocation requireOneByAmenities(string $amenities) Return the first ChildLocation filtered by the amenities column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildLocation requireOneByWebsite(string $website) Return the first ChildLocation filtered by the website column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildLocation[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildLocation objects based on current ModelCriteria
  * @method     ChildLocation[]|ObjectCollection findByLocationId(int $location_id) Return ChildLocation objects filtered by the location_id column
@@ -96,6 +100,7 @@ use crwdogs\events\Map\LocationTableMap;
  * @method     ChildLocation[]|ObjectCollection findByGoogleLink(string $google_link) Return ChildLocation objects filtered by the google_link column
  * @method     ChildLocation[]|ObjectCollection findByPhone(string $phone) Return ChildLocation objects filtered by the phone column
  * @method     ChildLocation[]|ObjectCollection findByAmenities(string $amenities) Return ChildLocation objects filtered by the amenities column
+ * @method     ChildLocation[]|ObjectCollection findByWebsite(string $website) Return ChildLocation objects filtered by the website column
  * @method     ChildLocation[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -194,7 +199,7 @@ abstract class LocationQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT location_id, name, street, city, state, zip, google_link, phone, amenities FROM location WHERE location_id = :p0';
+        $sql = 'SELECT location_id, name, street, city, state, zip, google_link, phone, amenities, website FROM location WHERE location_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -539,6 +544,31 @@ abstract class LocationQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(LocationTableMap::COL_AMENITIES, $amenities, $comparison);
+    }
+
+    /**
+     * Filter the query on the website column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByWebsite('fooValue');   // WHERE website = 'fooValue'
+     * $query->filterByWebsite('%fooValue%', Criteria::LIKE); // WHERE website LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $website The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildLocationQuery The current query, for fluid interface
+     */
+    public function filterByWebsite($website = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($website)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(LocationTableMap::COL_WEBSITE, $website, $comparison);
     }
 
     /**

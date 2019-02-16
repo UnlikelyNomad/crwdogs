@@ -156,7 +156,7 @@ class ItemOptionTableMap extends TableMap
         $this->addColumn('name', 'Name', 'VARCHAR', true, 45, null);
         $this->addColumn('type', 'Type', 'VARCHAR', true, 45, null);
         $this->addColumn('label', 'Label', 'VARCHAR', true, 45, null);
-        $this->addColumn('sort', 'Sort', 'INTEGER', true, null, null);
+        $this->addColumn('sort', 'Sort', 'INTEGER', true, null, 0);
     } // initialize()
 
     /**

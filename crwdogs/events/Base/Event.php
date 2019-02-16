@@ -18,6 +18,8 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
+use crwdogs\events\AuthGroup as ChildAuthGroup;
+use crwdogs\events\AuthGroupQuery as ChildAuthGroupQuery;
 use crwdogs\events\EarlyDiscount as ChildEarlyDiscount;
 use crwdogs\events\EarlyDiscountQuery as ChildEarlyDiscountQuery;
 use crwdogs\events\Event as ChildEvent;
@@ -176,9 +178,21 @@ abstract class Event implements ActiveRecordInterface
     protected $notify_email;
 
     /**
+     * The value for the owning_group field.
+     *
+     * @var        int
+     */
+    protected $owning_group;
+
+    /**
      * @var        ChildLocation
      */
     protected $aLocation;
+
+    /**
+     * @var        ChildAuthGroup
+     */
+    protected $aAuthGroup;
 
     /**
      * @var        ObjectCollection|ChildEarlyDiscount[] Collection to store aggregation of ChildEarlyDiscount objects.
@@ -662,6 +676,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [owning_group] column value.
+     *
+     * @return int
+     */
+    public function getOwningGroup()
+    {
+        return $this->owning_group;
+    }
+
+    /**
      * Set the value of [event_id] column.
      *
      * @param int $v new value
@@ -946,6 +970,30 @@ abstract class Event implements ActiveRecordInterface
     } // setNotifyEmail()
 
     /**
+     * Set the value of [owning_group] column.
+     *
+     * @param int $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setOwningGroup($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->owning_group !== $v) {
+            $this->owning_group = $v;
+            $this->modifiedColumns[EventTableMap::COL_OWNING_GROUP] = true;
+        }
+
+        if ($this->aAuthGroup !== null && $this->aAuthGroup->getGroupId() !== $v) {
+            $this->aAuthGroup = null;
+        }
+
+        return $this;
+    } // setOwningGroup()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1034,6 +1082,9 @@ abstract class Event implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : EventTableMap::translateFieldName('NotifyEmail', TableMap::TYPE_PHPNAME, $indexType)];
             $this->notify_email = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : EventTableMap::translateFieldName('OwningGroup', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->owning_group = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1042,7 +1093,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 14; // 14 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 15; // 15 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Event'), 0, $e);
@@ -1066,6 +1117,9 @@ abstract class Event implements ActiveRecordInterface
     {
         if ($this->aLocation !== null && $this->location_id !== $this->aLocation->getLocationId()) {
             $this->aLocation = null;
+        }
+        if ($this->aAuthGroup !== null && $this->owning_group !== $this->aAuthGroup->getGroupId()) {
+            $this->aAuthGroup = null;
         }
     } // ensureConsistency
 
@@ -1107,6 +1161,7 @@ abstract class Event implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aLocation = null;
+            $this->aAuthGroup = null;
             $this->collEarlyDiscounts = null;
 
             $this->collItems = null;
@@ -1228,6 +1283,13 @@ abstract class Event implements ActiveRecordInterface
                     $affectedRows += $this->aLocation->save($con);
                 }
                 $this->setLocation($this->aLocation);
+            }
+
+            if ($this->aAuthGroup !== null) {
+                if ($this->aAuthGroup->isModified() || $this->aAuthGroup->isNew()) {
+                    $affectedRows += $this->aAuthGroup->save($con);
+                }
+                $this->setAuthGroup($this->aAuthGroup);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1377,6 +1439,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_NOTIFY_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'notify_email';
         }
+        if ($this->isColumnModified(EventTableMap::COL_OWNING_GROUP)) {
+            $modifiedColumns[':p' . $index++]  = 'owning_group';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1429,6 +1494,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'notify_email':
                         $stmt->bindValue($identifier, $this->notify_email, PDO::PARAM_STR);
+                        break;
+                    case 'owning_group':
+                        $stmt->bindValue($identifier, $this->owning_group, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1534,6 +1602,9 @@ abstract class Event implements ActiveRecordInterface
             case 13:
                 return $this->getNotifyEmail();
                 break;
+            case 14:
+                return $this->getOwningGroup();
+                break;
             default:
                 return null;
                 break;
@@ -1578,6 +1649,7 @@ abstract class Event implements ActiveRecordInterface
             $keys[11] => $this->getRegCost(),
             $keys[12] => $this->getPaypalEmail(),
             $keys[13] => $this->getNotifyEmail(),
+            $keys[14] => $this->getOwningGroup(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1623,6 +1695,21 @@ abstract class Event implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aLocation->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aAuthGroup) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'authGroup';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'auth_group';
+                        break;
+                    default:
+                        $key = 'AuthGroup';
+                }
+
+                $result[$key] = $this->aAuthGroup->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collEarlyDiscounts) {
 
@@ -1760,6 +1847,9 @@ abstract class Event implements ActiveRecordInterface
             case 13:
                 $this->setNotifyEmail($value);
                 break;
+            case 14:
+                $this->setOwningGroup($value);
+                break;
         } // switch()
 
         return $this;
@@ -1827,6 +1917,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if (array_key_exists($keys[13], $arr)) {
             $this->setNotifyEmail($arr[$keys[13]]);
+        }
+        if (array_key_exists($keys[14], $arr)) {
+            $this->setOwningGroup($arr[$keys[14]]);
         }
     }
 
@@ -1910,6 +2003,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_NOTIFY_EMAIL)) {
             $criteria->add(EventTableMap::COL_NOTIFY_EMAIL, $this->notify_email);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_OWNING_GROUP)) {
+            $criteria->add(EventTableMap::COL_OWNING_GROUP, $this->owning_group);
         }
 
         return $criteria;
@@ -2010,6 +2106,7 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setRegCost($this->getRegCost());
         $copyObj->setPaypalEmail($this->getPaypalEmail());
         $copyObj->setNotifyEmail($this->getNotifyEmail());
+        $copyObj->setOwningGroup($this->getOwningGroup());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2119,6 +2216,57 @@ abstract class Event implements ActiveRecordInterface
         }
 
         return $this->aLocation;
+    }
+
+    /**
+     * Declares an association between this object and a ChildAuthGroup object.
+     *
+     * @param  ChildAuthGroup $v
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setAuthGroup(ChildAuthGroup $v = null)
+    {
+        if ($v === null) {
+            $this->setOwningGroup(NULL);
+        } else {
+            $this->setOwningGroup($v->getGroupId());
+        }
+
+        $this->aAuthGroup = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildAuthGroup object, it will not be re-added.
+        if ($v !== null) {
+            $v->addEvent($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildAuthGroup object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildAuthGroup The associated ChildAuthGroup object.
+     * @throws PropelException
+     */
+    public function getAuthGroup(ConnectionInterface $con = null)
+    {
+        if ($this->aAuthGroup === null && ($this->owning_group != 0)) {
+            $this->aAuthGroup = ChildAuthGroupQuery::create()->findPk($this->owning_group, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aAuthGroup->addEvents($this);
+             */
+        }
+
+        return $this->aAuthGroup;
     }
 
 
@@ -3085,6 +3233,9 @@ abstract class Event implements ActiveRecordInterface
         if (null !== $this->aLocation) {
             $this->aLocation->removeEvent($this);
         }
+        if (null !== $this->aAuthGroup) {
+            $this->aAuthGroup->removeEvent($this);
+        }
         $this->event_id = null;
         $this->location_id = null;
         $this->name = null;
@@ -3099,6 +3250,7 @@ abstract class Event implements ActiveRecordInterface
         $this->reg_cost = null;
         $this->paypal_email = null;
         $this->notify_email = null;
+        $this->owning_group = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -3144,6 +3296,7 @@ abstract class Event implements ActiveRecordInterface
         $this->collQuestions = null;
         $this->collRegistrations = null;
         $this->aLocation = null;
+        $this->aAuthGroup = null;
     }
 
     /**

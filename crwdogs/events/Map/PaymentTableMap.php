@@ -59,7 +59,7 @@ class PaymentTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PaymentTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 10;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the payment_id field
@@ -122,6 +122,11 @@ class PaymentTableMap extends TableMap
     const COL_RECEIVED = 'payment.received';
 
     /**
+     * the column name for the comment field
+     */
+    const COL_COMMENT = 'payment.comment';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -133,11 +138,11 @@ class PaymentTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PaymentId', 'RegistrationId', 'Status', 'TxnId', 'TxnType', 'Recipient', 'ParentTxn', 'Email', 'Full', 'Received', ),
-        self::TYPE_CAMELNAME     => array('paymentId', 'registrationId', 'status', 'txnId', 'txnType', 'recipient', 'parentTxn', 'email', 'full', 'received', ),
-        self::TYPE_COLNAME       => array(PaymentTableMap::COL_PAYMENT_ID, PaymentTableMap::COL_REGISTRATION_ID, PaymentTableMap::COL_STATUS, PaymentTableMap::COL_TXN_ID, PaymentTableMap::COL_TXN_TYPE, PaymentTableMap::COL_RECIPIENT, PaymentTableMap::COL_PARENT_TXN, PaymentTableMap::COL_EMAIL, PaymentTableMap::COL_FULL, PaymentTableMap::COL_RECEIVED, ),
-        self::TYPE_FIELDNAME     => array('payment_id', 'registration_id', 'status', 'txn_id', 'txn_type', 'recipient', 'parent_txn', 'email', 'full', 'received', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('PaymentId', 'RegistrationId', 'Status', 'TxnId', 'TxnType', 'Recipient', 'ParentTxn', 'Email', 'Full', 'Received', 'Comment', ),
+        self::TYPE_CAMELNAME     => array('paymentId', 'registrationId', 'status', 'txnId', 'txnType', 'recipient', 'parentTxn', 'email', 'full', 'received', 'comment', ),
+        self::TYPE_COLNAME       => array(PaymentTableMap::COL_PAYMENT_ID, PaymentTableMap::COL_REGISTRATION_ID, PaymentTableMap::COL_STATUS, PaymentTableMap::COL_TXN_ID, PaymentTableMap::COL_TXN_TYPE, PaymentTableMap::COL_RECIPIENT, PaymentTableMap::COL_PARENT_TXN, PaymentTableMap::COL_EMAIL, PaymentTableMap::COL_FULL, PaymentTableMap::COL_RECEIVED, PaymentTableMap::COL_COMMENT, ),
+        self::TYPE_FIELDNAME     => array('payment_id', 'registration_id', 'status', 'txn_id', 'txn_type', 'recipient', 'parent_txn', 'email', 'full', 'received', 'comment', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -147,11 +152,11 @@ class PaymentTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PaymentId' => 0, 'RegistrationId' => 1, 'Status' => 2, 'TxnId' => 3, 'TxnType' => 4, 'Recipient' => 5, 'ParentTxn' => 6, 'Email' => 7, 'Full' => 8, 'Received' => 9, ),
-        self::TYPE_CAMELNAME     => array('paymentId' => 0, 'registrationId' => 1, 'status' => 2, 'txnId' => 3, 'txnType' => 4, 'recipient' => 5, 'parentTxn' => 6, 'email' => 7, 'full' => 8, 'received' => 9, ),
-        self::TYPE_COLNAME       => array(PaymentTableMap::COL_PAYMENT_ID => 0, PaymentTableMap::COL_REGISTRATION_ID => 1, PaymentTableMap::COL_STATUS => 2, PaymentTableMap::COL_TXN_ID => 3, PaymentTableMap::COL_TXN_TYPE => 4, PaymentTableMap::COL_RECIPIENT => 5, PaymentTableMap::COL_PARENT_TXN => 6, PaymentTableMap::COL_EMAIL => 7, PaymentTableMap::COL_FULL => 8, PaymentTableMap::COL_RECEIVED => 9, ),
-        self::TYPE_FIELDNAME     => array('payment_id' => 0, 'registration_id' => 1, 'status' => 2, 'txn_id' => 3, 'txn_type' => 4, 'recipient' => 5, 'parent_txn' => 6, 'email' => 7, 'full' => 8, 'received' => 9, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('PaymentId' => 0, 'RegistrationId' => 1, 'Status' => 2, 'TxnId' => 3, 'TxnType' => 4, 'Recipient' => 5, 'ParentTxn' => 6, 'Email' => 7, 'Full' => 8, 'Received' => 9, 'Comment' => 10, ),
+        self::TYPE_CAMELNAME     => array('paymentId' => 0, 'registrationId' => 1, 'status' => 2, 'txnId' => 3, 'txnType' => 4, 'recipient' => 5, 'parentTxn' => 6, 'email' => 7, 'full' => 8, 'received' => 9, 'comment' => 10, ),
+        self::TYPE_COLNAME       => array(PaymentTableMap::COL_PAYMENT_ID => 0, PaymentTableMap::COL_REGISTRATION_ID => 1, PaymentTableMap::COL_STATUS => 2, PaymentTableMap::COL_TXN_ID => 3, PaymentTableMap::COL_TXN_TYPE => 4, PaymentTableMap::COL_RECIPIENT => 5, PaymentTableMap::COL_PARENT_TXN => 6, PaymentTableMap::COL_EMAIL => 7, PaymentTableMap::COL_FULL => 8, PaymentTableMap::COL_RECEIVED => 9, PaymentTableMap::COL_COMMENT => 10, ),
+        self::TYPE_FIELDNAME     => array('payment_id' => 0, 'registration_id' => 1, 'status' => 2, 'txn_id' => 3, 'txn_type' => 4, 'recipient' => 5, 'parent_txn' => 6, 'email' => 7, 'full' => 8, 'received' => 9, 'comment' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -177,10 +182,11 @@ class PaymentTableMap extends TableMap
         $this->addColumn('txn_id', 'TxnId', 'VARCHAR', true, 45, null);
         $this->addColumn('txn_type', 'TxnType', 'VARCHAR', true, 45, null);
         $this->addColumn('recipient', 'Recipient', 'VARCHAR', true, 255, null);
-        $this->addColumn('parent_txn', 'ParentTxn', 'VARCHAR', true, 45, '');
+        $this->addColumn('parent_txn', 'ParentTxn', 'VARCHAR', false, 45, '');
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
         $this->addColumn('full', 'Full', 'LONGVARCHAR', true, null, null);
         $this->addColumn('received', 'Received', 'TIMESTAMP', true, null, null);
+        $this->addColumn('comment', 'Comment', 'VARCHAR', true, 255, '');
     } // initialize()
 
     /**
@@ -348,6 +354,7 @@ class PaymentTableMap extends TableMap
             $criteria->addSelectColumn(PaymentTableMap::COL_EMAIL);
             $criteria->addSelectColumn(PaymentTableMap::COL_FULL);
             $criteria->addSelectColumn(PaymentTableMap::COL_RECEIVED);
+            $criteria->addSelectColumn(PaymentTableMap::COL_COMMENT);
         } else {
             $criteria->addSelectColumn($alias . '.payment_id');
             $criteria->addSelectColumn($alias . '.registration_id');
@@ -359,6 +366,7 @@ class PaymentTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.email');
             $criteria->addSelectColumn($alias . '.full');
             $criteria->addSelectColumn($alias . '.received');
+            $criteria->addSelectColumn($alias . '.comment');
         }
     }
 

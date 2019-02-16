@@ -114,6 +114,7 @@ abstract class Item implements ActiveRecordInterface
     /**
      * The value for the event_qty field.
      *
+     * Note: this column has a database default value of: 0
      * @var        int
      */
     protected $event_qty;
@@ -135,6 +136,7 @@ abstract class Item implements ActiveRecordInterface
     /**
      * The value for the base_cost field.
      *
+     * Note: this column has a database default value of: '0.00'
      * @var        string
      */
     protected $base_cost;
@@ -163,6 +165,7 @@ abstract class Item implements ActiveRecordInterface
     /**
      * The value for the sort field.
      *
+     * Note: this column has a database default value of: 0
      * @var        int
      */
     protected $sort;
@@ -205,10 +208,25 @@ abstract class Item implements ActiveRecordInterface
     protected $purchasedItemsScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->event_qty = 0;
+        $this->base_cost = '0.00';
+        $this->sort = 0;
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\Item object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -863,6 +881,18 @@ abstract class Item implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->event_qty !== 0) {
+                return false;
+            }
+
+            if ($this->base_cost !== '0.00') {
+                return false;
+            }
+
+            if ($this->sort !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -2435,6 +2465,7 @@ abstract class Item implements ActiveRecordInterface
         $this->sort = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

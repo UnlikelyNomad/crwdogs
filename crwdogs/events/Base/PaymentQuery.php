@@ -30,6 +30,7 @@ use crwdogs\events\Map\PaymentTableMap;
  * @method     ChildPaymentQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildPaymentQuery orderByFull($order = Criteria::ASC) Order by the full column
  * @method     ChildPaymentQuery orderByReceived($order = Criteria::ASC) Order by the received column
+ * @method     ChildPaymentQuery orderByComment($order = Criteria::ASC) Order by the comment column
  *
  * @method     ChildPaymentQuery groupByPaymentId() Group by the payment_id column
  * @method     ChildPaymentQuery groupByRegistrationId() Group by the registration_id column
@@ -41,6 +42,7 @@ use crwdogs\events\Map\PaymentTableMap;
  * @method     ChildPaymentQuery groupByEmail() Group by the email column
  * @method     ChildPaymentQuery groupByFull() Group by the full column
  * @method     ChildPaymentQuery groupByReceived() Group by the received column
+ * @method     ChildPaymentQuery groupByComment() Group by the comment column
  *
  * @method     ChildPaymentQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPaymentQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -74,7 +76,8 @@ use crwdogs\events\Map\PaymentTableMap;
  * @method     ChildPayment findOneByParentTxn(string $parent_txn) Return the first ChildPayment filtered by the parent_txn column
  * @method     ChildPayment findOneByEmail(string $email) Return the first ChildPayment filtered by the email column
  * @method     ChildPayment findOneByFull(string $full) Return the first ChildPayment filtered by the full column
- * @method     ChildPayment findOneByReceived(string $received) Return the first ChildPayment filtered by the received column *
+ * @method     ChildPayment findOneByReceived(string $received) Return the first ChildPayment filtered by the received column
+ * @method     ChildPayment findOneByComment(string $comment) Return the first ChildPayment filtered by the comment column *
 
  * @method     ChildPayment requirePk($key, ConnectionInterface $con = null) Return the ChildPayment by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPayment requireOne(ConnectionInterface $con = null) Return the first ChildPayment matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -89,6 +92,7 @@ use crwdogs\events\Map\PaymentTableMap;
  * @method     ChildPayment requireOneByEmail(string $email) Return the first ChildPayment filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPayment requireOneByFull(string $full) Return the first ChildPayment filtered by the full column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPayment requireOneByReceived(string $received) Return the first ChildPayment filtered by the received column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPayment requireOneByComment(string $comment) Return the first ChildPayment filtered by the comment column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPayment[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPayment objects based on current ModelCriteria
  * @method     ChildPayment[]|ObjectCollection findByPaymentId(int $payment_id) Return ChildPayment objects filtered by the payment_id column
@@ -101,6 +105,7 @@ use crwdogs\events\Map\PaymentTableMap;
  * @method     ChildPayment[]|ObjectCollection findByEmail(string $email) Return ChildPayment objects filtered by the email column
  * @method     ChildPayment[]|ObjectCollection findByFull(string $full) Return ChildPayment objects filtered by the full column
  * @method     ChildPayment[]|ObjectCollection findByReceived(string $received) Return ChildPayment objects filtered by the received column
+ * @method     ChildPayment[]|ObjectCollection findByComment(string $comment) Return ChildPayment objects filtered by the comment column
  * @method     ChildPayment[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -199,7 +204,7 @@ abstract class PaymentQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT payment_id, registration_id, status, txn_id, txn_type, recipient, parent_txn, email, full, received FROM payment WHERE payment_id = :p0';
+        $sql = 'SELECT payment_id, registration_id, status, txn_id, txn_type, recipient, parent_txn, email, full, received, comment FROM payment WHERE payment_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -589,6 +594,31 @@ abstract class PaymentQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PaymentTableMap::COL_RECEIVED, $received, $comparison);
+    }
+
+    /**
+     * Filter the query on the comment column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByComment('fooValue');   // WHERE comment = 'fooValue'
+     * $query->filterByComment('%fooValue%', Criteria::LIKE); // WHERE comment LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $comment The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPaymentQuery The current query, for fluid interface
+     */
+    public function filterByComment($comment = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($comment)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PaymentTableMap::COL_COMMENT, $comment, $comparison);
     }
 
     /**

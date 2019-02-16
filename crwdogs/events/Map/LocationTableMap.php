@@ -59,7 +59,7 @@ class LocationTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 10;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class LocationTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 10;
 
     /**
      * the column name for the location_id field
@@ -117,6 +117,11 @@ class LocationTableMap extends TableMap
     const COL_AMENITIES = 'location.amenities';
 
     /**
+     * the column name for the website field
+     */
+    const COL_WEBSITE = 'location.website';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -128,11 +133,11 @@ class LocationTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('LocationId', 'Name', 'Street', 'City', 'State', 'Zip', 'GoogleLink', 'Phone', 'Amenities', ),
-        self::TYPE_CAMELNAME     => array('locationId', 'name', 'street', 'city', 'state', 'zip', 'googleLink', 'phone', 'amenities', ),
-        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATION_ID, LocationTableMap::COL_NAME, LocationTableMap::COL_STREET, LocationTableMap::COL_CITY, LocationTableMap::COL_STATE, LocationTableMap::COL_ZIP, LocationTableMap::COL_GOOGLE_LINK, LocationTableMap::COL_PHONE, LocationTableMap::COL_AMENITIES, ),
-        self::TYPE_FIELDNAME     => array('location_id', 'name', 'street', 'city', 'state', 'zip', 'google_link', 'phone', 'amenities', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('LocationId', 'Name', 'Street', 'City', 'State', 'Zip', 'GoogleLink', 'Phone', 'Amenities', 'Website', ),
+        self::TYPE_CAMELNAME     => array('locationId', 'name', 'street', 'city', 'state', 'zip', 'googleLink', 'phone', 'amenities', 'website', ),
+        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATION_ID, LocationTableMap::COL_NAME, LocationTableMap::COL_STREET, LocationTableMap::COL_CITY, LocationTableMap::COL_STATE, LocationTableMap::COL_ZIP, LocationTableMap::COL_GOOGLE_LINK, LocationTableMap::COL_PHONE, LocationTableMap::COL_AMENITIES, LocationTableMap::COL_WEBSITE, ),
+        self::TYPE_FIELDNAME     => array('location_id', 'name', 'street', 'city', 'state', 'zip', 'google_link', 'phone', 'amenities', 'website', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -142,11 +147,11 @@ class LocationTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('LocationId' => 0, 'Name' => 1, 'Street' => 2, 'City' => 3, 'State' => 4, 'Zip' => 5, 'GoogleLink' => 6, 'Phone' => 7, 'Amenities' => 8, ),
-        self::TYPE_CAMELNAME     => array('locationId' => 0, 'name' => 1, 'street' => 2, 'city' => 3, 'state' => 4, 'zip' => 5, 'googleLink' => 6, 'phone' => 7, 'amenities' => 8, ),
-        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATION_ID => 0, LocationTableMap::COL_NAME => 1, LocationTableMap::COL_STREET => 2, LocationTableMap::COL_CITY => 3, LocationTableMap::COL_STATE => 4, LocationTableMap::COL_ZIP => 5, LocationTableMap::COL_GOOGLE_LINK => 6, LocationTableMap::COL_PHONE => 7, LocationTableMap::COL_AMENITIES => 8, ),
-        self::TYPE_FIELDNAME     => array('location_id' => 0, 'name' => 1, 'street' => 2, 'city' => 3, 'state' => 4, 'zip' => 5, 'google_link' => 6, 'phone' => 7, 'amenities' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('LocationId' => 0, 'Name' => 1, 'Street' => 2, 'City' => 3, 'State' => 4, 'Zip' => 5, 'GoogleLink' => 6, 'Phone' => 7, 'Amenities' => 8, 'Website' => 9, ),
+        self::TYPE_CAMELNAME     => array('locationId' => 0, 'name' => 1, 'street' => 2, 'city' => 3, 'state' => 4, 'zip' => 5, 'googleLink' => 6, 'phone' => 7, 'amenities' => 8, 'website' => 9, ),
+        self::TYPE_COLNAME       => array(LocationTableMap::COL_LOCATION_ID => 0, LocationTableMap::COL_NAME => 1, LocationTableMap::COL_STREET => 2, LocationTableMap::COL_CITY => 3, LocationTableMap::COL_STATE => 4, LocationTableMap::COL_ZIP => 5, LocationTableMap::COL_GOOGLE_LINK => 6, LocationTableMap::COL_PHONE => 7, LocationTableMap::COL_AMENITIES => 8, LocationTableMap::COL_WEBSITE => 9, ),
+        self::TYPE_FIELDNAME     => array('location_id' => 0, 'name' => 1, 'street' => 2, 'city' => 3, 'state' => 4, 'zip' => 5, 'google_link' => 6, 'phone' => 7, 'amenities' => 8, 'website' => 9, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -175,6 +180,7 @@ class LocationTableMap extends TableMap
         $this->addColumn('google_link', 'GoogleLink', 'VARCHAR', true, 45, null);
         $this->addColumn('phone', 'Phone', 'VARCHAR', true, 20, null);
         $this->addColumn('amenities', 'Amenities', 'LONGVARCHAR', true, null, null);
+        $this->addColumn('website', 'Website', 'VARCHAR', true, 255, null);
     } // initialize()
 
     /**
@@ -341,6 +347,7 @@ class LocationTableMap extends TableMap
             $criteria->addSelectColumn(LocationTableMap::COL_GOOGLE_LINK);
             $criteria->addSelectColumn(LocationTableMap::COL_PHONE);
             $criteria->addSelectColumn(LocationTableMap::COL_AMENITIES);
+            $criteria->addSelectColumn(LocationTableMap::COL_WEBSITE);
         } else {
             $criteria->addSelectColumn($alias . '.location_id');
             $criteria->addSelectColumn($alias . '.name');
@@ -351,6 +358,7 @@ class LocationTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.google_link');
             $criteria->addSelectColumn($alias . '.phone');
             $criteria->addSelectColumn($alias . '.amenities');
+            $criteria->addSelectColumn($alias . '.website');
         }
     }
 

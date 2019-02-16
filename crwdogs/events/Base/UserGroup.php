@@ -2,7 +2,6 @@
 
 namespace crwdogs\events\Base;
 
-use \DateTime;
 use \Exception;
 use \PDO;
 use Propel\Runtime\Propel;
@@ -16,25 +15,26 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Propel\Runtime\Util\PropelDateTime;
-use crwdogs\events\PaymentQuery as ChildPaymentQuery;
-use crwdogs\events\Registration as ChildRegistration;
-use crwdogs\events\RegistrationQuery as ChildRegistrationQuery;
-use crwdogs\events\Map\PaymentTableMap;
+use crwdogs\events\AuthGroup as ChildAuthGroup;
+use crwdogs\events\AuthGroupQuery as ChildAuthGroupQuery;
+use crwdogs\events\User as ChildUser;
+use crwdogs\events\UserGroupQuery as ChildUserGroupQuery;
+use crwdogs\events\UserQuery as ChildUserQuery;
+use crwdogs\events\Map\UserGroupTableMap;
 
 /**
- * Base class that represents a row from the 'payment' table.
+ * Base class that represents a row from the 'user_group' table.
  *
  *
  *
  * @package    propel.generator.crwdogs.events.Base
  */
-abstract class Payment implements ActiveRecordInterface
+abstract class UserGroup implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\crwdogs\\events\\Map\\PaymentTableMap';
+    const TABLE_MAP = '\\crwdogs\\events\\Map\\UserGroupTableMap';
 
 
     /**
@@ -64,88 +64,28 @@ abstract class Payment implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the payment_id field.
+     * The value for the user_id field.
      *
      * @var        int
      */
-    protected $payment_id;
+    protected $user_id;
 
     /**
-     * The value for the registration_id field.
+     * The value for the group_id field.
      *
      * @var        int
      */
-    protected $registration_id;
+    protected $group_id;
 
     /**
-     * The value for the status field.
-     *
-     * @var        string
+     * @var        ChildAuthGroup
      */
-    protected $status;
+    protected $aAuthGroup;
 
     /**
-     * The value for the txn_id field.
-     *
-     * @var        string
+     * @var        ChildUser
      */
-    protected $txn_id;
-
-    /**
-     * The value for the txn_type field.
-     *
-     * @var        string
-     */
-    protected $txn_type;
-
-    /**
-     * The value for the recipient field.
-     *
-     * @var        string
-     */
-    protected $recipient;
-
-    /**
-     * The value for the parent_txn field.
-     *
-     * Note: this column has a database default value of: ''
-     * @var        string
-     */
-    protected $parent_txn;
-
-    /**
-     * The value for the email field.
-     *
-     * @var        string
-     */
-    protected $email;
-
-    /**
-     * The value for the full field.
-     *
-     * @var        string
-     */
-    protected $full;
-
-    /**
-     * The value for the received field.
-     *
-     * @var        DateTime
-     */
-    protected $received;
-
-    /**
-     * The value for the comment field.
-     *
-     * Note: this column has a database default value of: ''
-     * @var        string
-     */
-    protected $comment;
-
-    /**
-     * @var        ChildRegistration
-     */
-    protected $aRegistration;
+    protected $aUser;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -156,24 +96,10 @@ abstract class Payment implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Applies default values to this object.
-     * This method should be called from the object's constructor (or
-     * equivalent initialization method).
-     * @see __construct()
-     */
-    public function applyDefaultValues()
-    {
-        $this->parent_txn = '';
-        $this->comment = '';
-    }
-
-    /**
-     * Initializes internal state of crwdogs\events\Base\Payment object.
-     * @see applyDefaults()
+     * Initializes internal state of crwdogs\events\Base\UserGroup object.
      */
     public function __construct()
     {
-        $this->applyDefaultValues();
     }
 
     /**
@@ -265,9 +191,9 @@ abstract class Payment implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Payment</code> instance.  If
-     * <code>obj</code> is an instance of <code>Payment</code>, delegates to
-     * <code>equals(Payment)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>UserGroup</code> instance.  If
+     * <code>obj</code> is an instance of <code>UserGroup</code>, delegates to
+     * <code>equals(UserGroup)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -333,7 +259,7 @@ abstract class Payment implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Payment The current object, for fluid interface
+     * @return $this|UserGroup The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -395,348 +321,72 @@ abstract class Payment implements ActiveRecordInterface
     }
 
     /**
-     * Get the [payment_id] column value.
+     * Get the [user_id] column value.
      *
      * @return int
      */
-    public function getPaymentId()
+    public function getUserId()
     {
-        return $this->payment_id;
+        return $this->user_id;
     }
 
     /**
-     * Get the [registration_id] column value.
+     * Get the [group_id] column value.
      *
      * @return int
      */
-    public function getRegistrationId()
+    public function getGroupId()
     {
-        return $this->registration_id;
+        return $this->group_id;
     }
 
     /**
-     * Get the [status] column value.
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Get the [txn_id] column value.
-     *
-     * @return string
-     */
-    public function getTxnId()
-    {
-        return $this->txn_id;
-    }
-
-    /**
-     * Get the [txn_type] column value.
-     *
-     * @return string
-     */
-    public function getTxnType()
-    {
-        return $this->txn_type;
-    }
-
-    /**
-     * Get the [recipient] column value.
-     *
-     * @return string
-     */
-    public function getRecipient()
-    {
-        return $this->recipient;
-    }
-
-    /**
-     * Get the [parent_txn] column value.
-     *
-     * @return string
-     */
-    public function getParentTxn()
-    {
-        return $this->parent_txn;
-    }
-
-    /**
-     * Get the [email] column value.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the [full] column value.
-     *
-     * @return string
-     */
-    public function getFull()
-    {
-        return $this->full;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [received] column value.
-     *
-     *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getReceived($format = NULL)
-    {
-        if ($format === null) {
-            return $this->received;
-        } else {
-            return $this->received instanceof \DateTimeInterface ? $this->received->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [comment] column value.
-     *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * Set the value of [payment_id] column.
+     * Set the value of [user_id] column.
      *
      * @param int $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
+     * @return $this|\crwdogs\events\UserGroup The current object (for fluent API support)
      */
-    public function setPaymentId($v)
+    public function setUserId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->payment_id !== $v) {
-            $this->payment_id = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_PAYMENT_ID] = true;
+        if ($this->user_id !== $v) {
+            $this->user_id = $v;
+            $this->modifiedColumns[UserGroupTableMap::COL_USER_ID] = true;
+        }
+
+        if ($this->aUser !== null && $this->aUser->getUserId() !== $v) {
+            $this->aUser = null;
         }
 
         return $this;
-    } // setPaymentId()
+    } // setUserId()
 
     /**
-     * Set the value of [registration_id] column.
+     * Set the value of [group_id] column.
      *
      * @param int $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
+     * @return $this|\crwdogs\events\UserGroup The current object (for fluent API support)
      */
-    public function setRegistrationId($v)
+    public function setGroupId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->registration_id !== $v) {
-            $this->registration_id = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_REGISTRATION_ID] = true;
+        if ($this->group_id !== $v) {
+            $this->group_id = $v;
+            $this->modifiedColumns[UserGroupTableMap::COL_GROUP_ID] = true;
         }
 
-        if ($this->aRegistration !== null && $this->aRegistration->getRegistrationId() !== $v) {
-            $this->aRegistration = null;
-        }
-
-        return $this;
-    } // setRegistrationId()
-
-    /**
-     * Set the value of [status] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setStatus($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->status !== $v) {
-            $this->status = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_STATUS] = true;
+        if ($this->aAuthGroup !== null && $this->aAuthGroup->getGroupId() !== $v) {
+            $this->aAuthGroup = null;
         }
 
         return $this;
-    } // setStatus()
-
-    /**
-     * Set the value of [txn_id] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setTxnId($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->txn_id !== $v) {
-            $this->txn_id = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_TXN_ID] = true;
-        }
-
-        return $this;
-    } // setTxnId()
-
-    /**
-     * Set the value of [txn_type] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setTxnType($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->txn_type !== $v) {
-            $this->txn_type = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_TXN_TYPE] = true;
-        }
-
-        return $this;
-    } // setTxnType()
-
-    /**
-     * Set the value of [recipient] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setRecipient($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->recipient !== $v) {
-            $this->recipient = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_RECIPIENT] = true;
-        }
-
-        return $this;
-    } // setRecipient()
-
-    /**
-     * Set the value of [parent_txn] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setParentTxn($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->parent_txn !== $v) {
-            $this->parent_txn = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_PARENT_TXN] = true;
-        }
-
-        return $this;
-    } // setParentTxn()
-
-    /**
-     * Set the value of [email] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [full] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setFull($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->full !== $v) {
-            $this->full = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_FULL] = true;
-        }
-
-        return $this;
-    } // setFull()
-
-    /**
-     * Sets the value of [received] column to a normalized version of the date/time value specified.
-     *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setReceived($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->received !== null || $dt !== null) {
-            if ($this->received === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->received->format("Y-m-d H:i:s.u")) {
-                $this->received = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[PaymentTableMap::COL_RECEIVED] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setReceived()
-
-    /**
-     * Set the value of [comment] column.
-     *
-     * @param string $v new value
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
-     */
-    public function setComment($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->comment !== $v) {
-            $this->comment = $v;
-            $this->modifiedColumns[PaymentTableMap::COL_COMMENT] = true;
-        }
-
-        return $this;
-    } // setComment()
+    } // setGroupId()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -748,14 +398,6 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->parent_txn !== '') {
-                return false;
-            }
-
-            if ($this->comment !== '') {
-                return false;
-            }
-
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -782,41 +424,11 @@ abstract class Payment implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PaymentTableMap::translateFieldName('PaymentId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->payment_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserGroupTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->user_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PaymentTableMap::translateFieldName('RegistrationId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->registration_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PaymentTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->status = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PaymentTableMap::translateFieldName('TxnId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->txn_id = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PaymentTableMap::translateFieldName('TxnType', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->txn_type = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PaymentTableMap::translateFieldName('Recipient', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->recipient = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PaymentTableMap::translateFieldName('ParentTxn', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->parent_txn = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PaymentTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PaymentTableMap::translateFieldName('Full', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->full = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : PaymentTableMap::translateFieldName('Received', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
-            $this->received = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : PaymentTableMap::translateFieldName('Comment', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->comment = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserGroupTableMap::translateFieldName('GroupId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->group_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -825,10 +437,10 @@ abstract class Payment implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 11; // 11 = PaymentTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 2; // 2 = UserGroupTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Payment'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\UserGroup'), 0, $e);
         }
     }
 
@@ -847,8 +459,11 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aRegistration !== null && $this->registration_id !== $this->aRegistration->getRegistrationId()) {
-            $this->aRegistration = null;
+        if ($this->aUser !== null && $this->user_id !== $this->aUser->getUserId()) {
+            $this->aUser = null;
+        }
+        if ($this->aAuthGroup !== null && $this->group_id !== $this->aAuthGroup->getGroupId()) {
+            $this->aAuthGroup = null;
         }
     } // ensureConsistency
 
@@ -873,13 +488,13 @@ abstract class Payment implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PaymentTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(UserGroupTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildPaymentQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildUserGroupQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -889,7 +504,8 @@ abstract class Payment implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aRegistration = null;
+            $this->aAuthGroup = null;
+            $this->aUser = null;
         } // if (deep)
     }
 
@@ -899,8 +515,8 @@ abstract class Payment implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Payment::setDeleted()
-     * @see Payment::isDeleted()
+     * @see UserGroup::setDeleted()
+     * @see UserGroup::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -909,11 +525,11 @@ abstract class Payment implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PaymentTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserGroupTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildPaymentQuery::create()
+            $deleteQuery = ChildUserGroupQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -948,7 +564,7 @@ abstract class Payment implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PaymentTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserGroupTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -967,7 +583,7 @@ abstract class Payment implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                PaymentTableMap::addInstanceToPool($this);
+                UserGroupTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -998,11 +614,18 @@ abstract class Payment implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aRegistration !== null) {
-                if ($this->aRegistration->isModified() || $this->aRegistration->isNew()) {
-                    $affectedRows += $this->aRegistration->save($con);
+            if ($this->aAuthGroup !== null) {
+                if ($this->aAuthGroup->isModified() || $this->aAuthGroup->isNew()) {
+                    $affectedRows += $this->aAuthGroup->save($con);
                 }
-                $this->setRegistration($this->aRegistration);
+                $this->setAuthGroup($this->aAuthGroup);
+            }
+
+            if ($this->aUser !== null) {
+                if ($this->aUser->isModified() || $this->aUser->isNew()) {
+                    $affectedRows += $this->aUser->save($con);
+                }
+                $this->setUser($this->aUser);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1036,48 +659,17 @@ abstract class Payment implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[PaymentTableMap::COL_PAYMENT_ID] = true;
-        if (null !== $this->payment_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . PaymentTableMap::COL_PAYMENT_ID . ')');
-        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PaymentTableMap::COL_PAYMENT_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'payment_id';
+        if ($this->isColumnModified(UserGroupTableMap::COL_USER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'user_id';
         }
-        if ($this->isColumnModified(PaymentTableMap::COL_REGISTRATION_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'registration_id';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_STATUS)) {
-            $modifiedColumns[':p' . $index++]  = 'status';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_TXN_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'txn_id';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_TXN_TYPE)) {
-            $modifiedColumns[':p' . $index++]  = 'txn_type';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_RECIPIENT)) {
-            $modifiedColumns[':p' . $index++]  = 'recipient';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_PARENT_TXN)) {
-            $modifiedColumns[':p' . $index++]  = 'parent_txn';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_FULL)) {
-            $modifiedColumns[':p' . $index++]  = 'full';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_RECEIVED)) {
-            $modifiedColumns[':p' . $index++]  = 'received';
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_COMMENT)) {
-            $modifiedColumns[':p' . $index++]  = 'comment';
+        if ($this->isColumnModified(UserGroupTableMap::COL_GROUP_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'group_id';
         }
 
         $sql = sprintf(
-            'INSERT INTO payment (%s) VALUES (%s)',
+            'INSERT INTO user_group (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -1086,38 +678,11 @@ abstract class Payment implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'payment_id':
-                        $stmt->bindValue($identifier, $this->payment_id, PDO::PARAM_INT);
+                    case 'user_id':
+                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
                         break;
-                    case 'registration_id':
-                        $stmt->bindValue($identifier, $this->registration_id, PDO::PARAM_INT);
-                        break;
-                    case 'status':
-                        $stmt->bindValue($identifier, $this->status, PDO::PARAM_STR);
-                        break;
-                    case 'txn_id':
-                        $stmt->bindValue($identifier, $this->txn_id, PDO::PARAM_STR);
-                        break;
-                    case 'txn_type':
-                        $stmt->bindValue($identifier, $this->txn_type, PDO::PARAM_STR);
-                        break;
-                    case 'recipient':
-                        $stmt->bindValue($identifier, $this->recipient, PDO::PARAM_STR);
-                        break;
-                    case 'parent_txn':
-                        $stmt->bindValue($identifier, $this->parent_txn, PDO::PARAM_STR);
-                        break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case 'full':
-                        $stmt->bindValue($identifier, $this->full, PDO::PARAM_STR);
-                        break;
-                    case 'received':
-                        $stmt->bindValue($identifier, $this->received ? $this->received->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
-                        break;
-                    case 'comment':
-                        $stmt->bindValue($identifier, $this->comment, PDO::PARAM_STR);
+                    case 'group_id':
+                        $stmt->bindValue($identifier, $this->group_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1126,13 +691,6 @@ abstract class Payment implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
-
-        try {
-            $pk = $con->lastInsertId();
-        } catch (Exception $e) {
-            throw new PropelException('Unable to get autoincrement id.', 0, $e);
-        }
-        $this->setPaymentId($pk);
 
         $this->setNew(false);
     }
@@ -1165,7 +723,7 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PaymentTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UserGroupTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1182,37 +740,10 @@ abstract class Payment implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getPaymentId();
+                return $this->getUserId();
                 break;
             case 1:
-                return $this->getRegistrationId();
-                break;
-            case 2:
-                return $this->getStatus();
-                break;
-            case 3:
-                return $this->getTxnId();
-                break;
-            case 4:
-                return $this->getTxnType();
-                break;
-            case 5:
-                return $this->getRecipient();
-                break;
-            case 6:
-                return $this->getParentTxn();
-                break;
-            case 7:
-                return $this->getEmail();
-                break;
-            case 8:
-                return $this->getFull();
-                break;
-            case 9:
-                return $this->getReceived();
-                break;
-            case 10:
-                return $this->getComment();
+                return $this->getGroupId();
                 break;
             default:
                 return null;
@@ -1238,48 +769,50 @@ abstract class Payment implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Payment'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['UserGroup'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Payment'][$this->hashCode()] = true;
-        $keys = PaymentTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['UserGroup'][$this->hashCode()] = true;
+        $keys = UserGroupTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getPaymentId(),
-            $keys[1] => $this->getRegistrationId(),
-            $keys[2] => $this->getStatus(),
-            $keys[3] => $this->getTxnId(),
-            $keys[4] => $this->getTxnType(),
-            $keys[5] => $this->getRecipient(),
-            $keys[6] => $this->getParentTxn(),
-            $keys[7] => $this->getEmail(),
-            $keys[8] => $this->getFull(),
-            $keys[9] => $this->getReceived(),
-            $keys[10] => $this->getComment(),
+            $keys[0] => $this->getUserId(),
+            $keys[1] => $this->getGroupId(),
         );
-        if ($result[$keys[9]] instanceof \DateTimeInterface) {
-            $result[$keys[9]] = $result[$keys[9]]->format('c');
-        }
-
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aRegistration) {
+            if (null !== $this->aAuthGroup) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'registration';
+                        $key = 'authGroup';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'registration';
+                        $key = 'auth_group';
                         break;
                     default:
-                        $key = 'Registration';
+                        $key = 'AuthGroup';
                 }
 
-                $result[$key] = $this->aRegistration->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aAuthGroup->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUser) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'user';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'user';
+                        break;
+                    default:
+                        $key = 'User';
+                }
+
+                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1295,11 +828,11 @@ abstract class Payment implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\crwdogs\events\Payment
+     * @return $this|\crwdogs\events\UserGroup
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PaymentTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UserGroupTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1310,43 +843,16 @@ abstract class Payment implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\crwdogs\events\Payment
+     * @return $this|\crwdogs\events\UserGroup
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setPaymentId($value);
+                $this->setUserId($value);
                 break;
             case 1:
-                $this->setRegistrationId($value);
-                break;
-            case 2:
-                $this->setStatus($value);
-                break;
-            case 3:
-                $this->setTxnId($value);
-                break;
-            case 4:
-                $this->setTxnType($value);
-                break;
-            case 5:
-                $this->setRecipient($value);
-                break;
-            case 6:
-                $this->setParentTxn($value);
-                break;
-            case 7:
-                $this->setEmail($value);
-                break;
-            case 8:
-                $this->setFull($value);
-                break;
-            case 9:
-                $this->setReceived($value);
-                break;
-            case 10:
-                $this->setComment($value);
+                $this->setGroupId($value);
                 break;
         } // switch()
 
@@ -1372,40 +878,13 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = PaymentTableMap::getFieldNames($keyType);
+        $keys = UserGroupTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setPaymentId($arr[$keys[0]]);
+            $this->setUserId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setRegistrationId($arr[$keys[1]]);
-        }
-        if (array_key_exists($keys[2], $arr)) {
-            $this->setStatus($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setTxnId($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setTxnType($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setRecipient($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setParentTxn($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setEmail($arr[$keys[7]]);
-        }
-        if (array_key_exists($keys[8], $arr)) {
-            $this->setFull($arr[$keys[8]]);
-        }
-        if (array_key_exists($keys[9], $arr)) {
-            $this->setReceived($arr[$keys[9]]);
-        }
-        if (array_key_exists($keys[10], $arr)) {
-            $this->setComment($arr[$keys[10]]);
+            $this->setGroupId($arr[$keys[1]]);
         }
     }
 
@@ -1426,7 +905,7 @@ abstract class Payment implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\crwdogs\events\Payment The current object, for fluid interface
+     * @return $this|\crwdogs\events\UserGroup The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1446,40 +925,13 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(PaymentTableMap::DATABASE_NAME);
+        $criteria = new Criteria(UserGroupTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PaymentTableMap::COL_PAYMENT_ID)) {
-            $criteria->add(PaymentTableMap::COL_PAYMENT_ID, $this->payment_id);
+        if ($this->isColumnModified(UserGroupTableMap::COL_USER_ID)) {
+            $criteria->add(UserGroupTableMap::COL_USER_ID, $this->user_id);
         }
-        if ($this->isColumnModified(PaymentTableMap::COL_REGISTRATION_ID)) {
-            $criteria->add(PaymentTableMap::COL_REGISTRATION_ID, $this->registration_id);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_STATUS)) {
-            $criteria->add(PaymentTableMap::COL_STATUS, $this->status);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_TXN_ID)) {
-            $criteria->add(PaymentTableMap::COL_TXN_ID, $this->txn_id);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_TXN_TYPE)) {
-            $criteria->add(PaymentTableMap::COL_TXN_TYPE, $this->txn_type);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_RECIPIENT)) {
-            $criteria->add(PaymentTableMap::COL_RECIPIENT, $this->recipient);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_PARENT_TXN)) {
-            $criteria->add(PaymentTableMap::COL_PARENT_TXN, $this->parent_txn);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_EMAIL)) {
-            $criteria->add(PaymentTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_FULL)) {
-            $criteria->add(PaymentTableMap::COL_FULL, $this->full);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_RECEIVED)) {
-            $criteria->add(PaymentTableMap::COL_RECEIVED, $this->received);
-        }
-        if ($this->isColumnModified(PaymentTableMap::COL_COMMENT)) {
-            $criteria->add(PaymentTableMap::COL_COMMENT, $this->comment);
+        if ($this->isColumnModified(UserGroupTableMap::COL_GROUP_ID)) {
+            $criteria->add(UserGroupTableMap::COL_GROUP_ID, $this->group_id);
         }
 
         return $criteria;
@@ -1497,8 +949,9 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildPaymentQuery::create();
-        $criteria->add(PaymentTableMap::COL_PAYMENT_ID, $this->payment_id);
+        $criteria = ChildUserGroupQuery::create();
+        $criteria->add(UserGroupTableMap::COL_USER_ID, $this->user_id);
+        $criteria->add(UserGroupTableMap::COL_GROUP_ID, $this->group_id);
 
         return $criteria;
     }
@@ -1511,10 +964,25 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getPaymentId();
+        $validPk = null !== $this->getUserId() &&
+            null !== $this->getGroupId();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
+
+        //relation member_group to table auth_group
+        if ($this->aAuthGroup && $hash = spl_object_hash($this->aAuthGroup)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
+
+        //relation member_user to table user
+        if ($this->aUser && $hash = spl_object_hash($this->aUser)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1526,23 +994,29 @@ abstract class Payment implements ActiveRecordInterface
     }
 
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns the composite primary key for this object.
+     * The array elements will be in same order as specified in XML.
+     * @return array
      */
     public function getPrimaryKey()
     {
-        return $this->getPaymentId();
+        $pks = array();
+        $pks[0] = $this->getUserId();
+        $pks[1] = $this->getGroupId();
+
+        return $pks;
     }
 
     /**
-     * Generic method to set the primary key (payment_id column).
+     * Set the [composite] primary key.
      *
-     * @param       int $key Primary key.
+     * @param      array $keys The elements of the composite key (order must match the order in XML file).
      * @return void
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($keys)
     {
-        $this->setPaymentId($key);
+        $this->setUserId($keys[0]);
+        $this->setGroupId($keys[1]);
     }
 
     /**
@@ -1551,7 +1025,7 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getPaymentId();
+        return (null === $this->getUserId()) && (null === $this->getGroupId());
     }
 
     /**
@@ -1560,26 +1034,17 @@ abstract class Payment implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \crwdogs\events\Payment (or compatible) type.
+     * @param      object $copyObj An object of \crwdogs\events\UserGroup (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setRegistrationId($this->getRegistrationId());
-        $copyObj->setStatus($this->getStatus());
-        $copyObj->setTxnId($this->getTxnId());
-        $copyObj->setTxnType($this->getTxnType());
-        $copyObj->setRecipient($this->getRecipient());
-        $copyObj->setParentTxn($this->getParentTxn());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setFull($this->getFull());
-        $copyObj->setReceived($this->getReceived());
-        $copyObj->setComment($this->getComment());
+        $copyObj->setUserId($this->getUserId());
+        $copyObj->setGroupId($this->getGroupId());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setPaymentId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1592,7 +1057,7 @@ abstract class Payment implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \crwdogs\events\Payment Clone of current object.
+     * @return \crwdogs\events\UserGroup Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1606,26 +1071,26 @@ abstract class Payment implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildRegistration object.
+     * Declares an association between this object and a ChildAuthGroup object.
      *
-     * @param  ChildRegistration $v
-     * @return $this|\crwdogs\events\Payment The current object (for fluent API support)
+     * @param  ChildAuthGroup $v
+     * @return $this|\crwdogs\events\UserGroup The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setRegistration(ChildRegistration $v = null)
+    public function setAuthGroup(ChildAuthGroup $v = null)
     {
         if ($v === null) {
-            $this->setRegistrationId(NULL);
+            $this->setGroupId(NULL);
         } else {
-            $this->setRegistrationId($v->getRegistrationId());
+            $this->setGroupId($v->getGroupId());
         }
 
-        $this->aRegistration = $v;
+        $this->aAuthGroup = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildRegistration object, it will not be re-added.
+        // If this object has already been added to the ChildAuthGroup object, it will not be re-added.
         if ($v !== null) {
-            $v->addPayment($this);
+            $v->addUserGroup($this);
         }
 
 
@@ -1634,26 +1099,77 @@ abstract class Payment implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildRegistration object
+     * Get the associated ChildAuthGroup object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildRegistration The associated ChildRegistration object.
+     * @return ChildAuthGroup The associated ChildAuthGroup object.
      * @throws PropelException
      */
-    public function getRegistration(ConnectionInterface $con = null)
+    public function getAuthGroup(ConnectionInterface $con = null)
     {
-        if ($this->aRegistration === null && ($this->registration_id != 0)) {
-            $this->aRegistration = ChildRegistrationQuery::create()->findPk($this->registration_id, $con);
+        if ($this->aAuthGroup === null && ($this->group_id != 0)) {
+            $this->aAuthGroup = ChildAuthGroupQuery::create()->findPk($this->group_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aRegistration->addPayments($this);
+                $this->aAuthGroup->addUserGroups($this);
              */
         }
 
-        return $this->aRegistration;
+        return $this->aAuthGroup;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUser object.
+     *
+     * @param  ChildUser $v
+     * @return $this|\crwdogs\events\UserGroup The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUser(ChildUser $v = null)
+    {
+        if ($v === null) {
+            $this->setUserId(NULL);
+        } else {
+            $this->setUserId($v->getUserId());
+        }
+
+        $this->aUser = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUser object, it will not be re-added.
+        if ($v !== null) {
+            $v->addUserGroup($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUser object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUser The associated ChildUser object.
+     * @throws PropelException
+     */
+    public function getUser(ConnectionInterface $con = null)
+    {
+        if ($this->aUser === null && ($this->user_id != 0)) {
+            $this->aUser = ChildUserQuery::create()->findPk($this->user_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUser->addUserGroups($this);
+             */
+        }
+
+        return $this->aUser;
     }
 
     /**
@@ -1663,23 +1179,16 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aRegistration) {
-            $this->aRegistration->removePayment($this);
+        if (null !== $this->aAuthGroup) {
+            $this->aAuthGroup->removeUserGroup($this);
         }
-        $this->payment_id = null;
-        $this->registration_id = null;
-        $this->status = null;
-        $this->txn_id = null;
-        $this->txn_type = null;
-        $this->recipient = null;
-        $this->parent_txn = null;
-        $this->email = null;
-        $this->full = null;
-        $this->received = null;
-        $this->comment = null;
+        if (null !== $this->aUser) {
+            $this->aUser->removeUserGroup($this);
+        }
+        $this->user_id = null;
+        $this->group_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
-        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1698,7 +1207,8 @@ abstract class Payment implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aRegistration = null;
+        $this->aAuthGroup = null;
+        $this->aUser = null;
     }
 
     /**
@@ -1708,7 +1218,7 @@ abstract class Payment implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(PaymentTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(UserGroupTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

@@ -1,3 +1,8 @@
+<?php
+    require_once(__DIR__ . '/common/crwdogs.inc.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,6 +17,7 @@
         <title>CRW Dogs - Events</title>
     </head>
     <body>
+        <?php include 'common/nav.inc.php'; ?>
         <div class="main-content text-center">
             <h1>Events</h1>
             <div class="banner">

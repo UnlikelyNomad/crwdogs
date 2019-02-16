@@ -140,6 +140,7 @@ class RegistrationTableMap extends TableMap
         $this->setClassName('\\crwdogs\\events\\Registration');
         $this->setPackage('crwdogs.events');
         $this->setUseIdGenerator(true);
+        $this->setIsCrossRef(true);
         // columns
         $this->addPrimaryKey('registration_id', 'RegistrationId', 'INTEGER', true, null, null);
         $this->addForeignKey('event_id', 'EventId', 'INTEGER', 'event', 'event_id', true, null, null);

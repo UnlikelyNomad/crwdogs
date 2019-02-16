@@ -42,6 +42,8 @@ CREATE TABLE `event`
     `reg_start` DATE NOT NULL,
     `reg_end` DATE NOT NULL,
     `reg_cost` DECIMAL(6,2) NOT NULL,
+    `paypal_email` VARCHAR(255) NOT NULL,
+    `notify_email` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`event_id`),
     INDEX `event_location` (`location_id`),
     CONSTRAINT `event_location`
@@ -153,7 +155,7 @@ CREATE TABLE `payment`
     `txn_id` VARCHAR(45) NOT NULL,
     `txn_type` VARCHAR(45) NOT NULL,
     `recipient` VARCHAR(255) NOT NULL,
-    `parent_txn` VARCHAR(45) NOT NULL,
+    `parent_txn` VARCHAR(45) DEFAULT '' NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `full` TEXT NOT NULL,
     `received` DATETIME NOT NULL,
@@ -248,7 +250,7 @@ CREATE TABLE `registration`
         REFERENCES `event` (`event_id`),
     CONSTRAINT `registration_user`
         FOREIGN KEY (`user_id`)
-        REFERENCES `users` (`user_id`)
+        REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
@@ -284,7 +286,7 @@ CREATE TABLE `response`
     `response_id` INTEGER NOT NULL AUTO_INCREMENT,
     `question_id` INTEGER NOT NULL,
     `registration_id` INTEGER NOT NULL,
-    `value` VARCHAR(255) NOT NULL,
+    `value` VARCHAR(255) DEFAULT '' NOT NULL,
     PRIMARY KEY (`response_id`),
     INDEX `response_question` (`question_id`),
     INDEX `response_registration` (`registration_id`),
@@ -297,20 +299,20 @@ CREATE TABLE `response`
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- users
+-- user
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `users`
+CREATE TABLE `user`
 (
     `user_id` INTEGER NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(45) NOT NULL,
     `last_name` VARCHAR(45) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    `location` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) DEFAULT '' NOT NULL,
+    `location` VARCHAR(255) DEFAULT '' NOT NULL,
     PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB;
 

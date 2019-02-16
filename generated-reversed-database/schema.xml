@@ -42,12 +42,8 @@
     <column name="reg_cost" phpName="RegCost" type="DECIMAL" size="6" scale="2" required="true"/>
     <column name="paypal_email" phpName="PaypalEmail" type="VARCHAR" size="255" required="true"/>
     <column name="notify_email" phpName="NotifyEmail" type="VARCHAR" size="255" required="true"/>
-    <column name="owning_group" phpName="OwningGroup" type="INTEGER" required="true"/>
     <foreign-key foreignTable="location" name="event_location">
       <reference local="location_id" foreign="location_id"/>
-    </foreign-key>
-    <foreign-key foreignTable="auth_group" name="event_owner">
-      <reference local="owning_group" foreign="group_id"/>
     </foreign-key>
     <index name="event_location">
       <index-column name="location_id"/>

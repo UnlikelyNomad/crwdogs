@@ -34,6 +34,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery orderByRegCost($order = Criteria::ASC) Order by the reg_cost column
  * @method     ChildEventQuery orderByPaypalEmail($order = Criteria::ASC) Order by the paypal_email column
  * @method     ChildEventQuery orderByNotifyEmail($order = Criteria::ASC) Order by the notify_email column
+ * @method     ChildEventQuery orderByOwningGroup($order = Criteria::ASC) Order by the owning_group column
  *
  * @method     ChildEventQuery groupByEventId() Group by the event_id column
  * @method     ChildEventQuery groupByLocationId() Group by the location_id column
@@ -49,6 +50,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery groupByRegCost() Group by the reg_cost column
  * @method     ChildEventQuery groupByPaypalEmail() Group by the paypal_email column
  * @method     ChildEventQuery groupByNotifyEmail() Group by the notify_email column
+ * @method     ChildEventQuery groupByOwningGroup() Group by the owning_group column
  *
  * @method     ChildEventQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildEventQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -67,6 +69,16 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery leftJoinWithLocation() Adds a LEFT JOIN clause and with to the query using the Location relation
  * @method     ChildEventQuery rightJoinWithLocation() Adds a RIGHT JOIN clause and with to the query using the Location relation
  * @method     ChildEventQuery innerJoinWithLocation() Adds a INNER JOIN clause and with to the query using the Location relation
+ *
+ * @method     ChildEventQuery leftJoinAuthGroup($relationAlias = null) Adds a LEFT JOIN clause to the query using the AuthGroup relation
+ * @method     ChildEventQuery rightJoinAuthGroup($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AuthGroup relation
+ * @method     ChildEventQuery innerJoinAuthGroup($relationAlias = null) Adds a INNER JOIN clause to the query using the AuthGroup relation
+ *
+ * @method     ChildEventQuery joinWithAuthGroup($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the AuthGroup relation
+ *
+ * @method     ChildEventQuery leftJoinWithAuthGroup() Adds a LEFT JOIN clause and with to the query using the AuthGroup relation
+ * @method     ChildEventQuery rightJoinWithAuthGroup() Adds a RIGHT JOIN clause and with to the query using the AuthGroup relation
+ * @method     ChildEventQuery innerJoinWithAuthGroup() Adds a INNER JOIN clause and with to the query using the AuthGroup relation
  *
  * @method     ChildEventQuery leftJoinEarlyDiscount($relationAlias = null) Adds a LEFT JOIN clause to the query using the EarlyDiscount relation
  * @method     ChildEventQuery rightJoinEarlyDiscount($relationAlias = null) Adds a RIGHT JOIN clause to the query using the EarlyDiscount relation
@@ -108,7 +120,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery rightJoinWithRegistration() Adds a RIGHT JOIN clause and with to the query using the Registration relation
  * @method     ChildEventQuery innerJoinWithRegistration() Adds a INNER JOIN clause and with to the query using the Registration relation
  *
- * @method     \crwdogs\events\LocationQuery|\crwdogs\events\EarlyDiscountQuery|\crwdogs\events\ItemQuery|\crwdogs\events\QuestionQuery|\crwdogs\events\RegistrationQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \crwdogs\events\LocationQuery|\crwdogs\events\AuthGroupQuery|\crwdogs\events\EarlyDiscountQuery|\crwdogs\events\ItemQuery|\crwdogs\events\QuestionQuery|\crwdogs\events\RegistrationQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildEvent findOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query
  * @method     ChildEvent findOneOrCreate(ConnectionInterface $con = null) Return the first ChildEvent matching the query, or a new ChildEvent object populated from the query conditions when no match is found
@@ -126,7 +138,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent findOneByRegEnd(string $reg_end) Return the first ChildEvent filtered by the reg_end column
  * @method     ChildEvent findOneByRegCost(string $reg_cost) Return the first ChildEvent filtered by the reg_cost column
  * @method     ChildEvent findOneByPaypalEmail(string $paypal_email) Return the first ChildEvent filtered by the paypal_email column
- * @method     ChildEvent findOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column *
+ * @method     ChildEvent findOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column
+ * @method     ChildEvent findOneByOwningGroup(int $owning_group) Return the first ChildEvent filtered by the owning_group column *
 
  * @method     ChildEvent requirePk($key, ConnectionInterface $con = null) Return the ChildEvent by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -145,6 +158,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent requireOneByRegCost(string $reg_cost) Return the first ChildEvent filtered by the reg_cost column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByPaypalEmail(string $paypal_email) Return the first ChildEvent filtered by the paypal_email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByOwningGroup(int $owning_group) Return the first ChildEvent filtered by the owning_group column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findByEventId(int $event_id) Return ChildEvent objects filtered by the event_id column
@@ -161,6 +175,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent[]|ObjectCollection findByRegCost(string $reg_cost) Return ChildEvent objects filtered by the reg_cost column
  * @method     ChildEvent[]|ObjectCollection findByPaypalEmail(string $paypal_email) Return ChildEvent objects filtered by the paypal_email column
  * @method     ChildEvent[]|ObjectCollection findByNotifyEmail(string $notify_email) Return ChildEvent objects filtered by the notify_email column
+ * @method     ChildEvent[]|ObjectCollection findByOwningGroup(int $owning_group) Return ChildEvent objects filtered by the owning_group column
  * @method     ChildEvent[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -259,7 +274,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email FROM event WHERE event_id = :p0';
+        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email, owning_group FROM event WHERE event_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -858,6 +873,49 @@ abstract class EventQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the owning_group column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByOwningGroup(1234); // WHERE owning_group = 1234
+     * $query->filterByOwningGroup(array(12, 34)); // WHERE owning_group IN (12, 34)
+     * $query->filterByOwningGroup(array('min' => 12)); // WHERE owning_group > 12
+     * </code>
+     *
+     * @see       filterByAuthGroup()
+     *
+     * @param     mixed $owningGroup The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByOwningGroup($owningGroup = null, $comparison = null)
+    {
+        if (is_array($owningGroup)) {
+            $useMinMax = false;
+            if (isset($owningGroup['min'])) {
+                $this->addUsingAlias(EventTableMap::COL_OWNING_GROUP, $owningGroup['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($owningGroup['max'])) {
+                $this->addUsingAlias(EventTableMap::COL_OWNING_GROUP, $owningGroup['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_OWNING_GROUP, $owningGroup, $comparison);
+    }
+
+    /**
      * Filter the query by a related \crwdogs\events\Location object
      *
      * @param \crwdogs\events\Location|ObjectCollection $location The related object(s) to use as filter
@@ -932,6 +990,83 @@ abstract class EventQuery extends ModelCriteria
         return $this
             ->joinLocation($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Location', '\crwdogs\events\LocationQuery');
+    }
+
+    /**
+     * Filter the query by a related \crwdogs\events\AuthGroup object
+     *
+     * @param \crwdogs\events\AuthGroup|ObjectCollection $authGroup The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByAuthGroup($authGroup, $comparison = null)
+    {
+        if ($authGroup instanceof \crwdogs\events\AuthGroup) {
+            return $this
+                ->addUsingAlias(EventTableMap::COL_OWNING_GROUP, $authGroup->getGroupId(), $comparison);
+        } elseif ($authGroup instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(EventTableMap::COL_OWNING_GROUP, $authGroup->toKeyValue('PrimaryKey', 'GroupId'), $comparison);
+        } else {
+            throw new PropelException('filterByAuthGroup() only accepts arguments of type \crwdogs\events\AuthGroup or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the AuthGroup relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function joinAuthGroup($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('AuthGroup');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'AuthGroup');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the AuthGroup relation AuthGroup object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \crwdogs\events\AuthGroupQuery A secondary query class using the current class as primary query
+     */
+    public function useAuthGroupQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinAuthGroup($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'AuthGroup', '\crwdogs\events\AuthGroupQuery');
     }
 
     /**
