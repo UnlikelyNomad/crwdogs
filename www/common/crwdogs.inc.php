@@ -37,7 +37,7 @@ function canManageEvent($user, $event) {
     return $user->getGroups()->contains($eventGroup);
 }
 
-$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+';
+$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_';
 function random_str($length) {
     global $keyspace;
 

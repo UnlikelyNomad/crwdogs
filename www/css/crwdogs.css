@@ -137,3 +137,7 @@ ul.crw-sort li {
 #checkout img {
     width: 90%;
 }
+
+td {
+    padding: 2px 5px;
+}

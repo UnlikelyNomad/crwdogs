@@ -12,7 +12,12 @@ if (!isset($user)) {
 use \crwdogs\events\User;
 use \crwdogs\events\UserQuery;
 use \crwdogs\events\EventQuery;
+use \crwdogs\events\RegistrationQuery;
+use \crwdogs\events\ResponseQuery;
+use \crwdogs\events\PaymentQuery;
+
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 $list = true;
 
@@ -96,8 +101,73 @@ if (!isset($_GET['id'])) {
                             }
                         } else {
                             //list registrations
-                        }
-                    ?>
+                            $registrations = RegistrationQuery::create()->filterByEventId($event->getEventId())->find();
+
+                            $regs = array();
+
+                            ?>
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Payment</th>
+                                    <th>Gross</th>
+                                    <th>Fee</th>
+                                    <th>Net</th>
+                                    <th>Send Payment Email</th>
+                                </tr>
+                                <?php
+
+                                foreach ($registrations as $registration) {
+                                    $regUser = $registration->getUser();
+                                    $payments = $registration->getPayments();
+                                    $payment = $payments->getLast();
+
+                                    $color = "#B88";
+
+                                    if (isset($payment)) {
+                                        $status = $payment->getStatus();
+
+                                        if ($status == "Completed") {
+                                            $color = "#6D6";
+                                        }
+
+                                        preg_match("/mc_gross=([^&]+)/", $payment->getFull(), $gross_match);
+                                        $gross = floatval($gross_match[1]);
+
+                                        preg_match("/mc_fee=([^&]+)/", $payment->getFull(), $fee_match);
+                                        $fee = floatval($fee_match[1]);
+                                    } else {
+                                        $status = "No Payment";
+                                        $gross = 0;
+                                        $fee = 0;
+                                    }
+
+                                    $net = $gross - $fee;
+
+                                    ?>
+                                    <tr>
+                                        <td><?= $regUser->getLastName() . ', ' . $regUser->getFirstName() ?></td>
+                                        <td><a href="mailto:<?= $regUser->getEmail() ?>"><?= $regUser->getEmail() ?></a></td>
+                                        <td style="background-color: <?= $color ?>;"><?= $status ?></td>
+                                        <td><?= $gross ?></td>
+                                        <td><?= $fee ?></td>
+                                        <td><?= $net ?></td>
+                                        <td><?php /*if ($status == "No Payment") { ?>
+                                            <form action="/paypal/resend.php" method="post">
+                                                <input type="hidden" name="event_id" value="<?= $event->getEventId() ?>">
+                                                <input type="hidden" name="reg_id" value="<?= $registration->getRegistrationId() ?>">
+                                                <button type="submit" name="email_paypal_link" class="btn btn-sm btn-primary">Send Payment Email</button>
+                                            </form><?php } */?>
+                                        </td>
+                                    </tr>
+
+                                    <?php
+
+                                    $responses = ResponseQuery::create()->filterByRegistrationId($registration->getRegistrationId())->find();
+                                } ?>
+                            </table>
+                        <?php } ?>
                     </div>
                 </div>
             <?php } ?>
