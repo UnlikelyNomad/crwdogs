@@ -2,6 +2,7 @@
 
 require_once '../../vendor/autoload.php';
 require_once '../../generated-conf/config.php';
+require_once '../common/crwdogs.inc.php';
 
 use \crwdogs\events\RegistrationQuery;
 use \crwdogs\events\PurchasedItem;
