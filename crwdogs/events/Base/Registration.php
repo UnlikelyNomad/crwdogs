@@ -103,6 +103,14 @@ abstract class Registration implements ActiveRecordInterface
     protected $status;
 
     /**
+     * The value for the total field.
+     *
+     * Note: this column has a database default value of: '0'
+     * @var        string
+     */
+    protected $total;
+
+    /**
      * @var        ChildEvent
      */
     protected $aEvent;
@@ -157,10 +165,23 @@ abstract class Registration implements ActiveRecordInterface
     protected $responsesScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->total = '0';
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\Registration object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -422,6 +443,16 @@ abstract class Registration implements ActiveRecordInterface
     }
 
     /**
+     * Get the [total] column value.
+     *
+     * @return string
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
      * Set the value of [registration_id] column.
      *
      * @param int $v new value
@@ -510,6 +541,26 @@ abstract class Registration implements ActiveRecordInterface
     } // setStatus()
 
     /**
+     * Set the value of [total] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Registration The current object (for fluent API support)
+     */
+    public function setTotal($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->total !== $v) {
+            $this->total = $v;
+            $this->modifiedColumns[RegistrationTableMap::COL_TOTAL] = true;
+        }
+
+        return $this;
+    } // setTotal()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -519,6 +570,10 @@ abstract class Registration implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->total !== '0') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -556,6 +611,9 @@ abstract class Registration implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RegistrationTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RegistrationTableMap::translateFieldName('Total', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->total = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -564,7 +622,7 @@ abstract class Registration implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 4; // 4 = RegistrationTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = RegistrationTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Registration'), 0, $e);
@@ -861,6 +919,9 @@ abstract class Registration implements ActiveRecordInterface
         if ($this->isColumnModified(RegistrationTableMap::COL_STATUS)) {
             $modifiedColumns[':p' . $index++]  = 'status';
         }
+        if ($this->isColumnModified(RegistrationTableMap::COL_TOTAL)) {
+            $modifiedColumns[':p' . $index++]  = 'total';
+        }
 
         $sql = sprintf(
             'INSERT INTO registration (%s) VALUES (%s)',
@@ -883,6 +944,9 @@ abstract class Registration implements ActiveRecordInterface
                         break;
                     case 'status':
                         $stmt->bindValue($identifier, $this->status, PDO::PARAM_STR);
+                        break;
+                    case 'total':
+                        $stmt->bindValue($identifier, $this->total, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -958,6 +1022,9 @@ abstract class Registration implements ActiveRecordInterface
             case 3:
                 return $this->getStatus();
                 break;
+            case 4:
+                return $this->getTotal();
+                break;
             default:
                 return null;
                 break;
@@ -992,6 +1059,7 @@ abstract class Registration implements ActiveRecordInterface
             $keys[1] => $this->getEventId(),
             $keys[2] => $this->getUserId(),
             $keys[3] => $this->getStatus(),
+            $keys[4] => $this->getTotal(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1120,6 +1188,9 @@ abstract class Registration implements ActiveRecordInterface
             case 3:
                 $this->setStatus($value);
                 break;
+            case 4:
+                $this->setTotal($value);
+                break;
         } // switch()
 
         return $this;
@@ -1157,6 +1228,9 @@ abstract class Registration implements ActiveRecordInterface
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setStatus($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setTotal($arr[$keys[4]]);
         }
     }
 
@@ -1210,6 +1284,9 @@ abstract class Registration implements ActiveRecordInterface
         }
         if ($this->isColumnModified(RegistrationTableMap::COL_STATUS)) {
             $criteria->add(RegistrationTableMap::COL_STATUS, $this->status);
+        }
+        if ($this->isColumnModified(RegistrationTableMap::COL_TOTAL)) {
+            $criteria->add(RegistrationTableMap::COL_TOTAL, $this->total);
         }
 
         return $criteria;
@@ -1300,6 +1377,7 @@ abstract class Registration implements ActiveRecordInterface
         $copyObj->setEventId($this->getEventId());
         $copyObj->setUserId($this->getUserId());
         $copyObj->setStatus($this->getStatus());
+        $copyObj->setTotal($this->getTotal());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2223,8 +2301,10 @@ abstract class Registration implements ActiveRecordInterface
         $this->event_id = null;
         $this->user_id = null;
         $this->status = null;
+        $this->total = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

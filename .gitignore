@@ -65,3 +65,4 @@ propel.yml
 /composer.phar
 /www/get_oauth_token.php
 /crwdogs/mail.config.php
+/www/test

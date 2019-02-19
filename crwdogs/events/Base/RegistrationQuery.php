@@ -24,11 +24,13 @@ use crwdogs\events\Map\RegistrationTableMap;
  * @method     ChildRegistrationQuery orderByEventId($order = Criteria::ASC) Order by the event_id column
  * @method     ChildRegistrationQuery orderByUserId($order = Criteria::ASC) Order by the user_id column
  * @method     ChildRegistrationQuery orderByStatus($order = Criteria::ASC) Order by the status column
+ * @method     ChildRegistrationQuery orderByTotal($order = Criteria::ASC) Order by the total column
  *
  * @method     ChildRegistrationQuery groupByRegistrationId() Group by the registration_id column
  * @method     ChildRegistrationQuery groupByEventId() Group by the event_id column
  * @method     ChildRegistrationQuery groupByUserId() Group by the user_id column
  * @method     ChildRegistrationQuery groupByStatus() Group by the status column
+ * @method     ChildRegistrationQuery groupByTotal() Group by the total column
  *
  * @method     ChildRegistrationQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildRegistrationQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -96,7 +98,8 @@ use crwdogs\events\Map\RegistrationTableMap;
  * @method     ChildRegistration findOneByRegistrationId(int $registration_id) Return the first ChildRegistration filtered by the registration_id column
  * @method     ChildRegistration findOneByEventId(int $event_id) Return the first ChildRegistration filtered by the event_id column
  * @method     ChildRegistration findOneByUserId(int $user_id) Return the first ChildRegistration filtered by the user_id column
- * @method     ChildRegistration findOneByStatus(string $status) Return the first ChildRegistration filtered by the status column *
+ * @method     ChildRegistration findOneByStatus(string $status) Return the first ChildRegistration filtered by the status column
+ * @method     ChildRegistration findOneByTotal(string $total) Return the first ChildRegistration filtered by the total column *
 
  * @method     ChildRegistration requirePk($key, ConnectionInterface $con = null) Return the ChildRegistration by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildRegistration requireOne(ConnectionInterface $con = null) Return the first ChildRegistration matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -105,12 +108,14 @@ use crwdogs\events\Map\RegistrationTableMap;
  * @method     ChildRegistration requireOneByEventId(int $event_id) Return the first ChildRegistration filtered by the event_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildRegistration requireOneByUserId(int $user_id) Return the first ChildRegistration filtered by the user_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildRegistration requireOneByStatus(string $status) Return the first ChildRegistration filtered by the status column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildRegistration requireOneByTotal(string $total) Return the first ChildRegistration filtered by the total column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildRegistration[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildRegistration objects based on current ModelCriteria
  * @method     ChildRegistration[]|ObjectCollection findByRegistrationId(int $registration_id) Return ChildRegistration objects filtered by the registration_id column
  * @method     ChildRegistration[]|ObjectCollection findByEventId(int $event_id) Return ChildRegistration objects filtered by the event_id column
  * @method     ChildRegistration[]|ObjectCollection findByUserId(int $user_id) Return ChildRegistration objects filtered by the user_id column
  * @method     ChildRegistration[]|ObjectCollection findByStatus(string $status) Return ChildRegistration objects filtered by the status column
+ * @method     ChildRegistration[]|ObjectCollection findByTotal(string $total) Return ChildRegistration objects filtered by the total column
  * @method     ChildRegistration[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -209,7 +214,7 @@ abstract class RegistrationQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT registration_id, event_id, user_id, status FROM registration WHERE registration_id = :p0';
+        $sql = 'SELECT registration_id, event_id, user_id, status, total FROM registration WHERE registration_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -449,6 +454,47 @@ abstract class RegistrationQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RegistrationTableMap::COL_STATUS, $status, $comparison);
+    }
+
+    /**
+     * Filter the query on the total column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTotal(1234); // WHERE total = 1234
+     * $query->filterByTotal(array(12, 34)); // WHERE total IN (12, 34)
+     * $query->filterByTotal(array('min' => 12)); // WHERE total > 12
+     * </code>
+     *
+     * @param     mixed $total The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRegistrationQuery The current query, for fluid interface
+     */
+    public function filterByTotal($total = null, $comparison = null)
+    {
+        if (is_array($total)) {
+            $useMinMax = false;
+            if (isset($total['min'])) {
+                $this->addUsingAlias(RegistrationTableMap::COL_TOTAL, $total['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($total['max'])) {
+                $this->addUsingAlias(RegistrationTableMap::COL_TOTAL, $total['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(RegistrationTableMap::COL_TOTAL, $total, $comparison);
     }
 
     /**

@@ -641,6 +641,45 @@ $event = EventQuery::create()->findPK($eid);
                         <img src="../images/cc-badges-ppmcvdam.png">
                     </div>
                 </div>
+                <form id="reg_form" action="/registration/register.php" method="post">
+                    <input type="hidden" name="qid1" value="">
+                    <input type="hidden" name="qid2" value="">
+                    <input type="hidden" name="qid3" value="">
+                    <input type="hidden" name="qid4" value="">
+                    <input type="hidden" name="qid5" value="">
+                    <input type="hidden" name="qid6" value="">
+                    <input type="hidden" name="qid7" value="">
+                    <input type="hidden" name="qid8" value="">
+                    <input type="hidden" name="qid9" value="">
+                    <input type="hidden" name="qid10" value="">
+                    <input type="hidden" name="qid11" value="">
+                    <input type="hidden" name="qid12" value="">
+                    <input type="hidden" name="qid13" value="">
+                    <input type="hidden" name="qid14" value="">
+                    <input type="hidden" name="qid15" value="">
+                    <input type="hidden" name="qid16" value="">
+                    <input type="hidden" name="qid17" value="">
+                    <input type="hidden" name="qid18" value="">
+                    <input type="hidden" name="qid19" value="">
+                    <input type="hidden" name="qid20" value="">
+                    <input type="hidden" name="qid21" value="">
+                    <input type="hidden" name="qid22" value="">
+                    <input type="hidden" name="qid23" value="">
+                    <input type="hidden" name="qid24" value="">
+                    <input type="hidden" name="qid25" value="">
+                    <input type="hidden" name="qid26" value="">
+                    <input type="hidden" name="qid27" value="">
+                    <input type="hidden" name="qid28" value="">
+                    <input type="hidden" name="qid29" value="">
+                    <input type="hidden" name="qid30" value="">
+                    <input type="hidden" name="qid31" value="">
+                    <input type="hidden" name="first_name" value="">
+                    <input type="hidden" name="last_name" value="">
+                    <input type="hidden" name="email" value="">
+                    <input type="hidden" name="phone" value="">
+                    <input type="hidden" name="event_id" value="1">
+                    <input type="hidden" name="iid6-qty" value="1">
+                </form>
                 <div class="card small p-2 mt-2">
                     <p>You do not need a PayPal account to pay, you can use any credit card accepted by PayPal or use a PayPal account to pay directly from your bank or to use PayPal balance.</p>
                     <p>Registration fee is $75 if paid before March 1, 2019 and $100 after that.</p>

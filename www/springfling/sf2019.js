@@ -140,7 +140,7 @@ function qidSel(qid) {
 }
 
 function doPayment(reg_id) {
-    var cart = new PaypalCart({
+    /*var cart = new PaypalCart({
         business: 'crw@texascrwd.com',
         ipn_url: 'https://crwdogs.com/paypal/ipn.php',
         ret_url: 'https://crwdogs.com/springfling/success.php',
@@ -156,7 +156,9 @@ function doPayment(reg_id) {
 
     cart.addItem('Registration', 75, 1);
 
-    cart.submit();
+    cart.submit();*/
+
+
 }
 
 function regSuccess(resp) {
@@ -175,31 +177,36 @@ function regFail(resp) {
     alert('There was a problem submitting the registration, please try again in a minute.');
 }
 
+function setFormVal(name, value) {
+    $('#reg_form [name="' + name + '"]').val(value);
+}
+
+function getFormVal(name) {
+    return $('#reg_form [name="' + name + '"]').val();
+}
+
 $('#checkout').click(function() {
     //alert('REGISTER');
 
-    //first gather up all the data
-    var reg = {
-        eventid: 1 //hardcoded event id to find event info on server and link reg appropriately
-    };
+    setFormVal('event_id', 1); // hardcoded event id for Spring Fling 2019
 
     //registrant info
-    reg['first_name'] = $('#first_name').val();
-    if (reg['first_name'] == '') {
+    setFormVal('first_name', $('#first_name').val());
+    if (getFormVal('first_name') == '') {
         $('#first_name')[0].focus();
         alert('You must enter your name before submitting.');
         return;
     }
 
-    reg['last_name'] = $('#last_name').val();
-    if (reg['last_name'] == '') {
+    setFormVal('last_name', $('#last_name').val());
+    if (getFormVal('last_name') == '') {
         $('#last_name')[0].focus();
         alert('You must enter your name before submitting.');
         return;
     }
 
-    reg['email'] = $('#email').val();
-    if (reg['email'] == '') {
+    setFormVal('email', $('#email').val());
+    if (getFormVal('email') == '') {
         $('#email')[0].focus();
         alert('You must enter your email before submitting.');
         return;
@@ -212,25 +219,22 @@ $('#checkout').click(function() {
         return;
     }
 
-    if (reg['email'] != email2) {
+    if (getFormVal('email') != email2) {
         $('#email')[0].focus();
         alert('Email addresses do not match.');
         return;
     }
 
-    reg['phone'] = $('#phone').val();
-    if (reg['phone'] == '') {
+    setFormVal('phone', $('#phone').val());
+    if (getFormVal('phone') == '') {
         $('#phone')[0].focus();
         alert('You must enter your phone before submitting.');
         return;
     }
 
-    //collection for question responses
-    var q = reg['questions'] = {};
-
     //universal questions
-    q[1] = getYesNoBoolVal(qidSel(1)); //night jumps
-    q[2] = getYesNoBoolVal(qidSel(2)); //beach jumps
+    setFormVal('qid1', getYesNoBoolVal(qidSel(1))); //night jumps
+    setFormVal('qid2', getYesNoBoolVal(qidSel(2))); //beach jumps
 
     var att = getButtonVal(qidSel(3)); //attendance selections
     var dates = [];
@@ -239,9 +243,11 @@ $('#checkout').click(function() {
             dates.push(i + 9);
         }
     }
-    q[3] = dates.toString();
 
-    if (q[3] == '') {
+    var qid3 = dates.toString();
+    setFormVal('qid3', qid3);
+
+    if (qid3 == '') {
         $(qidSel(3))[0].focus();
         alert('You must select at least one attendance day.');
         return;
@@ -249,113 +255,107 @@ $('#checkout').click(function() {
 
     //experience selection
     var expArr = getButtonVal(qidSel(4));
+    var e = '';
     if (expArr[0]) {
-        q[4] = 'new';
+        e = 'new';
     } else if (expArr[1]) {
-        q[4] = 'pup';
+        e = 'pup';
     } else if (expArr[2]) {
-        q[4] = 'exp';
+        e = 'exp';
     } else {
         alert('You must select an experience level.');
         return;
     }
 
-    var e = q[4];
+    setFormVal('qid4', e);
 
-    q[5] = getYesNoBoolVal(expSel(e, 5)); //has gear
-    q[6] = getInputVal(expSel(e, 6)); //# sport jumps
-    q[7] = getInputVal(expSel(e, 7)); //# crw jumps
-    q[8] = getInputVal(expSel(e, 8)); //crw jumps when
-    q[9] = getInputVal(expSel(e, 9)); //exit weight
-    q[10] = getInputVal(expSel(e, 10)); //sport canopy size
-    q[11] = getInputVal(expSel(e, 11)); //wing loading
-    q[12] = getInputVal(expSel(e, 12)); //sport canopy type
-    q[13] = getYesNoBoolVal(expSel(e, 13)); //lightning avail
-    q[14] = getYesNoBoolVal(expSel(e, 14)); //sized rig
-    q[15] = getInputVal(expSel(e, 15)); //reserve handle
-    q[16] = getYesNoBoolVal(expSel(e, 16)); //CRW at home
-    q[17] = getYesNoBoolVal(expSel(e, 17)); //acq at boogie
-    q[18] = getInputVal(expSel(e, 18)); //pup jumps with
+    setFormVal('qid5', getYesNoBoolVal(expSel(e, 5))); //has gear
+    setFormVal('qid6', getInputVal(expSel(e, 6))); //# sport jumps
+    setFormVal('qid7', getInputVal(expSel(e, 7))); //# crw jumps
+    setFormVal('qid8', getInputVal(expSel(e, 8))); //crw jumps when
+    setFormVal('qid9', getInputVal(expSel(e, 9))); //exit weight
+    setFormVal('qid10', getInputVal(expSel(e, 10))); //sport canopy size
+    setFormVal('qid11', getInputVal(expSel(e, 11))); //wing loading
+    setFormVal('qid12', getInputVal(expSel(e, 12))); //sport canopy type
+    setFormVal('qid13', getYesNoBoolVal(expSel(e, 13))); //lightning avail
+    setFormVal('qid14', getYesNoBoolVal(expSel(e, 14))); //sized rig
+    setFormVal('qid15', getInputVal(expSel(e, 15))); //reserve handle
+    setFormVal('qid16', getYesNoBoolVal(expSel(e, 16))); //CRW at home
+    setFormVal('qid17', getYesNoBoolVal(expSel(e, 17))); //acq at boogie
+    setFormVal('qid18', getInputVal(expSel(e, 18))); //pup jumps with
 
     //experienced questionaire
-
-    var sizeArr = getButtonVal(expSel(e, 19)); // jumping sizes
-    var sizes = [];
-    for (var i = 0; i < sizeArr.length; ++i) {
-        if (sizeArr[i]) {
-            sizes.push(Calcs.sizes[i]);
+    if (e == 'exp') {
+        var sizeArr = getButtonVal(expSel(e, 19)); // jumping sizes
+        var sizes = [];
+        for (var i = 0; i < sizeArr.length; ++i) {
+            if (sizeArr[i]) {
+                sizes.push(Calcs.sizes[i]);
+            }
         }
-    }
-    q[19] = sizes.toString();
+        setFormVal('qid19', sizes.toString());
 
-    q[20] = getSortListVal(expSel(e, 20)); //preferred jumps
-    q[21] = getSortListVal(expSel(e, 21)); //undesired jumps
-    q[22] = getSortListVal(expSel(e, 22)); //train skills
-    q[23] = getInputVal(expSel(e, 23)); //bring 113s
-    q[24] = getInputVal(expSel(e, 24)); //bring 126s
-    q[25] = getInputVal(expSel(e, 25)); //bring 143s
-    q[26] = getInputVal(expSel(e, 26)); //bring 160s
-    q[27] = getInputVal(expSel(e, 27)); //bring 176s
-    q[28] = getInputVal(expSel(e, 28)); //bring 193s
-    q[29] = getInputVal(expSel(e, 29)); //bring 218s
-    q[30] = getButtonVal(expSel(e, 30)); //fly camera
-    q[31] = getButtonVal(expSel(e, 31)); //loan camera
+        setFormVal('qid20', getSortListVal(expSel(e, 20))); //preferred jumps
+        setFormVal('qid21', getSortListVal(expSel(e, 21))); //undesired jumps
+        setFormVal('qid22', getSortListVal(expSel(e, 22))); //train skills
+        setFormVal('qid23', getInputVal(expSel(e, 23))); //bring 113s
+        setFormVal('qid24', getInputVal(expSel(e, 24))); //bring 126s
+        setFormVal('qid25', getInputVal(expSel(e, 25))); //bring 143s
+        setFormVal('qid26', getInputVal(expSel(e, 26))); //bring 160s
+        setFormVal('qid27', getInputVal(expSel(e, 27))); //bring 176s
+        setFormVal('qid28', getInputVal(expSel(e, 28))); //bring 193s
+        setFormVal('qid29', getInputVal(expSel(e, 29))); //bring 218s
+        setFormVal('qid30', getButtonVal(expSel(e, 30))); //fly camera
+        setFormVal('qid31', getButtonVal(expSel(e, 31))); //loan camera
+    }
 
     if (e == 'new' || e == 'pup') {
-        if (q[6] == '') {
+        if (getFormVal('qid6') == '') {
             $(expSel(e, 6))[0].focus();
             alert('You must fill in number of sport jumps.');
             return;
         }
 
-        if (q[9] == '') {
+        if (getFormVal('qid9') == '') {
             $(expSel(e, 9))[0].focus();
             alert('You must fill in exit weight.');
             return;
         }
 
-        if (q[10] == '') {
+        if (getFormVal('qid10') == '') {
             $(expSel(e, 10))[0].focus();
             alert('You must fill in current sport canopy size.');
             return;
         }
 
-        if (q[12] == '') {
+        if (getFormVal('qid12') == '') {
             $(expSel(e, 12))[0].focus();
             alert('You must fill in sport canopy type.');
             return;
         }
 
         if (e == 'pup') {
-            if (q[8] == '') {
+            if (getFormVal('qid8') == '') {
                 $(expSel(e, 8))[0].focus();
                 alert('You must fill in when you\'ve done CRW.');
                 return;
             }
 
-            if (q[18] == '') {
+            if (getFormVal('qid18') == '') {
                 $(expSel(e, 18))[0].focus();
                 alert('You must fill in who you\'ve jumped with.');
                 return;
             }
         }
     } else if (e == 'exp') {
-        if (q[19] == '') {
+        if (getFormVal('qid19') == '') {
             $(expSel(e, 19))[0].focus();
             alert('You must select at least one canopy size that you will be jumping.');
             return;
         }
     }
 
-    var reg = JSON.stringify(reg);
-
-    $.ajax({
-        type: 'POST',
-        url: '/registration/register.php',
-        data: {reg: reg},
-        success: regSuccess,
-        error: regFail
-    });
+    $('#reg_form').submit();
 });
 
 $(function() {
