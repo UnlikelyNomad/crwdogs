@@ -19,7 +19,7 @@
         <div class="main-content">
             <div class="banner">
                 <div class="banner-text rounded">
-                    <img src="/images/noplacelikedink.png" style="max-width: 600px;">
+                    <img src="/images/noplacelikedink.png" style="max-width: 80%; min-width: 320px;">
                 </div>
             </div>
 
