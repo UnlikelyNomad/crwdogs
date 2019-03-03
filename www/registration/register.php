@@ -30,7 +30,8 @@ $cart = new PayPalCart(
     'crw@texascrwd.com',
     'https://crwdogs.com/paypal/ipn.php',
     'https://crwdogs.com/registration/success.php?id=' . $registration->getRegistrationId(),
-    'https://crwdogs.com/registration/cancel.php?id=' . $registration->getRegistrationId()
+    'https://crwdogs.com/registration/cancel.php?id=' . $registration->getRegistrationId(),
+    false //disable sandbox
 );
 
 $mail->setFrom('admin@crwdogs.com', 'CRW Dogs Admin');
