@@ -77,7 +77,7 @@ function updateShirt() {
             n -= 1;
         }
 
-        cost.shirt = n * 15;
+        cost.shirt = n * 20;
 
         updateCosts();
     });
@@ -98,7 +98,7 @@ function updateBeer() {
             n += Number($(el).val());
         });
 
-        cost.beer = n * 25;
+        cost.beer = n * 40;
 
         updateCosts();
     });
@@ -106,14 +106,9 @@ function updateBeer() {
 
 function updateCamp() {
     setTimeout(function() {
-        var nights = Reg.getButtonVal(campButtonSel);
-        var camp = 0;
+        var camp = Reg.getButtonVal(campButtonSel);
 
-        if (nights[1]) camp += 10;
-        if (nights[2]) camp += 10;
-        if (nights[3]) camp += 10;
-
-        cost.camp = camp;
+        cost.camp = camp ? 40 : 0;
         updateCosts();
     });
 }

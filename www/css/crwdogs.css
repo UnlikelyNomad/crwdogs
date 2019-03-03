@@ -141,3 +141,8 @@ ul.crw-sort li {
 td {
     padding: 2px 5px;
 }
+
+.card-header {
+    background: linear-gradient(#333,#1a4165);
+    color: #9ec68a;
+}

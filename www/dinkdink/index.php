@@ -12,15 +12,14 @@
 
         <title>CRW Dogs - Dink Dink</title>
     </head>
-    <body>
+    <body style="background-image:url(/images/yellowbrick.png);">
 
     <?php include '../common/nav.inc.php'; ?>
 
         <div class="main-content">
             <div class="banner">
                 <div class="banner-text rounded">
-                    DINK DINK EPISODE 8
-                    <p class="font-italic small">Subscript later!</p>
+                    <img src="/images/noplacelikedink.png" style="max-width: 600px;">
                 </div>
             </div>
 
@@ -68,7 +67,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col card text-center py-3 mt-3 mx-3">PLEASE SELECT THE DISCIPLINE(S) YOU PLAN TO PARTICIPATE IN</div>
+                    <div class="col card text-center py-3 mt-3 mx-3 card-header">PLEASE SELECT THE DISCIPLINE(S) YOU PLAN TO PARTICIPATE IN</div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="33">CRW</button></div>
@@ -80,7 +79,7 @@
                 </div>
                 <div class="container mt-3" id="lightning_sizes" style="display:none;">
                     <div class="row">
-                        <div class="col card text-center py-3">SELECT THE LIGHTNING SIZE(S) YOU WILL COME PREPARED TO FLY AT A 1.30 to 1.35 WING LOADING</div>
+                        <div class="col card text-center py-3 card-header">SELECT THE LIGHTNING SIZE(S) YOU WILL COME PREPARED TO FLY AT A 1.30 to 1.35 WING LOADING</div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg mt-1">
@@ -135,7 +134,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center mt-3 py-3 mx-3">
+                    <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         PLEASE SELECT THE DAYS YOU INTEND TO JUMP AND THE EVENING EVENTS YOU PLAN TO ATTEND
                     </div>
                 </div>
@@ -151,7 +150,8 @@
                         THURSDAY
                     </button></div>
                     <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="">
-                        CASUAL GATHERING AT...
+                        <span class="font-italic">ODDSIDE ALES</span><br>
+                        CASUAL GATHERING WITH ALL OF THE EARLIEST DINKERS
                     </button></div>
 
                     <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="">
@@ -159,7 +159,7 @@
                     </button></div>
                     <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="">
                         <span class="font-italic">JORTS AND JACKETS</span><br>
-                        FORMAL JORTS WEAR DINNER ON THE PATIO OF NOTO'S...
+                        FORMAL JORTS WEAR DINNER ON THE PATIO OF NOTO'S
                     </button></div>
 
                     <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="">
@@ -180,7 +180,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center mt-3 py-3 mx-3">
+                    <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         YOU MUST BE REGISTERED IN ORDER TO JUMP<br>
                         <span class="small">
                             IF YOU CHOOSE A REGISTRATION WITH T-SHIRT, YOUR FIRST BOOGIE SHIRT SIZE SELECTION WILL BE FREE.<br>
@@ -215,13 +215,13 @@
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center mt-3 py-3 mx-3">
-                        BOOGIE T-SHIRTS $15<br>
+                    <div class="col card text-center mt-3 py-3 mx-3 card-header">
+                        BOOGIE T-SHIRTS $20<br>
                         <span class="small">SELECT SIZE AND QUANTITY OF BOOGIE T-SHIRTS BELOW</span>
                     </div>
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-auto text-center"><h4 id="shirt_amount">$15.00</h4></div>
+                    <div class="col-auto text-center"><h4 id="shirt_amount">$20.00</h4></div>
                     <div class="col text-center">
                         <div class="row">
                             <div class="col-12 col-lg mt-1">
@@ -279,7 +279,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center mt-3 py-3 mx-3">
+                    <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         SATURDAY NIGHT DINNER TICKETS $20
                     </div>
                 </div>
@@ -307,8 +307,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center m-3 py-3">
-                        BEER T-SHIRTS $25<br>
+                    <div class="col card text-center m-3 py-3 card-header">
+                        BEER T-SHIRTS $40<br>
                         <span class="small">THIS YEAR WE ARE OFFERING A SPECIAL T-SHIRT CELEBRATING THE ANNUAL BOOGIE BEER THAT DRAFTING TABLE BREWERY MAKES, ESPECIALLY FOR THIS EVENT. PURCHASE OF A BEER T-SHIRT WILL EARN YOU SIX COMPLEMENTARY 12oz. GIFTS. <span class="small">(MUST BE BORN BEFORE 8/18/1998)</span><br><br>SELECT SIZE AND QUANTITY OF BEER T-SHIRTS BELOW</span>
                     </div>
                 </div>
@@ -371,9 +371,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center mt-3 py-3 mx-3">
-                        CAMPING IS AVAILABLE ON THE AIRPORT<br>
-                        SELECT NIGHTS YOU WILL BE CAMPING<br>
+                    <div class="col card text-center mt-3 py-3 mx-3 card-header">
+                        CAMPING IS AVAILABLE ON PRIVATE PROPERTY AWAY FROM THE PARTY TENT<br>
+                        CAMPING IS $40 FOR ANY NUMBER OF NIGHTS
                         <span class="small">
                             BATHROOMS AND SHOWERS ON SITE<br>
                             RVs WELCOME BUT THERE ARE NO HOOKUPS AVAILABLE
@@ -384,17 +384,15 @@
                     <div class="col-auto text-center"><h4 id="camp_amount">$30.00</h4></div>
                     <div class="col">
                         <div class="row">
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">WEDNESDAY<br>FREE</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">THURSDAY<br>$10</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">FRIDAY<br>$10</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SATURDAY<br>$10</button></div>
-                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">SUNDAY<br>FREE</button></div>
+                            <div class="col-12 col-lg mt-1"><button data-toggle="button" class="camp-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                                YES, I WILL BE CAMPING
+                            </button></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col card text-center m-3 py-3"><h2>TOTAL</h2></div>
+                    <div class="col card text-center m-3 py-3 card-header"><h2>TOTAL</h2></div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col-auto text-center"><h4 id="total_amount">$235.00</h4></div>

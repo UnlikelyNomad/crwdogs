@@ -49,3 +49,12 @@ function random_str($length) {
     }
     return $str;
 }
+
+function requireAdmin() {
+    global $user;
+
+    if (!isset($user) || !$user->isAdmin()) {
+        http_response_code(404);
+        exit();
+    }
+}

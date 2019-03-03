@@ -8,13 +8,12 @@ use \crwdogs\events\RegistrationQuery;
 use \crwdogs\events\PurchasedItem;
 use \crwdogs\events\PurchasedItemQuery;
 
-if (!isset($user) || !$user->isAdmin()) {
-    http_response_code(404);
-    exit();
-}
+requireAdmin();
 
 $event_id = $_GET['eid'];
 $item_id = $_GET['iid'];
+$qty = $_GET['qty'];
+$uc = $_GET['uc'];
 
 $registrations = RegistrationQuery::create()->filterByEventId($event_id)->find();
 
@@ -38,8 +37,8 @@ foreach($registrations as $registration) {
         $purchase = new PurchasedItem();
         $purchase->setItemId($item_id);
         $purchase->setRegistrationId($reg_id);
-        $purchase->setQty($_GET['qty']);
-        $purchase->setUnitCost($_GET['uc']);
+        $purchase->setQty($qty);
+        $purchase->setUnitCost($uc);
         $purchase->save();
         $count++;
     }
