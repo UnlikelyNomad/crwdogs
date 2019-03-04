@@ -43,6 +43,7 @@
     <column name="paypal_email" phpName="PaypalEmail" type="VARCHAR" size="255" required="true"/>
     <column name="notify_email" phpName="NotifyEmail" type="VARCHAR" size="255" required="true"/>
     <column name="owning_group" phpName="OwningGroup" type="INTEGER" required="true"/>
+    <column name="sandbox" phpName="Sandbox" type="VARCHAR" size="1" defaultValue="N" required="false"/>
     <foreign-key foreignTable="location" name="event_location">
       <reference local="location_id" foreign="location_id"/>
     </foreign-key>

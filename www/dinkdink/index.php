@@ -71,11 +71,11 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="33">CRW</button></div>
-                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">WINGSUIT</button></div>
-                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">RW</button></div>
-                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">FF/ANGLE</button></div>
-                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">HP&nbsp;FLOCKING</button></div>
-                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">XRW</button></div>
+                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="34">WINGSUIT</button></div>
+                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="35">RW</button></div>
+                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="36">FF/ANGLE</button></div>
+                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="37">HP&nbsp;FLOCKING</button></div>
+                    <div class="col-12 col-md mt-1"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="38">XRW</button></div>
                 </div>
                 <div class="container mt-3" id="lightning_sizes" style="display:none;">
                     <div class="row">
@@ -83,37 +83,37 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>113</h3><span class="small">147-153 LBS</span>
                             </button>
                         </div>
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>126</h3><span class="small">164-170 LBS</span>
                             </button>
                         </div>
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>143</h3><span class="small">186-193 LBS</span>
                             </button>
                         </div>
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>160</h3><span class="small">208-216 LBS</span>
                             </button>
                         </div>
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>176</h3><span class="small">229-238 LBS</span>
                             </button>
                         </div>
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>193</h3><span class="small">251-261 LBS</span>
                             </button>
                         </div>
                         <div class="col-12 col-lg mt-1">
-                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="">
+                            <button data-toggle="button" class="btn btn-danger redgreen-toggle ml-1 mr-1 w-100" data-qid="39">
                                 <h3>218</h3><span class="small">283-295 LBS</span>
                             </button>
                         </div>
@@ -125,10 +125,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                    <div class="col-12"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="40">
                         I AM INTERESTED IN BEACH JUMPS AND HAVE A PRO RATING
                     </button></div>
-                    <div class="col-12 mt-3"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                    <div class="col-12 mt-3"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="41">
                         I AM INTERESTED IN BEACH JUMPS AND DO <span class="font-italic font-weight-bold font-underline">NOT</span> HAVE A PRO RATING
                     </button></div>
                 </div>
@@ -146,35 +146,35 @@
                         EVENING EVENT
                     </div>
 
-                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="">
+                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="42">
                         THURSDAY
                     </button></div>
-                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="">
-                        <span class="font-italic">ODDSIDE ALES</span><br>
-                        CASUAL GATHERING WITH ALL OF THE EARLIEST DINKERS
+                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="46">
+                        <span class="font-italic">CASUAL GATHERING</span><br>
+                        FIND YOUR NEW LOCAL FAVE
                     </button></div>
 
-                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="">
+                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="43">
                         FRIDAY
                     </button></div>
-                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="">
+                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="47">
                         <span class="font-italic">JORTS AND JACKETS</span><br>
                         FORMAL JORTS WEAR DINNER ON THE PATIO OF NOTO'S
                     </button></div>
 
-                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="">
+                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="44">
                         SATURDAY
                     </button></div>
-                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="">
+                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="48">
                         <span class="font-italic">DINKING EXTRAVAGANZA</span><br>
                         EVERYONE IS WELCOME<br>
                         $20 CATERED DINNER (TICKETS BELOW) - BEER - DINKING TOURNAMENT - ...
                     </button></div>
 
-                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="">
+                    <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="45">
                         SUNDAY
                     </button></div>
-                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="">
+                    <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="49">
                         KICK OFF THE POST BOOGIE DEPRESSION AT THE PAISLEY PIG WITH THE OTHER FOLKS WHO JUST CAN'T LET IT END.
                     </button></div>
                 </div>
@@ -405,6 +405,40 @@
                 </div>
             </div>
         </div>
+
+        <form id="reg_form" action="/registration/register.php" method="post">
+            <input type="hidden" name="qid32" value=""><!--Birthdate-->
+            <input type="hidden" name="qid33" value=""><!--CRW-->
+            <input type="hidden" name="qid34" value=""><!--WS-->
+            <input type="hidden" name="qid35" value=""><!--RW-->
+            <input type="hidden" name="qid36" value=""><!--FF-->
+            <input type="hidden" name="qid37" value=""><!--HP-->
+            <input type="hidden" name="qid38" value=""><!--XRW-->
+            <input type="hidden" name="qid39" value=""><!--LightningSizes-->
+            <input type="hidden" name="qid40" value=""><!--BeachWithPro-->
+            <input type="hidden" name="qid41" value=""><!--BeachNoPro-->
+            <input type="hidden" name="qid42" value=""><!--JumpThur-->
+            <input type="hidden" name="qid43" value=""><!--JumpFri-->
+            <input type="hidden" name="qid44" value=""><!--JumpSat-->
+            <input type="hidden" name="qid45" value=""><!--JumpSun-->
+            <input type="hidden" name="qid46" value=""><!--EventThur-->
+            <input type="hidden" name="qid47" value=""><!--EventFri-->
+            <input type="hidden" name="qid48" value=""><!--EventSat-->
+            <input type="hidden" name="qid49" value=""><!--EventSun-->
+            <input type="hidden" name="first_name" value="">
+            <input type="hidden" name="last_name" value="">
+            <input type="hidden" name="email" value="">
+            <input type="hidden" name="phone" value="">
+            <input type="hidden" name="event_id" value="2">
+            <input type="hidden" name="iid1-num" value="0">
+            <div id="iid1"></div>
+            <input type="hidden" name="iid2-num" value="0"><!--Boogie Shirt-->
+            <div id="iid2"></div>
+            <input type="hidden" name="iid3-num" value="0"><!--Beer-->
+            <div id="iid3"></div>
+            <input type="hidden" name="iid4-qty" value=""><!--Dinner-->
+            <input type="hidden" name="iid5-qty" value=""><!--Camping-->
+        </form>
         
         <script src="../js/jquery-3.3.1.min.js"></script>
         <script src="../js/jquery-ui.min.js"></script>

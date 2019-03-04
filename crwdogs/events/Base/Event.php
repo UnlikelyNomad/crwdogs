@@ -185,6 +185,14 @@ abstract class Event implements ActiveRecordInterface
     protected $owning_group;
 
     /**
+     * The value for the sandbox field.
+     *
+     * Note: this column has a database default value of: 'N'
+     * @var        string
+     */
+    protected $sandbox;
+
+    /**
      * @var        ChildLocation
      */
     protected $aLocation;
@@ -251,10 +259,23 @@ abstract class Event implements ActiveRecordInterface
     protected $registrationsScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->sandbox = 'N';
+    }
+
+    /**
      * Initializes internal state of crwdogs\events\Base\Event object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -686,6 +707,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [sandbox] column value.
+     *
+     * @return string
+     */
+    public function getSandbox()
+    {
+        return $this->sandbox;
+    }
+
+    /**
      * Set the value of [event_id] column.
      *
      * @param int $v new value
@@ -994,6 +1025,26 @@ abstract class Event implements ActiveRecordInterface
     } // setOwningGroup()
 
     /**
+     * Set the value of [sandbox] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setSandbox($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->sandbox !== $v) {
+            $this->sandbox = $v;
+            $this->modifiedColumns[EventTableMap::COL_SANDBOX] = true;
+        }
+
+        return $this;
+    } // setSandbox()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1003,6 +1054,10 @@ abstract class Event implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->sandbox !== 'N') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1085,6 +1140,9 @@ abstract class Event implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : EventTableMap::translateFieldName('OwningGroup', TableMap::TYPE_PHPNAME, $indexType)];
             $this->owning_group = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : EventTableMap::translateFieldName('Sandbox', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->sandbox = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1093,7 +1151,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 15; // 15 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 16; // 16 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Event'), 0, $e);
@@ -1442,6 +1500,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_OWNING_GROUP)) {
             $modifiedColumns[':p' . $index++]  = 'owning_group';
         }
+        if ($this->isColumnModified(EventTableMap::COL_SANDBOX)) {
+            $modifiedColumns[':p' . $index++]  = 'sandbox';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1497,6 +1558,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'owning_group':
                         $stmt->bindValue($identifier, $this->owning_group, PDO::PARAM_INT);
+                        break;
+                    case 'sandbox':
+                        $stmt->bindValue($identifier, $this->sandbox, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1605,6 +1669,9 @@ abstract class Event implements ActiveRecordInterface
             case 14:
                 return $this->getOwningGroup();
                 break;
+            case 15:
+                return $this->getSandbox();
+                break;
             default:
                 return null;
                 break;
@@ -1650,6 +1717,7 @@ abstract class Event implements ActiveRecordInterface
             $keys[12] => $this->getPaypalEmail(),
             $keys[13] => $this->getNotifyEmail(),
             $keys[14] => $this->getOwningGroup(),
+            $keys[15] => $this->getSandbox(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1850,6 +1918,9 @@ abstract class Event implements ActiveRecordInterface
             case 14:
                 $this->setOwningGroup($value);
                 break;
+            case 15:
+                $this->setSandbox($value);
+                break;
         } // switch()
 
         return $this;
@@ -1920,6 +1991,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if (array_key_exists($keys[14], $arr)) {
             $this->setOwningGroup($arr[$keys[14]]);
+        }
+        if (array_key_exists($keys[15], $arr)) {
+            $this->setSandbox($arr[$keys[15]]);
         }
     }
 
@@ -2006,6 +2080,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_OWNING_GROUP)) {
             $criteria->add(EventTableMap::COL_OWNING_GROUP, $this->owning_group);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_SANDBOX)) {
+            $criteria->add(EventTableMap::COL_SANDBOX, $this->sandbox);
         }
 
         return $criteria;
@@ -2107,6 +2184,7 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setPaypalEmail($this->getPaypalEmail());
         $copyObj->setNotifyEmail($this->getNotifyEmail());
         $copyObj->setOwningGroup($this->getOwningGroup());
+        $copyObj->setSandbox($this->getSandbox());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -3251,8 +3329,10 @@ abstract class Event implements ActiveRecordInterface
         $this->paypal_email = null;
         $this->notify_email = null;
         $this->owning_group = null;
+        $this->sandbox = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

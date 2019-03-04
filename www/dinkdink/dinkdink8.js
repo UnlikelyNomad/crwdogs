@@ -42,8 +42,6 @@ function updateReg() {
 
         var regs = Reg.getButtonVal(btns);
     
-        console.log(regs);
-    
         var regCosts = [100, 75, 45, 85, 60, 30];
     
         cost.reg = 0;
@@ -84,7 +82,9 @@ function updateShirt() {
 }
 
 function updateDinner() {
-    var n = Number($(dinnerInputSel).val());
+    var dinner = $(dinnerInputSel);
+    var n = Number(dinner.val());
+    dinner.val(n);
     cost.dinner = n * 20;
 
     updateCosts();
@@ -125,6 +125,124 @@ function updateCRW() {
         }
     });
 }
+
+$('#checkout').click(function() {
+    Reg.setFormVal('event_id', 2); // hardcoded event id
+
+    //registrant info
+    Reg.setFormVal('first_name', $('#first_name').val());
+    if (Reg.getFormVal('first_name') == '') {
+        $('#first_name')[0].focus();
+        alert('You must enter your name before submitting.');
+        return;
+    }
+
+    Reg.setFormVal('last_name', $('#last_name').val());
+    if (Reg.getFormVal('last_name') == '') {
+        $('#last_name')[0].focus();
+        alert('You must enter your name before submitting.');
+        return;
+    }
+
+    Reg.setFormVal('email', $('#email').val());
+    if (Reg.getFormVal('email') == '') {
+        $('#email')[0].focus();
+        alert('You must enter your email before submitting.');
+        return;
+    }
+
+    Reg.setFormVal('phone', $('#phone').val());
+
+    Reg.setFormVal('qid32', $('#dob').val());
+    if (Reg.getFormVal('qid32') == '') {
+        $('#dob')[0].focus();
+        alert('You must enter your birthdate before submitting.');
+        return;
+    }
+
+    Reg.setFormVal('qid33', Reg.getButtonVal(Reg.qidSel(33))); //CRW
+    Reg.setFormVal('qid34', Reg.getButtonVal(Reg.qidSel(34))); //WS
+    Reg.setFormVal('qid35', Reg.getButtonVal(Reg.qidSel(35))); //RW
+    Reg.setFormVal('qid36', Reg.getButtonVal(Reg.qidSel(36))); //FF
+    Reg.setFormVal('qid37', Reg.getButtonVal(Reg.qidSel(37))); //HP
+    Reg.setFormVal('qid38', Reg.getButtonVal(Reg.qidSel(38))); //XRW
+
+    if (Reg.getFormVal('qid33') == 'true') {
+        var sizeArr = Reg.getButtonVal(Reg.qidSel(39)); // lightning sizes
+        var sizes = [];
+        for (var i = 0; i < sizeArr.length; ++i) {
+            if (sizeArr[i]) {
+                sizes.push(Calcs.sizes[i]);
+            }
+        }
+        Reg.setFormVal('qid39', sizes.toString());
+    } else {
+        Reg.setFormVal('qid39', '');
+    }
+    
+    Reg.setFormVal('qid40', Reg.getButtonVal(Reg.qidSel(40))); //Beach w/ Pro
+    Reg.setFormVal('qid41', Reg.getButtonVal(Reg.qidSel(41))); //Beach no Pro
+
+    Reg.setFormVal('qid42', Reg.getButtonVal(Reg.qidSel(42))); //Thurs - Jump
+    Reg.setFormVal('qid43', Reg.getButtonVal(Reg.qidSel(43))); //Fri
+    Reg.setFormVal('qid44', Reg.getButtonVal(Reg.qidSel(44))); //Sat
+    Reg.setFormVal('qid45', Reg.getButtonVal(Reg.qidSel(45))); //Sun
+    Reg.setFormVal('qid46', Reg.getButtonVal(Reg.qidSel(46))); //Thurs - Event
+    Reg.setFormVal('qid47', Reg.getButtonVal(Reg.qidSel(47))); //Fri
+    Reg.setFormVal('qid48', Reg.getButtonVal(Reg.qidSel(48))); //Sat
+    Reg.setFormVal('qid49', Reg.getButtonVal(Reg.qidSel(49))); //Sun
+
+    //Registration ticket
+    Reg.clearItem(1);
+    var btns = $(regButtonSel);
+    var regs = Reg.getButtonVal(btns);
+    var regOid = [1, 2, 3, 4, 5, 6];
+
+    for (var i = 0; i < 6; ++i) {
+        if (regs[i]) {
+            var num = Reg.addItem(1, 1);
+            Reg.setItemOption(1, num, 1, regOid[i]);
+            break;
+        }
+    }
+
+    //Boogie shirts
+    Reg.clearItem(2);
+    var shirts = $(shirtInputSel);
+    var shirtOid = [7, 8, 9, 10, 11];
+    shirts.each(function(i, el) {
+        var qty = Number($(el).val());
+        if (qty > 0) {
+            var num = Reg.addItem(2, qty);
+            Reg.setItemOption(2, num, 2, shirtOid[i]);
+        }
+    });
+
+    //Dinner tickets
+    Reg.setFormVal('iid4-qty', Reg.getInputVal('#dinner_input'));
+
+    //Beer shirts
+    Reg.clearItem(3);
+    var beers = $(beerInputSel);
+    var beerOid = [12, 13, 14, 15, 16];
+    beers.each(function(i, el) {
+        var qty = Number($(el).val());
+        if (qty > 0) {
+            var num = Reg.addItem(3, qty);
+            Reg.setItemOption(3, num, 3, beerOid[i]);
+        }
+    });
+
+    if (Reg.getButtonVal('.camp-button')) {
+        Reg.setFormVal('iid5-qty', 1);
+    } else {
+        Reg.setFormVal('iid5-qty', 0);
+    }
+
+
+
+    $('#reg_form').submit();
+});
 
 $(regButtonSel).click(updateReg);
 $(shirtInputSel).change(updateShirt);

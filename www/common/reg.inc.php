@@ -93,21 +93,10 @@ function createRegistration($data) {
     $items = $event->getItems();
 
     foreach($items as $item) {
-        $key = 'iid' . $item->getItemId();
 
-        $qty = 0;
+        $cost = $item->getBaseCost();
 
-        if (isset($data[$key . '-qty'])) {
-            $qty= $data[$key . '-qty'];
-        }
-
-        if ($qty > 0) {
-            $purchase = new PurchasedItem();
-            $purchase->setItem($item);
-            $purchase->setRegistration($registration);
-            $purchase->setQty($qty);
-
-            $cost = $item->getBaseCost();
+        if ($item->getMultipleVariations() == 'Y') { //lookup option values 
 
             $options = $item->getItemOptions();
 
@@ -125,8 +114,24 @@ function createRegistration($data) {
                 $regOpt->save();
             }
 
-            $purchase->setUnitCost($cost);
-            $purchase->save();
+        } else { //item as-is
+            $key = 'iid' . $item->getItemId();
+
+            $qty = 0;
+
+            if (isset($data[$key . '-qty'])) {
+                $qty= $data[$key . '-qty'];
+            }
+
+            if ($qty > 0) {
+                $purchase = new PurchasedItem();
+                $purchase->setItem($item);
+                $purchase->setRegistration($registration);
+                $purchase->setQty($qty);
+
+                $purchase->setUnitCost($cost);
+                $purchase->save();
+            }
         }
     }
 

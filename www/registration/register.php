@@ -24,14 +24,22 @@ $registration = createRegistration($_POST);
 $u = $registration->getUser();
 $event = $registration->getEvent();
 
+$account = array('TexasCRWd', 'crw@texascrwd.com');
+
+if (!isempty($event->getPaypalEmail())) {
+    $account = explode(';', $event->getPaypalEmail());
+}
+
+$paypalSandbox = $event->getSandbox() == 'Y';
+
 $mail = createMail();
 $cart = new PayPalCart(
-    'TexasCRWd',
-    'crw@texascrwd.com',
+    $account[0],
+    $account[1],
     'https://crwdogs.com/paypal/ipn.php',
     'https://crwdogs.com/registration/success.php?id=' . $registration->getRegistrationId(),
     'https://crwdogs.com/registration/cancel.php?id=' . $registration->getRegistrationId(),
-    false //disable sandbox
+    $paypalSandbox
 );
 
 $mail->setFrom('admin@crwdogs.com', 'CRW Dogs Admin');

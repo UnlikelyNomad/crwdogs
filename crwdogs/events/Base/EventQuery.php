@@ -35,6 +35,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery orderByPaypalEmail($order = Criteria::ASC) Order by the paypal_email column
  * @method     ChildEventQuery orderByNotifyEmail($order = Criteria::ASC) Order by the notify_email column
  * @method     ChildEventQuery orderByOwningGroup($order = Criteria::ASC) Order by the owning_group column
+ * @method     ChildEventQuery orderBySandbox($order = Criteria::ASC) Order by the sandbox column
  *
  * @method     ChildEventQuery groupByEventId() Group by the event_id column
  * @method     ChildEventQuery groupByLocationId() Group by the location_id column
@@ -51,6 +52,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery groupByPaypalEmail() Group by the paypal_email column
  * @method     ChildEventQuery groupByNotifyEmail() Group by the notify_email column
  * @method     ChildEventQuery groupByOwningGroup() Group by the owning_group column
+ * @method     ChildEventQuery groupBySandbox() Group by the sandbox column
  *
  * @method     ChildEventQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildEventQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -139,7 +141,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent findOneByRegCost(string $reg_cost) Return the first ChildEvent filtered by the reg_cost column
  * @method     ChildEvent findOneByPaypalEmail(string $paypal_email) Return the first ChildEvent filtered by the paypal_email column
  * @method     ChildEvent findOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column
- * @method     ChildEvent findOneByOwningGroup(int $owning_group) Return the first ChildEvent filtered by the owning_group column *
+ * @method     ChildEvent findOneByOwningGroup(int $owning_group) Return the first ChildEvent filtered by the owning_group column
+ * @method     ChildEvent findOneBySandbox(string $sandbox) Return the first ChildEvent filtered by the sandbox column *
 
  * @method     ChildEvent requirePk($key, ConnectionInterface $con = null) Return the ChildEvent by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -159,6 +162,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent requireOneByPaypalEmail(string $paypal_email) Return the first ChildEvent filtered by the paypal_email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByNotifyEmail(string $notify_email) Return the first ChildEvent filtered by the notify_email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByOwningGroup(int $owning_group) Return the first ChildEvent filtered by the owning_group column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneBySandbox(string $sandbox) Return the first ChildEvent filtered by the sandbox column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findByEventId(int $event_id) Return ChildEvent objects filtered by the event_id column
@@ -176,6 +180,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent[]|ObjectCollection findByPaypalEmail(string $paypal_email) Return ChildEvent objects filtered by the paypal_email column
  * @method     ChildEvent[]|ObjectCollection findByNotifyEmail(string $notify_email) Return ChildEvent objects filtered by the notify_email column
  * @method     ChildEvent[]|ObjectCollection findByOwningGroup(int $owning_group) Return ChildEvent objects filtered by the owning_group column
+ * @method     ChildEvent[]|ObjectCollection findBySandbox(string $sandbox) Return ChildEvent objects filtered by the sandbox column
  * @method     ChildEvent[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -274,7 +279,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email, owning_group FROM event WHERE event_id = :p0';
+        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email, owning_group, sandbox FROM event WHERE event_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -913,6 +918,31 @@ abstract class EventQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(EventTableMap::COL_OWNING_GROUP, $owningGroup, $comparison);
+    }
+
+    /**
+     * Filter the query on the sandbox column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySandbox('fooValue');   // WHERE sandbox = 'fooValue'
+     * $query->filterBySandbox('%fooValue%', Criteria::LIKE); // WHERE sandbox LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $sandbox The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterBySandbox($sandbox = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($sandbox)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_SANDBOX, $sandbox, $comparison);
     }
 
     /**

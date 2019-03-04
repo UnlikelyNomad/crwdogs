@@ -135,6 +135,47 @@ Reg.qidSel = function(qid) {
     return '[data-qid="' + qid + '"]';
 }
 
+Reg.formSel = function(name) {
+    return '#reg_form [name="' + name + '"]';
+}
+
+Reg.setFormVal = function(name, value) {
+    $(Reg.formSel(name)).val(value);
+}
+
+Reg.getFormVal = function(name) {
+    return $(Reg.formSel(name)).val();
+}
+
+Reg.createField = function(name, value) {
+    return $('<input type="hidden" name="' + name + '" value="' + value + '">');
+}
+
+Reg.addItem = function(item_id, qty) {
+    var numSel = 'iid' + item_id + '-num';
+    var item = $('#iid' + item_id);
+    var item_num = Number(Reg.getFormVal(numSel));
+    Reg.setFormVal(numSel, item_num + 1);
+
+    var name = 'iid' + item_id + '-' + item_num + '-qty';
+    var newItem = Reg.createField(name, qty);
+    item.append(newItem);
+
+    return item_num;
+}
+
+Reg.setItemOption = function(item_id, num, opt_id, val_id) {
+    var name = 'iid' + item_id + '-' + num + '-' + opt_id;
+    var newOpt = Reg.createField(name, val_id);
+    $('#iid' + item_id).append(newOpt);
+}
+
+Reg.clearItem = function(item_id) {
+    var numSel = 'iid' + item_id + '-num';
+    Reg.setFormVal(numSel, 0);
+    $('#iid' + item_id).empty();
+}
+
 return Reg;
 
 })();
