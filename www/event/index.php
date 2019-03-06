@@ -128,8 +128,14 @@ if (!isset($_GET['id'])) {
                                     if (isset($payment)) {
                                         $status = $payment->getStatus();
 
-                                        if (substr($status, 0, 9) === "Completed") {
+                                        $s = 'Completed';
+                                        if (substr($status, 0, strlen($s)) === $s) {
                                             $color = "#6D6";
+                                        }
+
+                                        $s = 'Pending';
+                                        if (substr($status, 0, strlen($s)) === $s) {
+                                            $color = "#AB2";
                                         }
 
                                         preg_match("/mc_gross=([^&]+)/", $payment->getFull(), $gross_match);
