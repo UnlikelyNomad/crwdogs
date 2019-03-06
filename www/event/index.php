@@ -101,7 +101,7 @@ if (!isset($_GET['id'])) {
                             }
                         } else {
                             //list registrations
-                            $registrations = RegistrationQuery::create()->filterByEventId($event->getEventId())->where('status != ?', 'Cancelled')->find();
+                            $registrations = RegistrationQuery::create()->filterByEventId($event->getEventId())->where('Registration.Status != ?', 'Cancelled')->find();
 
                             $regs = array();
 
