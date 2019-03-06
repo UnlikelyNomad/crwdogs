@@ -35,6 +35,31 @@ if ($verified) {
         $payment->setFull($ipn->getFull());
         $payment->setReceived($_POST['payment_date']);
         $payment->save();
+
+        $registration->setStatus('Paid');
+        $registration->save();
+    }
+} else {
+    $ipn->useSandbox();
+    $verified = $ipn->verifyIPN();
+    if ($verified) {
+        $registration = RegistrationQuery::create()->findPK($_POST['invoice']);
+        if ($registration->getSandbox() == 'Y') {
+            $payment = new Payment();
+            $payment->setRegistrationId($registration->getRegistrationId());
+            $payment->setStatus($_POST['payment_status'] . ' SANDBOX');
+            $payment->setTxnId($_POST['txn_id']);
+            $payment->setTxnType($_POST['txn_type']);
+            $payment->setRecipient($_POST['receiver_email']);
+            $payment->setParentTxn($_POST['parent_txn']);
+            $payment->setEmail($_POST['payer_email']);
+            $payment->setFull($ipn->getFull());
+            $payment->setReceived($_POST['payment_date']);
+            $payment->save();
+
+            $registration->setStatus('Sandbox');
+            $registration->save();
+        }
     }
 }
 

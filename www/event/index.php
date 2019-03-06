@@ -128,7 +128,7 @@ if (!isset($_GET['id'])) {
                                     if (isset($payment)) {
                                         $status = $payment->getStatus();
 
-                                        if ($status == "Completed") {
+                                        if (substr($status, 0, 9) === "Completed") {
                                             $color = "#6D6";
                                         }
 
