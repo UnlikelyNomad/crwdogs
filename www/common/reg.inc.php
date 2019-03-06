@@ -34,7 +34,11 @@ function createUser($data) {
     $user->setEmail($data['email']);
 
     if (isset($data['phone'])) {
-        $user->setPhone($data['phone']);
+        $phone = $data['phone'];
+        if (strlen($phone) > 20) {
+            $phone = substr($phone, 0, 20);
+        }
+        $user->setPhone($phone);
     }
 
     if (isset($data['location'])) {
