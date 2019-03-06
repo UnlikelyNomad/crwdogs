@@ -104,5 +104,5 @@ if ($registration->getTotal() > 0) {
 $_SESSION['reg_id'] = $registration->getRegistrationId();
 
 
-echo htmlspecialchars($url);
-//header('Location: ' . $url);
+//echo htmlspecialchars($url);
+header('Location: ' . $url);
