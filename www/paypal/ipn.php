@@ -45,7 +45,7 @@ if ($verified) {
     if ($verified) {
         error_log($ipn->getFull());
         $registration = RegistrationQuery::create()->findPK($_POST['invoice']);
-        if ($registration->getSandbox() == 'Y') {
+        if ($registration->getEvent()->getSandbox() == 'Y') {
             $payment = new Payment();
             $payment->setRegistrationId($registration->getRegistrationId());
             $payment->setStatus($_POST['payment_status'] . ' SANDBOX');
