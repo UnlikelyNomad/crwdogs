@@ -43,7 +43,7 @@ if ($verified) {
     $ipn->useSandbox();
     $verified = $ipn->verifyIPN();
     if ($verified) {
-        $registration = RegistrationQuery::create()->findPK($_POST['invoice']);
+        $registration = RegistrationQuery::create()->findPK(intval($_POST['invoice']));
         if (isset($registration)) {
             if ($registration->getEvent()->getSandbox() == 'Y') {
                 $payment = new Payment();
