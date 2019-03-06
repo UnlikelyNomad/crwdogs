@@ -60,6 +60,8 @@ if ($verified) {
             $registration->setStatus('Sandbox');
             $registration->save();
         }
+    } else {
+        error_log($ipn->getFull());
     }
 }
 
