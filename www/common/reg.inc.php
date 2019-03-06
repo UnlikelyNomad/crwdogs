@@ -92,32 +92,50 @@ function createRegistration($data) {
 
     $items = $event->getItems();
 
-    foreach($items as $item) {
+    $total = 0;
 
-        $cost = $item->getBaseCost();
+    foreach($items as $item) {
+        $key = 'iid' . $item->getItemId();
 
         if ($item->getMultipleVariations() == 'Y') { //lookup option values 
 
             $options = $item->getItemOptions();
+            $cost = $item->getBaseCost();
 
-            foreach($options as $option) {
-                $opt = 'oid' . $option->getItemOptionId();
+            $numVar = intval($data[$key . '-num']);
 
-                $vid = $data[$opt];
-                $value = OptionValueQuery::create()->findPK($vid);
+            for ($i = 0; $i < $numVar; $i++) {
+                $itemNumKey = $key . '-' . $i;
 
-                $cost += $value->getCostAdj();
+                $qty = $data[$itemNumKey . '-qty'];
 
-                $regOpt = new RegistrationOption();
-                $regOpt->setPurchasedItem($purchase);
-                $regOpt->setOptionValue($value);
-                $regOpt->save();
+                $purchase = new PurchasedItem();
+                $purchase->setItem($item);
+                $purchase->setRegistration($registration);
+                $purchase->setQty($qty);
+
+                foreach($options as $option) {
+                    $opt = $itemNumKey . '-' . $option->getOptionId();
+
+                    $vid = $data[$opt];
+                    $value = OptionValueQuery::create()->findPK($vid);
+
+                    $cost += $value->getCostAdj();
+
+                    $regOpt = new RegistrationOption();
+                    $regOpt->setPurchasedItem($purchase);
+                    $regOpt->setOptionValue($value);
+                }
+
+                $purchase->setUnitCost($cost);
+                $purchase->save();
+                $total += $qty * $cost;
             }
 
         } else { //item as-is
-            $key = 'iid' . $item->getItemId();
 
             $qty = 0;
+            $cost = $item->getBaseCost();
 
             if (isset($data[$key . '-qty'])) {
                 $qty= $data[$key . '-qty'];
@@ -131,6 +149,7 @@ function createRegistration($data) {
 
                 $purchase->setUnitCost($cost);
                 $purchase->save();
+                $total += $qty * $cost;
             }
         }
     }

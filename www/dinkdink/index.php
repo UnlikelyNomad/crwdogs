@@ -119,6 +119,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="container mt-3" id="high_perf" style="display:none;">
+                    <div class="row">
+                        <div class="col card text-center py-3 card-header">ENTER YOUR HP CANOPY INFORMATION</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mt-3">
+                            <input class="form-control" type="text" placeholder="Canopy & Size" data-qid="50">
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <input class="form-control" type="number" placeholder="Wingloading" data-qid="51">
+                        </div>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col card text-center py-3 mt-3 mx-3"><h4>BEACH JUMPS</h4>
                         <p class="text-left">Beach jumps will be available every evening on the final loads of the day. We will manifest beach loads starting with sunset load, working backward from there as needed. Beach jumps will be from 5K ($25) unless officially organized at 13.5K ($35). The landing area will be small so you must either have a pro rating or complete two accuracy landings at the airport, observed by an official event organizer. Beach jump permissions are weather dependent and at the discretion of the event organizers.</p>
@@ -192,15 +205,15 @@
                     <div class="col-auto text-center"><h3 id="reg_amount">$100.00</h3></div>
                     <div class="col">
                         <div class="row" id="reg_buttons">
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <div class="col-12 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 FULL REGISTRATION<br>W/ T-SHIRT<br>$100
                             </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                            <?php /*<div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 TWO DAY REGISTRATION<br>W/ T-SHIRT<br>$75
                             </button></div>
                             <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 ONE DAY REGISTRATION<br>W/ T-SHIRT<br>$45
-                            </button></div>
+                            </button></div> */?>
                             <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 FULL REGISTRATION<br>$85
                             </button></div>
@@ -278,7 +291,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <?php /* <div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         SATURDAY NIGHT DINNER TICKETS $20
                     </div>
@@ -304,7 +317,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */ ?>
 
                 <div class="row">
                     <div class="col card text-center m-3 py-3 card-header">
@@ -372,11 +385,9 @@
 
                 <div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
-                        CAMPING IS AVAILABLE ON PRIVATE PROPERTY AWAY FROM THE PARTY TENT<br>
-                        CAMPING IS $40 FOR ANY NUMBER OF NIGHTS
+                        CAMPING<br>
                         <span class="small">
-                            BATHROOMS AND SHOWERS ON SITE<br>
-                            RVs WELCOME BUT THERE ARE NO HOOKUPS AVAILABLE
+                            WHERE EVERYONE IS STAYING
                         </span>
                     </div>
                 </div>
@@ -425,6 +436,8 @@
             <input type="hidden" name="qid47" value=""><!--EventFri-->
             <input type="hidden" name="qid48" value=""><!--EventSat-->
             <input type="hidden" name="qid49" value=""><!--EventSun-->
+            <input type="hidden" name="qid50" value=""><!--HPCanopy-->
+            <input type="hidden" name="qid51" value=""><!--HPWingloading-->
             <input type="hidden" name="first_name" value="">
             <input type="hidden" name="last_name" value="">
             <input type="hidden" name="email" value="">
@@ -432,12 +445,13 @@
             <input type="hidden" name="event_id" value="2">
             <input type="hidden" name="iid1-num" value="0">
             <div id="iid1"></div>
-            <input type="hidden" name="iid2-num" value="0"><!--Boogie Shirt-->
+            <input type="hidden" name="iid2-num" value="0">
             <div id="iid2"></div>
-            <input type="hidden" name="iid3-num" value="0"><!--Beer-->
+            <input type="hidden" name="iid3-num" value="0">
             <div id="iid3"></div>
-            <input type="hidden" name="iid4-qty" value=""><!--Dinner-->
-            <input type="hidden" name="iid5-qty" value=""><!--Camping-->
+            <input type="hidden" name="iid4-qty" value="">
+            <input type="hidden" name="iid5-qty" value="">
+            <input type="hidden" name="iid7-qty" value="">
         </form>
         
         <script src="../js/jquery-3.3.1.min.js"></script>

@@ -20,6 +20,8 @@ class PayPalCart {
     private $last_name = '';
     private $email = '';
 
+    private $cart_discount = 0;
+
     private $items = [];
 
     function __construct($company_name, $business, $notify_url, $return_url, $cancel_url, $sandbox = true) {
@@ -47,6 +49,10 @@ class PayPalCart {
             'qty' => $qty,
             'opt' => []
         ];
+    }
+
+    function setCartDiscount($amount) {
+        $this->cart_discount = $amount;
     }
 
     /** Sets a variation value for items that have multiple options associated with them */
@@ -113,6 +119,10 @@ class PayPalCart {
             }
 
             $item_num++;
+        }
+
+        if ($this->cart_discount > 0) {
+            $data['discount_amount_cart'] = $this->cart_discount;
         }
 
         $q = http_build_query($data);

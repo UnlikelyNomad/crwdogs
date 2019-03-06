@@ -26,7 +26,7 @@ $event = $registration->getEvent();
 
 $account = array('TexasCRWd', 'crw@texascrwd.com');
 
-if (!isempty($event->getPaypalEmail())) {
+if (!empty($event->getPaypalEmail())) {
     $account = explode(';', $event->getPaypalEmail());
 }
 
@@ -64,27 +64,39 @@ $cart->setBuyer($u->getFirstName(), $u->getLastName(), $u->getEmail());
 
 $purchases = $registration->getPurchasedItems();
 
+
 if (!$purchases->isEmpty()) {
     $msg .= '<b>Purchases:</b><br/>';
-}
+    $discount = 0;
 
-foreach($purchases as $purchase) {
-    $item = $purchase->getItem();
-    $msg .= $item->getLabel() . ' $' . number_format($purchase->getUnitCost(), 2) . ' x' . $purchase->getQty() . '<br/>';
+    foreach($purchases as $purchase) {
+        $item = $purchase->getItem();
+        $msg .= $item->getLabel() . ' x' . $purchase->getQty() . ' $' . number_format($purchase->getUnitCost(), 2) . ' ea<br/>';
 
-    $cart->addItem($purchase->getItemId(), $item->getLabel(), $purchase->getUnitCost(), $purchase->getQty());
+        if ($purchase->getUnitCost() < 0) {
+            $discount -= $purchase->getUnitCost();
+        } else {
+            $cart->addItem($purchase->getItemId(), $item->getLabel(), $purchase->getUnitCost(), $purchase->getQty());
 
-    $options = $purchase->getRegistrationOptions();
+            $options = $purchase->getRegistrationOptions();
 
-    foreach($options as $option) {
-        $value = $option->getOptionValue();
-        $label - $value->getItemOption()->getLabel();
-        $msg .= ' - ' . $label . ': ' . $value->getValue() . '<br/>';
+            foreach($options as $option) {
+                $value = $option->getOptionValue();
+                $label = $value->getItemOption()->getLabel();
+                $msg .= ' - ' . $label . ': ' . $value->getValue() . '<br/>';
 
-        $cart->setItemOption($purchase->getItemId(), $label, $value->getValue());
+                $cart->setItemOption($purchase->getItemId(), $label, $value->getValue());
+            }
+        }
+
+        $msg .= '<br/>';
     }
 
-    $msg .= '<br/>';
+    $msg .= '<b>Total:</b> $' . number_format($registration->getTotal(), 2) . '<br/><br/>';
+    
+    if ($discount > 0) {
+        $cart->setCartDiscount($discount);
+    }
 }
 
 //fill out responses
@@ -123,7 +135,10 @@ $msg .= '<br/>';
 $msg .= 'Incoming!<br/>';
 $msg .= '<a href="https://crwdogs.com">crwdogs.com</a>';
 
-$mail->msgHTML($msg);
+echo $msg;
 
-$mailResult = $mail->send();
-header('Location: ' . $url);
+//$mail->msgHTML($msg);
+
+//$mailResult = $mail->send();
+
+//header('Location: ' . $url);

@@ -42,7 +42,7 @@ function updateReg() {
 
         var regs = Reg.getButtonVal(btns);
     
-        var regCosts = [100, 75, 45, 85, 60, 30];
+        var regCosts = [100, 85, 60, 30];
     
         cost.reg = 0;
         freeShirt = false;
@@ -51,7 +51,7 @@ function updateReg() {
             if (regs[i]) {
                 cost.reg = regCosts[i];
 
-                if (i < 3) {
+                if (i < 1) {
                     freeShirt = true;
                 }
 
@@ -117,6 +117,19 @@ function updateCRW() {
     setTimeout(function() {
         var show = Reg.getButtonVal(Reg.qidSel(33));
         var l = $('#lightning_sizes');
+
+        if (show) {
+            l.slideDown();
+        } else {
+            l.slideUp();
+        }
+    });
+}
+
+function updateHP() {
+    setTimeout(function() {
+        var show = Reg.getButtonVal(Reg.qidSel(37));
+        var l = $('#high_perf');
 
         if (show) {
             l.slideDown();
@@ -192,18 +205,47 @@ $('#checkout').click(function() {
     Reg.setFormVal('qid48', Reg.getButtonVal(Reg.qidSel(48))); //Sat
     Reg.setFormVal('qid49', Reg.getButtonVal(Reg.qidSel(49))); //Sun
 
+    var jumpDays = 0;
+    if (Reg.getFormVal('qid42') == 'true') jumpDays++;
+    if (Reg.getFormVal('qid43') == 'true') jumpDays++;
+    if (Reg.getFormVal('qid44') == 'true') jumpDays++;
+    if (Reg.getFormVal('qid45') == 'true') jumpDays++;
+
+    if (Reg.getFormVal('qid37') == 'true') {
+        Reg.setFormVal('qid50', Reg.getInputVal(Reg.qidSel(50))); // HP Canopy
+        Reg.setFormVal('qid51', Reg.getInputVal(Reg.qidSel(51))); // HP Wingloading
+    }
+
     //Registration ticket
     Reg.clearItem(1);
     var btns = $(regButtonSel);
     var regs = Reg.getButtonVal(btns);
-    var regOid = [1, 2, 3, 4, 5, 6];
+    var regOid = [1, 4, 5, 6];
+    var regDays = [4, 4, 2, 1];
+
+    var ticketDays = 0;
 
     for (var i = 0; i < 6; ++i) {
         if (regs[i]) {
             var num = Reg.addItem(1, 1);
             Reg.setItemOption(1, num, 1, regOid[i]);
+            ticketDays = regDays[i];
             break;
         }
+    }
+
+    if (ticketDays < jumpDays) {
+        $(Reg.qidSel(42))[0].focus();
+        alert('You have selected more jump days than the selected ticket covers.');
+    }
+
+    if (regs[0]) {
+        var q = 0;
+        if (regs[0]) {
+            q = 1;
+        }
+
+        Reg.setFormVal('iid7-qty', q);
     }
 
     //Boogie shirts
@@ -241,7 +283,7 @@ $('#checkout').click(function() {
 
 
 
-    $('#reg_form').submit();
+    //$('#reg_form').submit();
 });
 
 $(regButtonSel).click(updateReg);
@@ -252,6 +294,7 @@ $(beerInputSel).change(updateBeer);
 $('.beer-buttons button').click(updateBeer);
 $(campButtonSel).click(updateCamp);
 $(Reg.qidSel(33)).click(updateCRW);
+$(Reg.qidSel(37)).click(updateHP);
 
 updateCosts();
 })();
