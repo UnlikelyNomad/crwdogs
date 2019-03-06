@@ -74,10 +74,12 @@ if (!$purchases->isEmpty()) {
     foreach($purchases as $purchase) {
         $item = $purchase->getItem();
 
+        echo $item->getLabel() . ' x' . $purchase->getQty() . ' $' . number_format($purchase->getUnitCost(), 2) . ' ea<br/>';
+
         if ($purchase->getUnitCost() < 0) {
             $discount -= $purchase->getUnitCost();
         } else {
-            $cart->addItem($purchase->getItemId(), $item->getLabel(), $purchase->getUnitCost(), $purchase->getQty());
+            $item_num = $cart->addItem($purchase->getItemId(), $item->getLabel(), $purchase->getUnitCost(), $purchase->getQty());
 
             $options = $purchase->getRegistrationOptions();
 
@@ -85,7 +87,8 @@ if (!$purchases->isEmpty()) {
                 $value = $option->getOptionValue();
                 $label = $value->getItemOption()->getLabel();
 
-                $cart->setItemOption($purchase->getItemId(), $label, $value->getValue());
+                $cart->setItemOption($item_num, $label, $value->getValue());
+                echo ' - ' . $label . ': ' . $value->getValue() . '<br/>';
             }
         }
     }
@@ -104,5 +107,5 @@ if ($registration->getTotal() > 0) {
 $_SESSION['reg_id'] = $registration->getRegistrationId();
 
 
-//echo htmlspecialchars($url);
-header('Location: ' . $url);
+echo htmlspecialchars($url);
+//header('Location: ' . $url);

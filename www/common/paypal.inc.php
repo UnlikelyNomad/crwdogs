@@ -43,12 +43,16 @@ class PayPalCart {
 
     /**Adds an item to the cart with a given per item cost and item_number desired */
     function addItem($item_id, $name, $unit_cost, $qty = 1) {
-        $this->items[$item_id] = [
+        $num = sizeof($this->items);
+        $this->items[] = [
+            'item_id' => $item_id,
             'name' => $name,
             'unit_cost' => $unit_cost,
             'qty' => $qty,
             'opt' => []
         ];
+
+        return $num;
     }
 
     function setCartDiscount($amount) {
@@ -56,21 +60,15 @@ class PayPalCart {
     }
 
     /** Sets a variation value for items that have multiple options associated with them */
-    function setItemOption($item_id, $opt_name, $opt_value) {
-
-        foreach ($this->items as $id=>$item) {
-            if ($id == $item_id) {
-
-                $opt = $item['opt'];
-                $opt[] = [
-                    'name' => $opt_name,
-                    'value' => $opt_value
-                ];
-                $this->items[$id]['opt'] = $opt;
-
-                return;
-            }
-        }
+    function setItemOption($item_num, $opt_name, $opt_value) {
+        $item = $this->items[$item_num];
+        
+        $opt = $item['opt'];
+        $opt[] = [
+            'name' => $opt_name,
+            'value' => $opt_value
+        ];
+        $this->items[$item_num]['opt'] = $opt;
     }
 
     /** finalizes items in cart and generates paypal query parameter and url to redirect client to for purchase */
@@ -102,18 +100,18 @@ class PayPalCart {
         $data['invoice'] = $invoice_id;
         $data['bn'] = $this->bn;
 
-        $item_num = 1;
-        foreach($this->items as $id=>$item) {
-            $data['item_name_' . $item_num] = $item['name'];
-            $data['item_item_number_' . $item_num] = $id;
-            $data['quantity_' . $item_num] = $item['qty'];
-            $data['amount_' . $item_num] = $item['unit_cost'];
+        foreach($this->items as $item_num=>$item) {
+            $n = $item_num + 1;
+            $data['item_name_' . $n] = $item['name'];
+            $data['item_item_number_' . $n] = $item['item_id'];
+            $data['quantity_' . $n] = $item['qty'];
+            $data['amount_' . $n] = $item['unit_cost'];
 
             $opt_num = 0;
 
             foreach($item['opt'] as $opt) {
-                $data['on' . $opt_num . '_' . $item_num] = $opt['name'];
-                $data['os' . $opt_num . '_' . $item_num] = $opt['value'];
+                $data['on' . $opt_num . '_' . $n] = $opt['name'];
+                $data['os' . $opt_num . '_' . $n] = $opt['value'];
 
                 $opt_num++;
             }
