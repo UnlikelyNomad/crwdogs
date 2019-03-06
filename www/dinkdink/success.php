@@ -4,13 +4,13 @@ require_once '../../vendor/autoload.php';
 require_once '../../generated-conf/config.php';
 require_once '../../crwdogs/mail.php';
 require_once '../common/reg.inc.php';
-require_once '../common/paypal.inc.php';
 
 use \crwdogs\events\EventQuery;
 use \crwdogs\events\UserQuery;
 use \crwdogs\events\RegistrationQuery;
 
-if (!isset($_GET['id']) || !isset($_SESSION['reg_id']) || $_GET['id'] !== $_SESSION['reg_id']) {
+if (!isset($_SESSION['reg_id'])) {
+    error_log('Missing reg_id');
     header('Location: /');
     return;
 }
