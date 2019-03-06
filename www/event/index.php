@@ -142,7 +142,11 @@ if (!isset($_GET['id'])) {
                                         $gross = floatval($gross_match[1]);
 
                                         preg_match("/mc_fee=([^&]+)/", $payment->getFull(), $fee_match);
-                                        $fee = floatval($fee_match[1]);
+                                        if (isset($fee_match[1])) {
+                                            $fee = floatval($fee_match[1]);
+                                        } else {
+                                            $fee = 0;
+                                        }
                                     } else {
                                         $status = "No Payment";
                                         $gross = 0;

@@ -29,7 +29,11 @@ if ($verified) {
         $payment->setTxnId($_POST['txn_id']);
         $payment->setTxnType($_POST['txn_type']);
         $payment->setRecipient($_POST['receiver_email']);
-        $payment->setParentTxn($_POST['parent_txn']);
+        if (isset($_POST['parent_txn'])) {
+            $payment->setParentTxn($_POST['parent_txn']);
+        } else {
+            $payment->setParentTxn('');
+        }
         $payment->setEmail($_POST['payer_email']);
         $payment->setFull($ipn->getFull());
         $payment->setReceived($_POST['payment_date']);
