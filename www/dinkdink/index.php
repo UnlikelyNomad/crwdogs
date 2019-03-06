@@ -181,7 +181,7 @@
                     <div class="col-8 mt-2"><button data-toggle="button" class="w-100 btn btn-danger redgreen-toggle text-left" data-qid="48">
                         <span class="font-italic">DINKING EXTRAVAGANZA</span><br>
                         EVERYONE IS WELCOME<br>
-                        $20 CATERED DINNER (TICKETS BELOW) - BEER - DINKING TOURNAMENT - ...
+                        $20 CATERED DINNER (TICKETS AVAILABLE AT EVENT) - BEER - DINKING TOURNAMENT - ...
                     </button></div>
 
                     <div class="col-4 mt-2 pr-2"><button data-toggle="button" class="h-100 w-100 btn btn-danger redgreen-toggle p-0" data-qid="45">

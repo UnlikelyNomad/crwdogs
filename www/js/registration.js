@@ -166,8 +166,15 @@ Reg.addItem = function(item_id, qty) {
 
 Reg.setItemOption = function(item_id, num, opt_id, val_id) {
     var name = 'iid' + item_id + '-' + num + '-' + opt_id;
-    var newOpt = Reg.createField(name, val_id);
-    $('#iid' + item_id).append(newOpt);
+
+    var opt = $(Reg.formSel(name));
+
+    if (opt.length == 0) {
+        var newOpt = Reg.createField(name, val_id);
+        $('#iid' + item_id).append(newOpt);
+    } else {
+        Reg.setFormVal(name, val_id);
+    }
 }
 
 Reg.clearItem = function(item_id) {

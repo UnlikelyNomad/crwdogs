@@ -193,6 +193,30 @@ abstract class Event implements ActiveRecordInterface
     protected $sandbox;
 
     /**
+     * The value for the paypal_success_url field.
+     *
+     * Note: this column has a database default value of: ''
+     * @var        string
+     */
+    protected $paypal_success_url;
+
+    /**
+     * The value for the paypal_cancel_url field.
+     *
+     * Note: this column has a database default value of: ''
+     * @var        string
+     */
+    protected $paypal_cancel_url;
+
+    /**
+     * The value for the reg_email_extra field.
+     *
+     * Note: this column has a database default value of: ''
+     * @var        string
+     */
+    protected $reg_email_extra;
+
+    /**
      * @var        ChildLocation
      */
     protected $aLocation;
@@ -267,6 +291,9 @@ abstract class Event implements ActiveRecordInterface
     public function applyDefaultValues()
     {
         $this->sandbox = 'N';
+        $this->paypal_success_url = '';
+        $this->paypal_cancel_url = '';
+        $this->reg_email_extra = '';
     }
 
     /**
@@ -717,6 +744,36 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [paypal_success_url] column value.
+     *
+     * @return string
+     */
+    public function getPaypalSuccessUrl()
+    {
+        return $this->paypal_success_url;
+    }
+
+    /**
+     * Get the [paypal_cancel_url] column value.
+     *
+     * @return string
+     */
+    public function getPaypalCancelUrl()
+    {
+        return $this->paypal_cancel_url;
+    }
+
+    /**
+     * Get the [reg_email_extra] column value.
+     *
+     * @return string
+     */
+    public function getRegEmailExtra()
+    {
+        return $this->reg_email_extra;
+    }
+
+    /**
      * Set the value of [event_id] column.
      *
      * @param int $v new value
@@ -1045,6 +1102,66 @@ abstract class Event implements ActiveRecordInterface
     } // setSandbox()
 
     /**
+     * Set the value of [paypal_success_url] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setPaypalSuccessUrl($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->paypal_success_url !== $v) {
+            $this->paypal_success_url = $v;
+            $this->modifiedColumns[EventTableMap::COL_PAYPAL_SUCCESS_URL] = true;
+        }
+
+        return $this;
+    } // setPaypalSuccessUrl()
+
+    /**
+     * Set the value of [paypal_cancel_url] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setPaypalCancelUrl($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->paypal_cancel_url !== $v) {
+            $this->paypal_cancel_url = $v;
+            $this->modifiedColumns[EventTableMap::COL_PAYPAL_CANCEL_URL] = true;
+        }
+
+        return $this;
+    } // setPaypalCancelUrl()
+
+    /**
+     * Set the value of [reg_email_extra] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setRegEmailExtra($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->reg_email_extra !== $v) {
+            $this->reg_email_extra = $v;
+            $this->modifiedColumns[EventTableMap::COL_REG_EMAIL_EXTRA] = true;
+        }
+
+        return $this;
+    } // setRegEmailExtra()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1055,6 +1172,18 @@ abstract class Event implements ActiveRecordInterface
     public function hasOnlyDefaultValues()
     {
             if ($this->sandbox !== 'N') {
+                return false;
+            }
+
+            if ($this->paypal_success_url !== '') {
+                return false;
+            }
+
+            if ($this->paypal_cancel_url !== '') {
+                return false;
+            }
+
+            if ($this->reg_email_extra !== '') {
                 return false;
             }
 
@@ -1143,6 +1272,15 @@ abstract class Event implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : EventTableMap::translateFieldName('Sandbox', TableMap::TYPE_PHPNAME, $indexType)];
             $this->sandbox = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : EventTableMap::translateFieldName('PaypalSuccessUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->paypal_success_url = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : EventTableMap::translateFieldName('PaypalCancelUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->paypal_cancel_url = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : EventTableMap::translateFieldName('RegEmailExtra', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->reg_email_extra = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1151,7 +1289,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 16; // 16 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 19; // 19 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Event'), 0, $e);
@@ -1503,6 +1641,15 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_SANDBOX)) {
             $modifiedColumns[':p' . $index++]  = 'sandbox';
         }
+        if ($this->isColumnModified(EventTableMap::COL_PAYPAL_SUCCESS_URL)) {
+            $modifiedColumns[':p' . $index++]  = 'paypal_success_url';
+        }
+        if ($this->isColumnModified(EventTableMap::COL_PAYPAL_CANCEL_URL)) {
+            $modifiedColumns[':p' . $index++]  = 'paypal_cancel_url';
+        }
+        if ($this->isColumnModified(EventTableMap::COL_REG_EMAIL_EXTRA)) {
+            $modifiedColumns[':p' . $index++]  = 'reg_email_extra';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1561,6 +1708,15 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'sandbox':
                         $stmt->bindValue($identifier, $this->sandbox, PDO::PARAM_STR);
+                        break;
+                    case 'paypal_success_url':
+                        $stmt->bindValue($identifier, $this->paypal_success_url, PDO::PARAM_STR);
+                        break;
+                    case 'paypal_cancel_url':
+                        $stmt->bindValue($identifier, $this->paypal_cancel_url, PDO::PARAM_STR);
+                        break;
+                    case 'reg_email_extra':
+                        $stmt->bindValue($identifier, $this->reg_email_extra, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1672,6 +1828,15 @@ abstract class Event implements ActiveRecordInterface
             case 15:
                 return $this->getSandbox();
                 break;
+            case 16:
+                return $this->getPaypalSuccessUrl();
+                break;
+            case 17:
+                return $this->getPaypalCancelUrl();
+                break;
+            case 18:
+                return $this->getRegEmailExtra();
+                break;
             default:
                 return null;
                 break;
@@ -1718,6 +1883,9 @@ abstract class Event implements ActiveRecordInterface
             $keys[13] => $this->getNotifyEmail(),
             $keys[14] => $this->getOwningGroup(),
             $keys[15] => $this->getSandbox(),
+            $keys[16] => $this->getPaypalSuccessUrl(),
+            $keys[17] => $this->getPaypalCancelUrl(),
+            $keys[18] => $this->getRegEmailExtra(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1921,6 +2089,15 @@ abstract class Event implements ActiveRecordInterface
             case 15:
                 $this->setSandbox($value);
                 break;
+            case 16:
+                $this->setPaypalSuccessUrl($value);
+                break;
+            case 17:
+                $this->setPaypalCancelUrl($value);
+                break;
+            case 18:
+                $this->setRegEmailExtra($value);
+                break;
         } // switch()
 
         return $this;
@@ -1994,6 +2171,15 @@ abstract class Event implements ActiveRecordInterface
         }
         if (array_key_exists($keys[15], $arr)) {
             $this->setSandbox($arr[$keys[15]]);
+        }
+        if (array_key_exists($keys[16], $arr)) {
+            $this->setPaypalSuccessUrl($arr[$keys[16]]);
+        }
+        if (array_key_exists($keys[17], $arr)) {
+            $this->setPaypalCancelUrl($arr[$keys[17]]);
+        }
+        if (array_key_exists($keys[18], $arr)) {
+            $this->setRegEmailExtra($arr[$keys[18]]);
         }
     }
 
@@ -2083,6 +2269,15 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_SANDBOX)) {
             $criteria->add(EventTableMap::COL_SANDBOX, $this->sandbox);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_PAYPAL_SUCCESS_URL)) {
+            $criteria->add(EventTableMap::COL_PAYPAL_SUCCESS_URL, $this->paypal_success_url);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_PAYPAL_CANCEL_URL)) {
+            $criteria->add(EventTableMap::COL_PAYPAL_CANCEL_URL, $this->paypal_cancel_url);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_REG_EMAIL_EXTRA)) {
+            $criteria->add(EventTableMap::COL_REG_EMAIL_EXTRA, $this->reg_email_extra);
         }
 
         return $criteria;
@@ -2185,6 +2380,9 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setNotifyEmail($this->getNotifyEmail());
         $copyObj->setOwningGroup($this->getOwningGroup());
         $copyObj->setSandbox($this->getSandbox());
+        $copyObj->setPaypalSuccessUrl($this->getPaypalSuccessUrl());
+        $copyObj->setPaypalCancelUrl($this->getPaypalCancelUrl());
+        $copyObj->setRegEmailExtra($this->getRegEmailExtra());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -3330,6 +3528,9 @@ abstract class Event implements ActiveRecordInterface
         $this->notify_email = null;
         $this->owning_group = null;
         $this->sandbox = null;
+        $this->paypal_success_url = null;
+        $this->paypal_cancel_url = null;
+        $this->reg_email_extra = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();

@@ -40,14 +40,14 @@ if ($registration->getStatus() !== 'Cancelled') {
 
         <title>CRW Dogs - Registration Completed</title>
     </head>
-    <body style="background-image:url(/images/yellowbrick.png);">
+    <body>
 
     <?php include '../common/nav.inc.php'; ?>
 
         <div class="main-content">
             <div class="banner">
                 <div class="banner-text rounded">
-                    <img src="/images/noplacelikedink.png" style="max-height: 600px;">
+                    <img src="/images/jump1.jpg" class="img-fluid rounded">
                 </div>
             </div>
 
@@ -57,11 +57,6 @@ if ($registration->getStatus() !== 'Cancelled') {
                         <h2>Registration Cancelled</h2>
                         <br>
                         You've cancelled payment for your registration.<br>
-                        You can return to the <a href="/dinkdink">Registration Page</a> to redo your registration<br>
-                        <br>
-                        or
-                        <br>
-                        <h3><a href="https://dinkdinkboogie.com">Back to Dink Dink site</a></h3>
                     </div>
                 </div>
             </div>

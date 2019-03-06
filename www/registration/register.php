@@ -32,46 +32,47 @@ if (!empty($event->getPaypalEmail())) {
 
 $paypalSandbox = $event->getSandbox() == 'Y';
 
-$mail = createMail();
+$eventSuccess = $event->getPaypalSuccessUrl();
+$eventCancel = $event->getPaypalCancelUrl();
+
+$domain = 'http://';
+
+if (isset($_SERVER['HTTPS'])) {
+    $domain = 'https://';
+}
+
+$domain .= $_SERVER['HTTP_HOST'];
+
+if (!empty($eventSuccess)) {
+    $successUrl = $domain . $eventSuccess;
+} else {
+    $successUrl = $domain . '/registration/success.php';
+}
+
+if (!empty($eventCancel)) {
+    $cancelUrl= $domain . $eventCancel;
+} else {
+    $cancelUrl = $domain . '/registration/cancel.php';
+}
+
 $cart = new PayPalCart(
     $account[0],
     $account[1],
     'https://crwdogs.com/paypal/ipn.php',
-    'https://crwdogs.com/registration/success.php?id=' . $registration->getRegistrationId(),
-    'https://crwdogs.com/registration/cancel.php?id=' . $registration->getRegistrationId(),
+    $successUrl . '?id=' . $registration->getRegistrationId(),
+    $cancelUrl . '?id=' . $registration->getRegistrationId(),
     $paypalSandbox
 );
-
-$mail->setFrom('admin@crwdogs.com', 'CRW Dogs Admin');
-$mail->addAddress($u->getEmail(), $u->getFirstName() . ' ' . $u->getLastName());
-
-if ($event->getNotifyEmail() != '') {
-    $mail->addBCC($event->getNotifyEmail());
-}
-
-$mail->Subject = $event->getName() . ' Registration';
-
-$msg = 'Thank you for your registration!<br/>';
-$msg .= 'Your registration number is: ' . $registration->getRegistrationId() . '</br>';
-$msg .= '<br/>';
-$msg .= 'Here is the information you registered with:<br/><br/>';
-$msg .= '<b>Name:</b> ' . $u->getFirstName() . ' ' . $u->getLastName() . '<br/>';
-$msg .= '<b>Email:</b> ' . $u->getEmail() . '<br/>';
-$msg .= '<b>Phone:</b> ' . $u->getPhone() . '<br/>';
-$msg .= '<br/>';
 
 $cart->setBuyer($u->getFirstName(), $u->getLastName(), $u->getEmail());
 
 $purchases = $registration->getPurchasedItems();
 
-
 if (!$purchases->isEmpty()) {
-    $msg .= '<b>Purchases:</b><br/>';
     $discount = 0;
 
     foreach($purchases as $purchase) {
         $item = $purchase->getItem();
-        $msg .= $item->getLabel() . ' x' . $purchase->getQty() . ' $' . number_format($purchase->getUnitCost(), 2) . ' ea<br/>';
 
         if ($purchase->getUnitCost() < 0) {
             $discount -= $purchase->getUnitCost();
@@ -83,62 +84,25 @@ if (!$purchases->isEmpty()) {
             foreach($options as $option) {
                 $value = $option->getOptionValue();
                 $label = $value->getItemOption()->getLabel();
-                $msg .= ' - ' . $label . ': ' . $value->getValue() . '<br/>';
 
                 $cart->setItemOption($purchase->getItemId(), $label, $value->getValue());
             }
         }
-
-        $msg .= '<br/>';
     }
 
-    $msg .= '<b>Total:</b> $' . number_format($registration->getTotal(), 2) . '<br/><br/>';
-    
     if ($discount > 0) {
         $cart->setCartDiscount($discount);
     }
 }
 
-//fill out responses
-$responses = $registration->getResponses();
-
-if (!$responses->isempty()) {
-    $msg .='<b>Questionaire:</b><br/>';
-}
-
-foreach($responses as $response) {
-    $v = $response->getValue();
-
-    if ($v == 'true') {
-        $v = 'Y';
-    } else if ($v == 'false') {
-        $v = 'N';
-    }
-
-    $msg .= $response->getQuestion()->getLabel() . ': ' . $v . '<br/>';
-}
-
-$url = '/registration/success?id=' . $registration->getRegistrationId();
+$url = $successUrl . '?id=' . $registration->getRegistrationId();
 
 if ($registration->getTotal() > 0) {
     $url = $cart->getPayPalCartURL($registration->getRegistrationId());
-    $msg .= '<br/>';
-    $msg .= '<b>Note:</b> You should be receiving a separate email from paypal confirming payment for this event.<br/>';
-    $msg .= 'If there was an issue accessing paypal you can try again with this link: ';
-    $msg .= '<a href="https://crwdogs.com/registration/pay.php?id=' . $registration->getRegistrationId() . '">Pay for registration</a><br/>';
 }
 
-$msg .= '<br/>';
-$msg .= 'Please reply to this email if you have any issues or questions!<br/>';
+$_SESSION['reg_id'] = $registration->getRegistrationId();
 
-$msg .= '<br/>';
-$msg .= 'Incoming!<br/>';
-$msg .= '<a href="https://crwdogs.com">crwdogs.com</a>';
 
-echo $msg;
-
-//$mail->msgHTML($msg);
-
-//$mailResult = $mail->send();
-
+echo htmlspecialchars($url);
 //header('Location: ' . $url);

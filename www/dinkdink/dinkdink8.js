@@ -225,10 +225,12 @@ $('#checkout').click(function() {
 
     var ticketDays = 0;
 
+    var regItemNum = 0;
+
     for (var i = 0; i < 6; ++i) {
         if (regs[i]) {
-            var num = Reg.addItem(1, 1);
-            Reg.setItemOption(1, num, 1, regOid[i]);
+            regItemNum = Reg.addItem(1, 1);
+            Reg.setItemOption(1, regItemNum, 1, regOid[i]);
             ticketDays = regDays[i];
             break;
         }
@@ -237,6 +239,7 @@ $('#checkout').click(function() {
     if (ticketDays < jumpDays) {
         $(Reg.qidSel(42))[0].focus();
         alert('You have selected more jump days than the selected ticket covers.');
+        return;
     }
 
     if (regs[0]) {
@@ -252,28 +255,51 @@ $('#checkout').click(function() {
     Reg.clearItem(2);
     var shirts = $(shirtInputSel);
     var shirtOid = [7, 8, 9, 10, 11];
+    var hasShirt = false;
     shirts.each(function(i, el) {
         var qty = Number($(el).val());
         if (qty > 0) {
+            hasShirt = true;
             var num = Reg.addItem(2, qty);
             Reg.setItemOption(2, num, 2, shirtOid[i]);
         }
     });
 
+    if (freeShirt && !hasShirt) {
+        $('.shirt-buttons')[0].focus();
+        alert('You have not selected a free shirt size with your full registration option.');
+        return;
+    }
+
+    if (!freeShirt && hasShirt && ticketDays == 4) {
+        Reg.setItemOption(1, regItemNum, 1, regOid[0]);
+        Reg.setFormVal('iid7-qty', 1);
+    }
+
     //Dinner tickets
-    Reg.setFormVal('iid4-qty', Reg.getInputVal('#dinner_input'));
+    //Reg.setFormVal('iid4-qty', Reg.getInputVal('#dinner_input'));
 
     //Beer shirts
     Reg.clearItem(3);
     var beers = $(beerInputSel);
     var beerOid = [12, 13, 14, 15, 16];
+    var hasBeer = false;
     beers.each(function(i, el) {
         var qty = Number($(el).val());
         if (qty > 0) {
             var num = Reg.addItem(3, qty);
             Reg.setItemOption(3, num, 3, beerOid[i]);
+            hasBeer = true;
         }
     });
+
+    if (hasBeer) {
+        if (Reg.getFormVal('qid32') > '1998-08-18') {
+            $('#beer_amount')[0].focus();
+            alert('You are not old enough to purchase a commemorative boogie beer shirt.');
+            return;
+        }
+    }
 
     if (Reg.getButtonVal('.camp-button')) {
         Reg.setFormVal('iid5-qty', 1);
@@ -281,9 +307,7 @@ $('#checkout').click(function() {
         Reg.setFormVal('iid5-qty', 0);
     }
 
-
-
-    //$('#reg_form').submit();
+    $('#reg_form').submit();
 });
 
 $(regButtonSel).click(updateReg);

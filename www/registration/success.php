@@ -11,16 +11,26 @@ use \crwdogs\events\UserQuery;
 use \crwdogs\events\RegistrationQuery;
 
 if (!isset($_SESSION['reg_id'])) {
-    header('Location: /');
+    //header('Location: /');
+
+    if (!isset($_SESSION['reg_id'])) {
+        echo 'No reg_id';
+    }
+
+    echo '"' . $_GET['id'] . '"<br>';
+    echo '"' . $_SESSION['reg_id'] . '"<br>';
+    echo '"' . (intval($_GET['id']) === intval($_SESSION['reg_id'])) . '"<br>';
     return;
 }
 
 $registration = RegistrationQuery::create()->findPK($_SESSION['reg_id']);
 $u = $registration->getUser();
 
-if ($registration->getStatus() !== 'Cancelled') {
+if ($registration->getStatus() !== 'Completed') {
+    $mail = createRegMail($registration);
+    $mailResult = $mail->send();
 
-    $registration->setStatus('Cancelled');
+    $registration->setStatus('Completed');
     $registration->save();
 }
 
@@ -40,28 +50,24 @@ if ($registration->getStatus() !== 'Cancelled') {
 
         <title>CRW Dogs - Registration Completed</title>
     </head>
-    <body style="background-image:url(/images/yellowbrick.png);">
+    <body>
 
     <?php include '../common/nav.inc.php'; ?>
 
         <div class="main-content">
             <div class="banner">
                 <div class="banner-text rounded">
-                    <img src="/images/noplacelikedink.png" style="max-height: 600px;">
+                <img src="/images/jump1.jpg" class="img-fluid rounded">
                 </div>
             </div>
 
             <div class="container-fluid inner-content rounded">
                 <div class="row justify-content-center">
                     <div class="col text-center">
-                        <h2>Registration Cancelled</h2>
+                        <h2>Registration Complete</h2>
                         <br>
-                        You've cancelled payment for your registration.<br>
-                        You can return to the <a href="/dinkdink">Registration Page</a> to redo your registration<br>
-                        <br>
-                        or
-                        <br>
-                        <h3><a href="https://dinkdinkboogie.com">Back to Dink Dink site</a></h3>
+                        Thank you for your registration, <?= $u->getFirstName() . ' ' . $u->getLastName() ?>!<br>
+                        You should receive a confirmation email to <?= $u->getEmail() ?> with your registration details.<br>
                     </div>
                 </div>
             </div>
