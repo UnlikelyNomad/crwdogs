@@ -14,8 +14,6 @@ use \crwdogs\events\QuestionQuery;
 use \crwdogs\events\Payment;
 
 $ipn = new PaypalIPN();
-
-//$ipn->useSandbox();
 $ipn->usePHPCerts();
 
 $verified = $ipn->verifyIPN();
@@ -35,6 +33,11 @@ if ($verified) {
         $payment->setFull($ipn->getFull());
         $payment->setReceived($_POST['payment_date']);
         $payment->save();
+
+        if ($registration->getStatus() == 'In Progress') {
+            $mail = createRegMail($registration);
+            $mailResult = $mail->send();
+        }
 
         $registration->setStatus('Paid');
         $registration->save();
@@ -57,6 +60,11 @@ if ($verified) {
                 $payment->setFull($ipn->getFull());
                 $payment->setReceived($_POST['payment_date']);
                 $payment->save();
+
+                if ($registration->getStatus() == 'In Progress') {
+                    $mail = createRegMail($registration);
+                    $mailResult = $mail->send();
+                }
 
                 $registration->setStatus('Paid SANDBOX');
                 $registration->save();
