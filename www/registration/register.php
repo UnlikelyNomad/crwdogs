@@ -74,8 +74,6 @@ if (!$purchases->isEmpty()) {
     foreach($purchases as $purchase) {
         $item = $purchase->getItem();
 
-        echo $item->getLabel() . ' x' . $purchase->getQty() . ' $' . number_format($purchase->getUnitCost(), 2) . ' ea<br/>';
-
         if ($purchase->getUnitCost() < 0) {
             $discount -= $purchase->getUnitCost();
         } else {
@@ -88,7 +86,6 @@ if (!$purchases->isEmpty()) {
                 $label = $value->getItemOption()->getLabel();
 
                 $cart->setItemOption($item_num, $label, $value->getValue());
-                echo ' - ' . $label . ': ' . $value->getValue() . '<br/>';
             }
         }
     }
@@ -107,5 +104,5 @@ if ($registration->getTotal() > 0) {
 $_SESSION['reg_id'] = $registration->getRegistrationId();
 
 
-echo htmlspecialchars($url);
-//header('Location: ' . $url);
+//echo htmlspecialchars($url);
+header('Location: ' . $url);
