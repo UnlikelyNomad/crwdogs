@@ -47,6 +47,7 @@
     <column name="paypal_success_url" phpName="PaypalSuccessUrl" type="VARCHAR" size="255" defaultValue="" required="false"/>
     <column name="paypal_cancel_url" phpName="PaypalCancelUrl" type="VARCHAR" size="255" defaultValue="" required="false"/>
     <column name="reg_email_extra" phpName="RegEmailExtra" type="LONGVARCHAR" defaultValue="" required="false"/>
+    <column name="organize_url" phpName="OrganizeUrl" type="VARCHAR" size="255" defaultValue="" required="false"/>
     <foreign-key foreignTable="location" name="event_location">
       <reference local="location_id" foreign="location_id"/>
     </foreign-key>

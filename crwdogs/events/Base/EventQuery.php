@@ -39,6 +39,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery orderByPaypalSuccessUrl($order = Criteria::ASC) Order by the paypal_success_url column
  * @method     ChildEventQuery orderByPaypalCancelUrl($order = Criteria::ASC) Order by the paypal_cancel_url column
  * @method     ChildEventQuery orderByRegEmailExtra($order = Criteria::ASC) Order by the reg_email_extra column
+ * @method     ChildEventQuery orderByOrganizeUrl($order = Criteria::ASC) Order by the organize_url column
  *
  * @method     ChildEventQuery groupByEventId() Group by the event_id column
  * @method     ChildEventQuery groupByLocationId() Group by the location_id column
@@ -59,6 +60,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEventQuery groupByPaypalSuccessUrl() Group by the paypal_success_url column
  * @method     ChildEventQuery groupByPaypalCancelUrl() Group by the paypal_cancel_url column
  * @method     ChildEventQuery groupByRegEmailExtra() Group by the reg_email_extra column
+ * @method     ChildEventQuery groupByOrganizeUrl() Group by the organize_url column
  *
  * @method     ChildEventQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildEventQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -151,7 +153,8 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent findOneBySandbox(string $sandbox) Return the first ChildEvent filtered by the sandbox column
  * @method     ChildEvent findOneByPaypalSuccessUrl(string $paypal_success_url) Return the first ChildEvent filtered by the paypal_success_url column
  * @method     ChildEvent findOneByPaypalCancelUrl(string $paypal_cancel_url) Return the first ChildEvent filtered by the paypal_cancel_url column
- * @method     ChildEvent findOneByRegEmailExtra(string $reg_email_extra) Return the first ChildEvent filtered by the reg_email_extra column *
+ * @method     ChildEvent findOneByRegEmailExtra(string $reg_email_extra) Return the first ChildEvent filtered by the reg_email_extra column
+ * @method     ChildEvent findOneByOrganizeUrl(string $organize_url) Return the first ChildEvent filtered by the organize_url column *
 
  * @method     ChildEvent requirePk($key, ConnectionInterface $con = null) Return the ChildEvent by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOne(ConnectionInterface $con = null) Return the first ChildEvent matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -175,6 +178,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent requireOneByPaypalSuccessUrl(string $paypal_success_url) Return the first ChildEvent filtered by the paypal_success_url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByPaypalCancelUrl(string $paypal_cancel_url) Return the first ChildEvent filtered by the paypal_cancel_url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvent requireOneByRegEmailExtra(string $reg_email_extra) Return the first ChildEvent filtered by the reg_email_extra column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvent requireOneByOrganizeUrl(string $organize_url) Return the first ChildEvent filtered by the organize_url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildEvent[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildEvent objects based on current ModelCriteria
  * @method     ChildEvent[]|ObjectCollection findByEventId(int $event_id) Return ChildEvent objects filtered by the event_id column
@@ -196,6 +200,7 @@ use crwdogs\events\Map\EventTableMap;
  * @method     ChildEvent[]|ObjectCollection findByPaypalSuccessUrl(string $paypal_success_url) Return ChildEvent objects filtered by the paypal_success_url column
  * @method     ChildEvent[]|ObjectCollection findByPaypalCancelUrl(string $paypal_cancel_url) Return ChildEvent objects filtered by the paypal_cancel_url column
  * @method     ChildEvent[]|ObjectCollection findByRegEmailExtra(string $reg_email_extra) Return ChildEvent objects filtered by the reg_email_extra column
+ * @method     ChildEvent[]|ObjectCollection findByOrganizeUrl(string $organize_url) Return ChildEvent objects filtered by the organize_url column
  * @method     ChildEvent[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -294,7 +299,7 @@ abstract class EventQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email, owning_group, sandbox, paypal_success_url, paypal_cancel_url, reg_email_extra FROM event WHERE event_id = :p0';
+        $sql = 'SELECT event_id, location_id, name, start_date, end_date, include_time, start_time, end_time, info, reg_start, reg_end, reg_cost, paypal_email, notify_email, owning_group, sandbox, paypal_success_url, paypal_cancel_url, reg_email_extra, organize_url FROM event WHERE event_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -1033,6 +1038,31 @@ abstract class EventQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(EventTableMap::COL_REG_EMAIL_EXTRA, $regEmailExtra, $comparison);
+    }
+
+    /**
+     * Filter the query on the organize_url column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByOrganizeUrl('fooValue');   // WHERE organize_url = 'fooValue'
+     * $query->filterByOrganizeUrl('%fooValue%', Criteria::LIKE); // WHERE organize_url LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $organizeUrl The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEventQuery The current query, for fluid interface
+     */
+    public function filterByOrganizeUrl($organizeUrl = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($organizeUrl)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EventTableMap::COL_ORGANIZE_URL, $organizeUrl, $comparison);
     }
 
     /**

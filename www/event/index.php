@@ -93,7 +93,13 @@ if (!isset($_GET['id'])) {
                             } else {
                                 foreach ($events as $event) { ?>
                                 <div class="row"><div class="col">
-                                    <a href="/event?id=<?php echo $event->getEventId(); ?>">
+                                    <?php
+                                        $eventUrl = $event->getOrganizeUrl();
+                                        if (empty($eventUrl)) {
+                                            $eventUrl = '/event?id=' . $event->getEventId();
+                                        }
+                                    ?>
+                                    <a href="<?= $eventUrl ?>">
                                         <?php echo $event->getName(); ?>
                                     </a>
                                 </div></div>

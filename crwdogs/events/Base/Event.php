@@ -217,6 +217,14 @@ abstract class Event implements ActiveRecordInterface
     protected $reg_email_extra;
 
     /**
+     * The value for the organize_url field.
+     *
+     * Note: this column has a database default value of: ''
+     * @var        string
+     */
+    protected $organize_url;
+
+    /**
      * @var        ChildLocation
      */
     protected $aLocation;
@@ -294,6 +302,7 @@ abstract class Event implements ActiveRecordInterface
         $this->paypal_success_url = '';
         $this->paypal_cancel_url = '';
         $this->reg_email_extra = '';
+        $this->organize_url = '';
     }
 
     /**
@@ -774,6 +783,16 @@ abstract class Event implements ActiveRecordInterface
     }
 
     /**
+     * Get the [organize_url] column value.
+     *
+     * @return string
+     */
+    public function getOrganizeUrl()
+    {
+        return $this->organize_url;
+    }
+
+    /**
      * Set the value of [event_id] column.
      *
      * @param int $v new value
@@ -1162,6 +1181,26 @@ abstract class Event implements ActiveRecordInterface
     } // setRegEmailExtra()
 
     /**
+     * Set the value of [organize_url] column.
+     *
+     * @param string $v new value
+     * @return $this|\crwdogs\events\Event The current object (for fluent API support)
+     */
+    public function setOrganizeUrl($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->organize_url !== $v) {
+            $this->organize_url = $v;
+            $this->modifiedColumns[EventTableMap::COL_ORGANIZE_URL] = true;
+        }
+
+        return $this;
+    } // setOrganizeUrl()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1184,6 +1223,10 @@ abstract class Event implements ActiveRecordInterface
             }
 
             if ($this->reg_email_extra !== '') {
+                return false;
+            }
+
+            if ($this->organize_url !== '') {
                 return false;
             }
 
@@ -1281,6 +1324,9 @@ abstract class Event implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : EventTableMap::translateFieldName('RegEmailExtra', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reg_email_extra = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 19 + $startcol : EventTableMap::translateFieldName('OrganizeUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->organize_url = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1289,7 +1335,7 @@ abstract class Event implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 19; // 19 = EventTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 20; // 20 = EventTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\crwdogs\\events\\Event'), 0, $e);
@@ -1650,6 +1696,9 @@ abstract class Event implements ActiveRecordInterface
         if ($this->isColumnModified(EventTableMap::COL_REG_EMAIL_EXTRA)) {
             $modifiedColumns[':p' . $index++]  = 'reg_email_extra';
         }
+        if ($this->isColumnModified(EventTableMap::COL_ORGANIZE_URL)) {
+            $modifiedColumns[':p' . $index++]  = 'organize_url';
+        }
 
         $sql = sprintf(
             'INSERT INTO event (%s) VALUES (%s)',
@@ -1717,6 +1766,9 @@ abstract class Event implements ActiveRecordInterface
                         break;
                     case 'reg_email_extra':
                         $stmt->bindValue($identifier, $this->reg_email_extra, PDO::PARAM_STR);
+                        break;
+                    case 'organize_url':
+                        $stmt->bindValue($identifier, $this->organize_url, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1837,6 +1889,9 @@ abstract class Event implements ActiveRecordInterface
             case 18:
                 return $this->getRegEmailExtra();
                 break;
+            case 19:
+                return $this->getOrganizeUrl();
+                break;
             default:
                 return null;
                 break;
@@ -1886,6 +1941,7 @@ abstract class Event implements ActiveRecordInterface
             $keys[16] => $this->getPaypalSuccessUrl(),
             $keys[17] => $this->getPaypalCancelUrl(),
             $keys[18] => $this->getRegEmailExtra(),
+            $keys[19] => $this->getOrganizeUrl(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -2098,6 +2154,9 @@ abstract class Event implements ActiveRecordInterface
             case 18:
                 $this->setRegEmailExtra($value);
                 break;
+            case 19:
+                $this->setOrganizeUrl($value);
+                break;
         } // switch()
 
         return $this;
@@ -2180,6 +2239,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if (array_key_exists($keys[18], $arr)) {
             $this->setRegEmailExtra($arr[$keys[18]]);
+        }
+        if (array_key_exists($keys[19], $arr)) {
+            $this->setOrganizeUrl($arr[$keys[19]]);
         }
     }
 
@@ -2278,6 +2340,9 @@ abstract class Event implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EventTableMap::COL_REG_EMAIL_EXTRA)) {
             $criteria->add(EventTableMap::COL_REG_EMAIL_EXTRA, $this->reg_email_extra);
+        }
+        if ($this->isColumnModified(EventTableMap::COL_ORGANIZE_URL)) {
+            $criteria->add(EventTableMap::COL_ORGANIZE_URL, $this->organize_url);
         }
 
         return $criteria;
@@ -2383,6 +2448,7 @@ abstract class Event implements ActiveRecordInterface
         $copyObj->setPaypalSuccessUrl($this->getPaypalSuccessUrl());
         $copyObj->setPaypalCancelUrl($this->getPaypalCancelUrl());
         $copyObj->setRegEmailExtra($this->getRegEmailExtra());
+        $copyObj->setOrganizeUrl($this->getOrganizeUrl());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -3531,6 +3597,7 @@ abstract class Event implements ActiveRecordInterface
         $this->paypal_success_url = null;
         $this->paypal_cancel_url = null;
         $this->reg_email_extra = null;
+        $this->organize_url = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();

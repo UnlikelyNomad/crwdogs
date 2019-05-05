@@ -18,14 +18,6 @@ if (!isset($_SESSION['reg_id'])) {
 $registration = RegistrationQuery::create()->findPK($_SESSION['reg_id']);
 $u = $registration->getUser();
 
-if ($registration->getStatus() == 'In Progress') {
-    $mail = createRegMail($registration);
-    $mailResult = $mail->send();
-
-    $registration->setStatus('Completed');
-    $registration->save();
-}
-
 ?>
 
 <!DOCTYPE html>
