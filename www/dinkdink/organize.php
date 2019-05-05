@@ -53,13 +53,14 @@ function summaryTable($event) {
             $payments = $registration->getPayments();
             $payment = $payments->getLast();
 
-            $status = $registration->getStatus();
+            //$status = $registration->getStatus();
             $gross = 0;
             $fee = 0;
 
             $color = "#B88";
 
             if (isset($payment)) {
+                $status = $payment->getStatus();
 
                 $s = 'Completed';
                 if (substr($status, 0, strlen($s)) === $s) {
@@ -80,6 +81,8 @@ function summaryTable($event) {
                 } else {
                     $fee = 0;
                 }
+            } else {
+                $status = "No Payment";
             }
 
             $net = $gross - $fee;
