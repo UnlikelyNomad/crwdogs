@@ -8,6 +8,7 @@ use \crwdogs\events\EventQuery;
 use \crwdogs\events\RegistrationQuery;
 use \crwdogs\events\ResponseQuery;
 use \crwdogs\events\PaymentQuery;
+use \crwdogs\events\PurchasedItemQuery;
 
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -126,17 +127,32 @@ function itemTable($event) {
             $payments = $registration->getPayments();
             $payment = $payments->getLast();
 
-            $status = $registration->getStatus();
+            //$status = $registration->getStatus();
             $gross = 0;
             $fee = 0;
 
             $color = "#B88";
 
             $s = "Completed";
-            if (isset($payment) && substr($status, 0, strlen($s)) === $s) {
+            if (isset($payment) && substr($payment->getStatus(), 0, strlen($s)) === $s) {
                 ?>
                 <tr>
                     <td><?= $regUser->getLastName() . ', ' . $regUser->getFirstName() ?></td>
+                    <?php
+                        foreach ($items as $item) {
+                            $item_purchases = PurchasedItemQuery::create()->
+                                filterByRegistrationId($registration->getRegistrationId())->
+                                filterByItemId($item->getItemId())->
+                                find();
+
+                            $amount = 0;
+                            foreach ($item_purchases as $purchase) {
+                                $amount += $purchase->getQty() & $purchase->getUnitCost();
+                            }
+
+                            ?><td><?= $amount; ?></td><?php
+                        }
+                    ?>
                 </tr>
 
                 <?php
