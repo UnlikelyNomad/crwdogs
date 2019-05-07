@@ -109,7 +109,87 @@ function itemTable($event) {
     $registrations = RegistrationQuery::create()->filterByEventId($event->getEventId())->where('Registration.Status != ?', 'Cancelled')->find();
     $items = $event->getItems();
     ?>
-    <table>
+
+    <table border="1" style="margin-left: auto; margin-right: auto;">
+        <tr><th>Item</th><th>Variation</th><th>Qty</th><th>Amount</th></tr>
+
+        <?php
+            //key: itemId_valueId1_valueId2_...
+            $variations = array();
+
+            foreach ($registrations as $registration) {
+                $payments = $registration->getPayments();
+                $payment = $payments->getLast();
+
+                if (isset($payment)) {
+                    $status = $payment->getStatus();
+
+                    $s = 'Completed';
+                    if (substr($status, 0, strlen($s)) === $s) {
+                        $item_purchases = PurchasedItemQuery::create()->
+                            filterByRegistration($registration)->
+                            orderByItemId()->
+                            find();
+                        
+                        foreach ($item_purchases as $purchase) {
+                            $item = $purchase->getItem();
+                            $key = "" . $item->getItemId();
+                            $label = "";
+
+                            if ($item->getMultipleVariations() == 'Y') {
+                                $options = $purchase->getRegistrationOptions();
+                                foreach ($options as $option) {
+                                    $key .= "_" . str_pad($option->getValueId(), 8, '0', STR_PAD_LEFT);
+                                    $value = $option->getOptionValue();
+                                    $label .= " - " . $value->getLabel();
+                                }
+                            } else {
+                                $label = "N/A";
+                            }
+
+                            if (array_key_exists($key, $variations)) {
+                                //echo "Adding to key " . $key . "\r\n";
+                                $var = $variations[$key];
+                                $var["qty"] = $var["qty"] + 1;
+                                $var["amount"] = $var["amount"] + ($purchase->getQty() * $purchase->getUnitCost());
+                                $variations[$key] = $var;
+                            } else {
+                                //echo "Key " . $key . " not existent yet.\r\n";
+                                $variations[$key] = array(
+                                    "item" => $item->getLabel(),
+                                    "label" => $label,
+                                    "qty" => 1,
+                                    "amount" => ($purchase->getQty() * $purchase->getUnitCost())
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+
+            //echo "</pre>\r\n";
+
+            ksort($variations);
+
+            $total = 0;
+            
+            foreach ($variations as $variation) {
+                ?><tr>
+                    <td><?= $variation['item'];?></td>
+                    <td><?= $variation['label'];?></td>
+                    <td><?= $variation['qty'];?></td>
+                    <td><?= $variation['amount'];?></td>
+                </tr><?php
+
+                $total += $variation['amount'];
+            }
+
+            ?><tr><td colspan="3"><b>TOTAL</b></td><td><?= $total;?></td></tr><?php
+        ?>
+    </table><br>
+
+    <a href="purchases.php" target="_blank">Download Purchases</a>
+    <table border="1" style="width: 100%">
         <tr>
             <th>Name</th>
             <?php
@@ -141,13 +221,13 @@ function itemTable($event) {
                     <?php
                         foreach ($items as $item) {
                             $item_purchases = PurchasedItemQuery::create()->
-                                filterByRegistrationId($registration->getRegistrationId())->
-                                filterByItemId($item->getItemId())->
+                                filterByRegistration($registration)->
+                                filterByItem($item)->
                                 find();
 
                             $amount = 0;
                             foreach ($item_purchases as $purchase) {
-                                $amount += $purchase->getQty() & $purchase->getUnitCost();
+                                $amount += $purchase->getQty() * $purchase->getUnitCost();
                             }
 
                             ?><td><?= $amount; ?></td><?php
