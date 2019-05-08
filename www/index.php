@@ -20,12 +20,7 @@
         <?php include 'common/nav.inc.php'; ?>
         <div class="main-content text-center">
             <h1>Events</h1>
-            <div class="banner">
-                <img src="/images/jump1.jpg" class="img-fluid rounded">
-                <a href="/springfling">
-                    <span class="banner-text rounded"><u>Spring Fling<br>Registration</u></span>
-                </a>
-            </div>
+            <h3><i>Check back soon!</i></h3>
             <!--<div class="banner">
                 <img src="/images/snake1.png" class="img-fluid rounded">
                 <a href="/dinkdink">
