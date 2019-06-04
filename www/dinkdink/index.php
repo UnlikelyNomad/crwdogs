@@ -312,69 +312,84 @@
                     </div>
                 </div> */ ?>
 
-                <div class="row">
-                    <div class="col card text-center m-3 py-3 card-header">
-                        BEER T-SHIRTS $40<br>
-                        <span class="small">THIS YEAR WE ARE OFFERING A SPECIAL T-SHIRT CELEBRATING THE ANNUAL BOOGIE BEER THAT DRAFTING TABLE BREWERY MAKES, ESPECIALLY FOR THIS EVENT. PURCHASE OF A BEER T-SHIRT WILL EARN YOU SIX COMPLEMENTARY 12oz. GIFTS. <span class="small">(MUST BE BORN BEFORE 8/18/1998)</span><br><br>SELECT SIZE AND QUANTITY OF BEER T-SHIRTS BELOW</span>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-auto text-center"><h4 id="beer_amount">$50.00</h4></div>
-                    <div class="col text-center">
-                        <div class="row beer-buttons">
-                            <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters num-button-group">
-                                    <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button>
-                                    </div>
-                                    <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
-                                    </div>
-                                </div>
+                <?php
+                    $today = new DateTime();
+                    $noBeer = new DateTime("2019-07-01");
+
+                    if ($today < $noBeer) {
+                    ?>
+                        <div class="row">
+                            <div class="col card text-center m-3 py-3 card-header">
+                                BEER T-SHIRTS $40<br>
+                                <span class="small">
+                                    THIS YEAR WE ARE OFFERING A SPECIAL T-SHIRT CELEBRATING THE ANNUAL BOOGIE BEER THAT DRAFTING TABLE BREWERY MAKES, ESPECIALLY FOR THIS EVENT. PURCHASE OF A BEER T-SHIRT WILL EARN YOU SIX COMPLEMENTARY 12oz. GIFTS.
+                                    <span class="small">(MUST BE BORN BEFORE 8/18/1998)</span>
+                                    <br>
+                                    <h3 style="color:#FF0;">BEER SHIRTS ARE ONLY AVAILABLE BEFORE JULY.<br>JULY 1st THEY WILL NO LONGER BE LISTED!</h3>
+                                    <br>
+                                    SELECT SIZE AND QUANTITY OF BEER T-SHIRTS BELOW</span>
                             </div>
-                            <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters num-button-group">
-                                    <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-auto text-center"><h4 id="beer_amount">$50.00</h4></div>
+                            <div class="col text-center">
+                                <div class="row beer-buttons">
+                                    <div class="col-12 col-lg mt-1">
+                                        <div class="row no-gutters num-button-group">
+                                            <div class="col-8 col-lg-12 order-2 order-lg-1">
+                                                <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">SMALL</button>
+                                            </div>
+                                            <div class="col-4 col-lg-12 order-1 order-lg-2">
+                                                <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                    <div class="col-12 col-lg mt-1">
+                                        <div class="row no-gutters num-button-group">
+                                            <div class="col-8 col-lg-12 order-2 order-lg-1">
+                                                <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">MEDIUM</button>
+                                            </div>
+                                            <div class="col-4 col-lg-12 order-1 order-lg-2">
+                                                <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters num-button-group">
-                                    <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button>
+                                    <div class="col-12 col-lg mt-1">
+                                        <div class="row no-gutters num-button-group">
+                                            <div class="col-8 col-lg-12 order-2 order-lg-1">
+                                                <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">LARGE</button>
+                                            </div>
+                                            <div class="col-4 col-lg-12 order-1 order-lg-2">
+                                                <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                    <div class="col-12 col-lg mt-1">
+                                        <div class="row no-gutters num-button-group">
+                                            <div class="col-8 col-lg-12 order-2 order-lg-1">
+                                                <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button>
+                                            </div>
+                                            <div class="col-4 col-lg-12 order-1 order-lg-2">
+                                                <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters num-button-group">
-                                    <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">X-LARGE</button>
-                                    </div>
-                                    <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg mt-1">
-                                <div class="row no-gutters num-button-group">
-                                    <div class="col-8 col-lg-12 order-2 order-lg-1">
-                                        <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button>
-                                    </div>
-                                    <div class="col-4 col-lg-12 order-1 order-lg-2">
-                                        <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                    <div class="col-12 col-lg mt-1">
+                                        <div class="row no-gutters num-button-group">
+                                            <div class="col-8 col-lg-12 order-2 order-lg-1">
+                                                <button data-toggle="button" class="num-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1">XX-LARGE</button>
+                                            </div>
+                                            <div class="col-4 col-lg-12 order-1 order-lg-2">
+                                                <input type="number" min="0" value="0" class="beer-input num-button form-control" data-qid="">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    <?php
+                    }
+                ?>
 
                 <div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
