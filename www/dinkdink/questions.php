@@ -72,7 +72,11 @@ foreach ($registrations as $registration) {
                 if ($response->getValue() == 'true') {
                     $val = 'YES';
                 } else if ($response->getValue() != 'false') {
-                    $val = $response->getValue();
+                    if (strpos($response->getValue(), ',') !== false) {
+                        $val = '"' . $response->getValue() . '"';
+                    } else {
+                        $val = $response->getValue();
+                    }
                 }
                 $out .= $val;
             }
