@@ -284,6 +284,8 @@
                     </div>
                 </div>
 
+
+
                 <?php /* <div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         SATURDAY NIGHT DINNER TICKETS $20
@@ -393,6 +395,47 @@
 
                 <div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
+                        iFly RAFFLE
+                        <span class="small">
+                            Enter for a grand prize gift basket from iFly Lincoln Park including tunnel time and other accommodations.
+                        </span>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-auto text-center"><h4 id="raffle_amount">$0.00</h4></div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-12 col-lg mt-1" style="display: flex; flex-direction:column; justify-content:center;">
+                                <div class="row no-gutters num-button-group">
+                                    <div class="col-4 col-lg-12 order-1 order-lg-2">
+                                        <input type="number" min="0" value="0" class="num-button form-control" id="raffle_tickets" data-qid="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg mt-1">
+                                <div class="row no-gutters num-button-group">
+                                    <div class="col-8 col-lg-12 order-2 order-lg-1 card p-3">
+                                        Each ticket is $10.<br>Every 8 tickets purchased gets you 2 free!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg mt-1" style="display: flex; flex-direction:column; justify-content:center;">
+                                <div class="row no-gutters num-button-group">
+                                    <div class="col-8 col-lg-12 order-2 order-lg-1 card text-center">
+                                        FREE TICKETS
+                                    </div>
+                                    <div class="col-4 col-lg-12 order-1 order-lg-2 mt-2">
+                                        <input type="number" min="0" value="0" class="num-button form-control" readonly id="raffle_free" data-qid="" style="background-color:#DDD;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         CAMPING<br>
                         <span class="small">
                             WHERE EVERYONE IS STAYING
@@ -451,15 +494,16 @@
             <input type="hidden" name="email" value="">
             <input type="hidden" name="phone" value="">
             <input type="hidden" name="event_id" value="2">
-            <input type="hidden" name="iid1-num" value="0">
+            <input type="hidden" name="iid1-num" value="0"><!-- Registration Ticket-->
             <div id="iid1"></div>
-            <input type="hidden" name="iid2-num" value="0">
+            <input type="hidden" name="iid2-num" value="0"><!-- Boogie Shirts -->
             <div id="iid2"></div>
-            <input type="hidden" name="iid3-num" value="0">
+            <input type="hidden" name="iid3-num" value="0"><!-- Beer Shirts -->
             <div id="iid3"></div>
-            <input type="hidden" name="iid4-qty" value="">
-            <input type="hidden" name="iid5-qty" value="">
-            <input type="hidden" name="iid7-qty" value="">
+            <input type="hidden" name="iid4-qty" value=""><!-- Dinner -->
+            <input type="hidden" name="iid5-qty" value=""><!-- Camping -->
+            <input type="hidden" name="iid7-qty" value=""><!-- Shirt Discount -->
+            <input type="hidden" name="iid8-qty" value=""><!-- iFly Raffle -->
         </form>
         
         <script src="../js/jquery-3.3.1.min.js"></script>

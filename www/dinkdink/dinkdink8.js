@@ -6,19 +6,23 @@ var dinnerAmount = $('#dinner_amount');
 var beerAmount = $('#beer_amount');
 var campAmount = $('#camp_amount');
 var totalAmount = $('#total_amount');
+var raffleAmount = $('#raffle_amount');
+var freeRaffle = $('#raffle_free');
 
 var regButtonSel = '.reg-button';
 var dinnerInputSel = '#dinner_input';
 var shirtInputSel = '.shirt-input';
 var beerInputSel = '.beer-input';
 var campButtonSel = '.camp-button';
+var raffleInputSel = '#raffle_tickets';
 
 var cost = {
     reg: 0,
     dinner: 0,
     shirt: 0,
     beer: 0,
-    camp: 0
+    camp: 0,
+    raffle: 0,
 };
 
 var freeShirt = false;
@@ -29,7 +33,8 @@ function updateCosts() {
     dinnerAmount.text(Reg.formatCost(cost.dinner));
     beerAmount.text(Reg.formatCost(cost.beer));
     campAmount.text(Reg.formatCost(cost.camp));
-    totalAmount.text(Reg.formatCost(cost.reg + cost.shirt + cost.dinner + cost.beer + cost.camp));
+    raffleAmount.text(Reg.formatCost(cost.raffle));
+    totalAmount.text(Reg.formatCost(cost.reg + cost.shirt + cost.dinner + cost.beer + cost.camp + cost.raffle));
 }
 
 function updateReg() {
@@ -136,6 +141,19 @@ function updateHP() {
         } else {
             l.slideUp();
         }
+    });
+}
+
+function updateRaffle() {
+    setTimeout(function() {
+        var raffle = Reg.getInputVal(raffleInputSel);
+
+        cost.raffle = raffle * 10;
+        var numFree = Math.floor(raffle / 8);
+
+        freeRaffle.val(numFree * 2);
+
+        updateCosts();
     });
 }
 
@@ -307,6 +325,8 @@ $('#checkout').click(function() {
         Reg.setFormVal('iid5-qty', 0);
     }
 
+    Reg.setFormVal('iid8-qty', Reg.getInputVal(raffleInputSel));
+
     $('#reg_form').submit();
 });
 
@@ -319,6 +339,7 @@ $('.beer-buttons button').click(updateBeer);
 $(campButtonSel).click(updateCamp);
 $(Reg.qidSel(33)).click(updateCRW);
 $(Reg.qidSel(37)).click(updateHP);
+$(raffleInputSel).change(updateRaffle);
 
 updateCosts();
 })();
