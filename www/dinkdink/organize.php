@@ -286,7 +286,13 @@ function questionTable($event) {
                                 findOne();
 
                             if (!is_null($response)) {
-                                echo $response->getValue();
+                                $val = '';
+                                if ($response->getValue() == 'true') {
+                                    $val = 'YES';
+                                } else if ($response->getValue() != 'false') {
+                                    $val = $response->getValue();
+                                }
+                                echo $val;
                             }
 
                             echo '</td>';
