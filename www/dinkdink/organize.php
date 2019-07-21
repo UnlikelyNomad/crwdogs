@@ -279,16 +279,17 @@ function questionTable($event) {
                     <td><?= $regUser->getLastName() . ', ' . $regUser->getFirstName() ?></td>
                     <?php
                         foreach ($questions as $question) {
-                            $responses = ResponseQuery::create()->
+                            echo '<td>';
+                            $response = ResponseQuery::create()->
                                 filterByRegistration($registration)->
                                 filterByQuestion($question)->
-                                find();
+                                findOne();
 
-                            foreach ($responses as $response) {
-                                ?><td><?= $response.getValue(); ?></td><?php
+                            if (!is_null($response)) {
+                                $response->getValue();
                             }
 
-                            
+                            echo '</td>';
                         }
                     ?>
                 </tr>
