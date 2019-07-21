@@ -286,7 +286,7 @@ function questionTable($event) {
                                 findOne();
 
                             if (!is_null($response)) {
-                                $response->getValue();
+                                echo $response->getValue();
                             }
 
                             echo '</td>';
