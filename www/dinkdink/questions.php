@@ -68,7 +68,13 @@ foreach ($registrations as $registration) {
             $out .= ",";
             
             if (!is_null($response)) {
-                $out .= $amount;
+                $val = '';
+                if ($response->getValue() == 'true') {
+                    $val = 'YES';
+                } else if ($response->getValue() != 'false') {
+                    $val = $response->getValue();
+                }
+                $out .= $val;
             }
         }
 
