@@ -9,6 +9,7 @@ use \crwdogs\events\RegistrationQuery;
 use \crwdogs\events\ResponseQuery;
 use \crwdogs\events\PaymentQuery;
 use \crwdogs\events\PurchasedItemQuery;
+use \crwdogs\events\ReponseQuery;
 
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -241,6 +242,63 @@ function itemTable($event) {
     </table> <?php
 }
 
+function questionTable($event) {
+    $registrations = RegistrationQuery::create()->filterByEventId($event->getEventId())->where('Registration.Status != ?', 'Cancelled')->find();
+    $questions = $event->getQuestions();
+    ?>
+
+    <a href="questions.php" target="_blank">Download Questions</a>
+    <table border="1" style="width: 100%">
+        <tr>
+            <th>Name</th>
+            <?php
+                foreach ($questions as $question) {
+                    ?>
+                    <th><?= $question->getLabel(); ?></th>
+                    <?php
+                }
+            ?>
+        </tr>
+        <?php
+
+        foreach ($registrations as $registration) {
+            $regUser = $registration->getUser();
+            $payments = $registration->getPayments();
+            $payment = $payments->getLast();
+
+            //$status = $registration->getStatus();
+            $gross = 0;
+            $fee = 0;
+
+            $color = "#B88";
+
+            $s = "Completed";
+            if (isset($payment) && substr($payment->getStatus(), 0, strlen($s)) === $s) {
+                ?>
+                <tr>
+                    <td><?= $regUser->getLastName() . ', ' . $regUser->getFirstName() ?></td>
+                    <?php
+                        foreach ($questions as $question) {
+                            $responses = ResponseQuery::create()->
+                                filterByRegistration($registration)->
+                                filterByQuestion($question)->
+                                find();
+
+                            foreach ($responses as $response) {
+                                ?><td><?= $response.getValue(); ?></td><?php
+                            }
+
+                            
+                        }
+                    ?>
+                </tr>
+
+                <?php
+            }
+        } ?>
+    </table> <?php
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -296,7 +354,7 @@ function itemTable($event) {
                             break;
 
                         case 'questions':
-
+                            questionTable($event);
                             break;
                     } ?>
                 </div>
