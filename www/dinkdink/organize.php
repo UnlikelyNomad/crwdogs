@@ -249,16 +249,18 @@ function questionTable($event) {
 
     <a href="questions.php" target="_blank">Download Questions</a>
     <table border="1" style="width: 100%">
-        <tr>
-            <th>Name</th>
-            <?php
-                foreach ($questions as $question) {
-                    ?>
-                    <th><?= $question->getLabel(); ?></th>
-                    <?php
-                }
-            ?>
-        </tr>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <?php
+                    foreach ($questions as $question) {
+                        ?>
+                        <th><?= $question->getLabel(); ?></th>
+                        <?php
+                    }
+                ?>
+            </tr>
+        </thead><tbody>
         <?php
 
         foreach ($registrations as $registration) {
@@ -303,7 +305,7 @@ function questionTable($event) {
                 <?php
             }
         } ?>
-    </table> <?php
+    </tbody></table> <?php
 }
 
 ?>
