@@ -7,7 +7,6 @@ use \crwdogs\events\EventQuery;
 use \crwdogs\events\RegistrationQuery;
 use \crwdogs\events\ResponseQuery;
 use \crwdogs\events\PaymentQuery;
-use \crwdogs\events\ResponseQuery;
 
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\ActiveQuery\Criteria;
