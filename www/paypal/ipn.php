@@ -24,19 +24,24 @@ if ($verified) {
         error_log('Unable to handle IPN for reg_id: ' . $_POST['invoice']);
     } else {
         $payment = new Payment();
-        $payment->setRegistrationId($registration->getRegistrationId());
-        $payment->setStatus($_POST['payment_status']);
-        $payment->setTxnId($_POST['txn_id']);
-        $payment->setTxnType($_POST['txn_type']);
-        $payment->setRecipient($_POST['receiver_email']);
-        if (isset($_POST['parent_txn'])) {
-            $payment->setParentTxn($_POST['parent_txn']);
-        } else {
-            $payment->setParentTxn('');
+        try {
+            $payment->setRegistrationId($registration->getRegistrationId());
+            $payment->setStatus($_POST['payment_status']);
+            $payment->setTxnId($_POST['txn_id']);
+            $payment->setTxnType($_POST['txn_type']);
+            $payment->setRecipient($_POST['receiver_email']);
+            if (isset($_POST['parent_txn'])) {
+                $payment->setParentTxn($_POST['parent_txn']);
+            } else {
+                $payment->setParentTxn('');
+            }
+            $payment->setEmail($_POST['payer_email']);
+            $payment->setReceived($_POST['payment_date']);
+        } catch (Exception $e) { 
+            $payment->setComment("Processing Error: " . $e->getMessage())
         }
-        $payment->setEmail($_POST['payer_email']);
+
         $payment->setFull($ipn->getFull());
-        $payment->setReceived($_POST['payment_date']);
         $payment->save();
 
         if ($registration->getStatus() == 'In Progress') {
