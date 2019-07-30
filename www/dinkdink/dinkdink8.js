@@ -47,7 +47,7 @@ function updateReg() {
 
         var regs = Reg.getButtonVal(btns);
     
-        var regCosts = [100, 85, 60, 30];
+        var regCosts = [90, 40];
     
         cost.reg = 0;
         freeShirt = false;
@@ -57,7 +57,7 @@ function updateReg() {
                 cost.reg = regCosts[i];
 
                 if (i < 1) {
-                    freeShirt = true;
+                    //freeShirt = true;
                 }
 
                 break;
@@ -238,8 +238,8 @@ $('#checkout').click(function() {
     Reg.clearItem(1);
     var btns = $(regButtonSel);
     var regs = Reg.getButtonVal(btns);
-    var regOid = [1, 4, 5, 6];
-    var regDays = [4, 4, 2, 1];
+    var regOid = [1, 6];
+    var regDays = [4, 1];
 
     var ticketDays = 0;
 
