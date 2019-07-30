@@ -38,7 +38,8 @@ if ($verified) {
             $payment->setEmail($_POST['payer_email']);
             $payment->setReceived($_POST['payment_date']);
         } catch (Exception $e) { 
-            $payment->setComment("Processing Error: " . $e->getMessage())
+            error_log("Payment processing error: " . $e->getMessage());
+            error_log($ipn->getFull());
         }
 
         $payment->setFull($ipn->getFull());
