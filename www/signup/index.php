@@ -45,8 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup-submit'])) {
 
         //create email
         $mail = createMail();
-
-        $mail->setFrom('admin@crwdogs.com', 'CRW Dogs Admin');
         $mail->addAddress($email, $user->getFirstName() . ' ' . $user->getLastName());
         $mail->Subject = 'crwdogs.com User Registration';
 
@@ -77,6 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup-submit'])) {
         $msg .= 'Blue Skies!';
 
         $mail->msgHTML($msg);
+
+        $mail->setFrom('admin@crwdogs.com', 'CRW Dogs Admin');
+        
         if (!$mail->send()) {
             $error = 'There was an error sending your user registration email: ' . $mail->ErrorInfo . '<br>';
             $error .= 'Email us at <a href="mailto:admin@crwdogs.com">admin@crwdogs.com</a> if you need assistance.';

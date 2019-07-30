@@ -189,7 +189,6 @@
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         YOU MUST BE REGISTERED IN ORDER TO JUMP<br>
                         <span class="small">
-                            IF YOU CHOOSE A REGISTRATION WITH T-SHIRT, YOUR FIRST BOOGIE SHIRT SIZE SELECTION WILL BE FREE.<br>
                             WALK IN REGISTRATIONS WILL BE AN ADDITIONAL $10
                         </span>
                     </div>
@@ -198,29 +197,29 @@
                     <div class="col-auto text-center"><h3 id="reg_amount">$100.00</h3></div>
                     <div class="col">
                         <div class="row" id="reg_buttons">
-                            <div class="col-12 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
-                                FULL REGISTRATION<br>W/ T-SHIRT<br>$100
+                            <div class="col-12 col-md-6 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                                FULL REGISTRATION<br>$90
                             </button></div>
                             <?php /*<div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 TWO DAY REGISTRATION<br>W/ T-SHIRT<br>$75
                             </button></div>
                             <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 ONE DAY REGISTRATION<br>W/ T-SHIRT<br>$45
-                            </button></div> */?>
+                            </button></div>
                             <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 FULL REGISTRATION<br>$85
                             </button></div>
                             <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
                                 TWO DAY REGISTRATION<br>$60
-                            </button></div>
-                            <div class="col-12 col-md-4 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
-                                ONE DAY REGISTRATION<br>$30
+                            </button></div> */?>
+                            <div class="col-12 col-md-6 mt-1"><button data-toggle="button" class="reg-button w-100 btn btn-danger redgreen-toggle ml-1 mr-1" data-qid="">
+                                ONE DAY REGISTRATION<br>$40
                             </button></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <?php /*<div class="row">
                     <div class="col card text-center mt-3 py-3 mx-3 card-header">
                         BOOGIE T-SHIRTS $20<br>
                         <span class="small">SELECT SIZE AND QUANTITY OF BOOGIE T-SHIRTS BELOW</span>
@@ -282,7 +281,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */?>
 
 
 

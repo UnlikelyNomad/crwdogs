@@ -8,11 +8,11 @@ use League\OAuth2\Client\Provider\Google;
 require 'mail.config.php';
 
 function createMail() {
-    global $clientId, $clientSecret, $email, $refreshToken;
+    global $clientId, $clientSecret, $clientEmail, $refreshToken;
 
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->SMTPDebug = 0;
+    $mail->SMTPDebug = 2;
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
@@ -33,7 +33,7 @@ function createMail() {
                 'clientId' => $clientId,
                 'clientSecret' => $clientSecret,
                 'refreshToken' => $refreshToken,
-                'userName' => $email,
+                'userName' => "admin@crwdogs.com",
             ]
         )
     );
