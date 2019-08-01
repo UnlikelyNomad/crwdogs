@@ -289,14 +289,6 @@ $('#checkout').click(function() {
         return;
     }
 
-    if (!freeShirt && hasShirt && ticketDays == 4) {
-        Reg.setItemOption(1, regItemNum, 1, regOid[0]);
-        Reg.setFormVal('iid7-qty', 1);
-    }
-
-    //Dinner tickets
-    //Reg.setFormVal('iid4-qty', Reg.getInputVal('#dinner_input'));
-
     //Beer shirts
     Reg.clearItem(3);
     var beers = $(beerInputSel);
