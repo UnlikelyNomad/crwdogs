@@ -260,15 +260,6 @@ $('#checkout').click(function() {
         return;
     }
 
-    if (regs[0]) {
-        var q = 0;
-        if (regs[0]) {
-            q = 1;
-        }
-
-        Reg.setFormVal('iid7-qty', q);
-    }
-
     //Boogie shirts
     Reg.clearItem(2);
     var shirts = $(shirtInputSel);
